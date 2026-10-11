@@ -2,7 +2,7 @@ import type { SQLiteDatabase } from 'expo-sqlite';
 
 import { seedPatients } from './seed';
 
-const DATABASE_VERSION = 2;
+const DATABASE_VERSION = 3;
 
 /** Migraciones versionadas con PRAGMA user_version. Se ejecuta en el onInit del SQLiteProvider. */
 export async function migrateDbIfNeeded(db: SQLiteDatabase) {
@@ -43,6 +43,15 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
       ALTER TABLE patients ADD COLUMN eco_ga_days INTEGER;
     `);
     currentVersion = 2;
+  }
+
+  if (currentVersion < 3) {
+    // Nota única por paciente, con la fecha de la última edición.
+    await db.execAsync(`
+      ALTER TABLE patients ADD COLUMN note TEXT;
+      ALTER TABLE patients ADD COLUMN note_updated_at TEXT;
+    `);
+    currentVersion = 3;
   }
 
   if (isNewDatabase) {

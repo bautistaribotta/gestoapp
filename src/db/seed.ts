@@ -10,11 +10,15 @@ type SeedPatient = [
   weight: number,
   heightCm: number,
   eco?: [daysAgo: number, gaDays: number],
+  note?: [daysAgo: number, text: string],
 ];
 
 /** Las dos ecografías de ejemplo muestran un caso concordante y uno discordante con la FUM. */
 const SEED: SeedPatient[] = [
-  ['Lucía Fernández', 31, 0, 198, 64, 163, [140, 58]],
+  [
+    'Lucía Fernández', 31, 0, 198, 64, 163, [140, 58],
+    [28, 'Hipotiroidismo en tratamiento con levotiroxina 50 mcg. Pedir TSH en el próximo control.'],
+  ],
   ['Camila Rodríguez', 27, 0, 84, 58, 160],
   ['Valentina Gómez', 34, 0, 241, 71, 168, [180, 75]],
   ['Sofía López', 29, 1, 133, 62, 165],
@@ -38,11 +42,13 @@ const SEED: SeedPatient[] = [
 export async function seedPatients(db: SQLiteDatabase) {
   const today = todayDay();
   const statement = await db.prepareAsync(
-    `INSERT INTO patients (name, age, weight, height_cm, fum, eco_date, eco_ga_days, last_seen)
-     VALUES ($name, $age, $weight, $heightCm, $fum, $ecoDate, $ecoGaDays, $lastSeen)`,
+    `INSERT INTO patients
+       (name, age, weight, height_cm, fum, eco_date, eco_ga_days, note, note_updated_at, last_seen)
+     VALUES
+       ($name, $age, $weight, $heightCm, $fum, $ecoDate, $ecoGaDays, $note, $noteUpdatedAt, $lastSeen)`,
   );
   try {
-    for (const [name, age, seenAgo, fumAgo, weight, heightCm, eco] of SEED) {
+    for (const [name, age, seenAgo, fumAgo, weight, heightCm, eco, note] of SEED) {
       await statement.executeAsync({
         $name: name,
         $age: age,
@@ -51,6 +57,8 @@ export async function seedPatients(db: SQLiteDatabase) {
         $fum: isoFromDay(today - fumAgo),
         $ecoDate: eco ? isoFromDay(today - eco[0]) : null,
         $ecoGaDays: eco ? eco[1] : null,
+        $note: note ? note[1] : null,
+        $noteUpdatedAt: note ? isoFromDay(today - note[0]) : null,
         $lastSeen: isoFromDay(today - seenAgo),
       });
     }
