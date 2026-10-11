@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600;700&family=Atkinson+Hyperlegible+Mono:wght@500&display=swap" rel="stylesheet">
+<style>body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250);font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif}a{color:oklch(0.21 0.012 250);text-decoration:underline}a:hover{color:oklch(0.38 0.012 250)}@keyframes gg-spin{to{transform:rotate(360deg)}}@keyframes gg-pulse{0%,100%{opacity:1}50%{opacity:.35}}@keyframes gg-dots{0%,80%,100%{transform:scale(.55);opacity:.35}40%{transform:scale(1);opacity:1}}@keyframes gg-bar{0%{transform:translateX(-100%)}100%{transform:translateX(260%)}}@keyframes gg-ray{0%{opacity:1}100%{opacity:.15}}@keyframes gg-ping{0%{transform:scale(.5);opacity:.7}100%{transform:scale(1.5);opacity:0}}</style>
+</helmet>
+<div style="max-width:1000px;margin:0 auto;padding:48px 24px 80px;display:flex;flex-direction:column;gap:40px">
+<header style="display:flex;flex-direction:column;gap:10px;max-width:640px">
+<div style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">COMPONENTE · INDICADOR DE CARGA · ELEGIDO</div>
+<h1 style="margin:0;font-size:32px;line-height:38px;font-weight:700;letter-spacing:-0.02em">Latido</h1>
+<p style="margin:0;font-size:16px;line-height:24px;color:oklch(0.38 0.012 250);text-wrap:pretty">Único indicador de carga propio de la app: un punto con una onda que se expande, como en el monitoreo fetal. Se usa al cargar la lista de pacientes, al abrir una ficha y dentro de los botones mientras guardan. Solo aparece si la operación tarda más de 300 ms, para que no parpadee en cargas normales. Con «reducir movimiento» activado, la onda no se muestra y el punto late cambiando de opacidad. Deslizar para actualizar el listado usa el indicador nativo del sistema en n-900: rayos en iPhone y el círculo de Material en Android.</p>
+</header>
+
+<section style="display:flex;flex-direction:column;gap:14px">
+<div style="font-size:14px;font-weight:600;color:oklch(0.47 0.012 250)">Tamaños</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:16px">
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:28px 20px 20px;display:flex;flex-direction:column;align-items:center;gap:20px"><div style="height:72px;display:flex;align-items:center">{{ b20 }}</div><span style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">20 · en botones</span></div>
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:28px 20px 20px;display:flex;flex-direction:column;align-items:center;gap:20px"><div style="height:72px;display:flex;align-items:center">{{ b44 }}</div><span style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">44 · en tarjetas</span></div>
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:28px 20px 20px;display:flex;flex-direction:column;align-items:center;gap:20px"><div style="height:72px;display:flex;align-items:center">{{ b72 }}</div><span style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">72 · pantalla completa</span></div>
+<div style="background:oklch(0.21 0.012 250);border-radius:16px;padding:28px 20px 20px;display:flex;flex-direction:column;align-items:center;gap:20px"><div style="height:72px;display:flex;align-items:center">{{ b44w }}</div><span style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.85 0.006 250)">44 · sobre oscuro</span></div>
+</div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:14px">
+<div style="font-size:14px;font-weight:600;color:oklch(0.47 0.012 250)">En uso</div>
+<div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+<div style="width:375px;height:800px;border:10px solid oklch(0.18 0.01 250);border-radius:48px;background:oklch(0.975 0.003 250);overflow:hidden;display:flex;flex-direction:column;box-sizing:content-box;flex:none">
+<div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-weight:600;font-size:15px;flex:none"><span>9:41</span><span style="width:24px;height:11px;border:1.5px solid currentColor;border-radius:3px"></span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding-bottom:80px">{{ b72b }}<span role="status" style="font-size:16px;font-weight:600;color:oklch(0.38 0.012 250)">Cargando pacientes…</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;width:343px;max-width:100%">
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px">
+<span style="font-size:13px;color:oklch(0.47 0.012 250)">Botón mientras guarda</span>
+<button disabled="{{ true }}" style="width:100%;height:56px;border-radius:12px;border:none;background:oklch(0.21 0.012 250);color:oklch(1 0 0);font:700 17px 'Atkinson Hyperlegible Next',sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;cursor:default">{{ b20w }}Guardando…</button>
+</div>
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px">
+<span style="font-size:13px;color:oklch(0.47 0.012 250)">Dentro de una tarjeta</span>
+<div style="display:flex;align-items:center;gap:12px;min-height:64px">{{ b44b }}<span style="font-size:15px;color:oklch(0.38 0.012 250)">Calculando fechas…</span></div>
+</div>
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px">
+<span style="font-size:13px;color:oklch(0.47 0.012 250)">Deslizar para actualizar · nativo</span>
+<div style="display:flex;align-items:center;justify-content:center;min-height:64px;border-radius:10px;background:oklch(0.975 0.003 250)">{{ rays }}</div>
+<span style="font-size:13px;line-height:18px;color:oklch(0.47 0.012 250)">Referencia del indicador de iPhone en n-900. No se dibuja: lo pone el sistema.</span>
+</div>
+</div>
+</div>
+</section>
+
+<div style="height:1px;background:oklch(0.89 0.006 250)"></div>
+<section style="display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;flex-direction:column;gap:10px;max-width:640px">
+<div style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">COMPONENTE · INDICADOR DE CARGA · v2</div>
+<h1 style="margin:0;font-size:32px;line-height:38px;font-weight:700;letter-spacing:-0.02em">Variantes clásicas</h1>
+<p style="margin:0;font-size:16px;line-height:24px;color:oklch(0.38 0.012 250);text-wrap:pretty">Cinco formas conocidas, cada una en neutro (n-900) y en ladrillo de alerta. El ladrillo conviene solo cuando la carga es parte de una alerta, por ejemplo al recalcular una discordancia. Más abajo queda la versión anterior, «Disco girando».</p>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px">
+<sc-for list="{{ classics }}" as="v" hint-placeholder-count="5">
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:700">{{ v.name }}</span><span style="font-size:13px;line-height:18px;color:oklch(0.47 0.012 250)">{{ v.desc }}</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<div style="height:112px;border-radius:10px;background:oklch(0.975 0.003 250);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px"><div style="height:48px;width:100%;display:flex;align-items:center;justify-content:center">{{ v.ink }}</div><span style="font:500 12px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">Neutro</span></div>
+<div style="height:112px;border-radius:10px;background:oklch(0.97 0.015 30);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px"><div style="height:48px;width:100%;display:flex;align-items:center;justify-content:center">{{ v.alr }}</div><span style="font:500 12px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.42 0.11 30)">Alerta</span></div>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+<div style="height:1px;background:oklch(0.89 0.006 250)"></div>
+<header style="display:flex;flex-direction:column;gap:10px;max-width:640px">
+<div style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">COMPONENTE · INDICADOR DE CARGA</div>
+<h1 style="margin:0;font-size:32px;line-height:38px;font-weight:700;letter-spacing:-0.02em">Disco girando</h1>
+<p style="margin:0;font-size:16px;line-height:24px;color:oklch(0.38 0.012 250);text-wrap:pretty">Parte del símbolo de la app: el aro es el disco del gestograma y la línea superior es la marca de lectura. Mientras carga, el disco gira y la línea queda fija, igual que al usar el gestograma. Con «reducir movimiento» activado en el sistema, el aro late en lugar de girar.</p>
+</header>
+
+<section style="display:flex;flex-direction:column;gap:14px">
+<div style="font-size:14px;font-weight:600;color:oklch(0.47 0.012 250)">Tamaños</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:16px">
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:28px 20px 20px;display:flex;flex-direction:column;align-items:center;gap:20px"><div style="height:72px;display:flex;align-items:center">{{ s20 }}</div><span style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">20 · en botones</span></div>
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:28px 20px 20px;display:flex;flex-direction:column;align-items:center;gap:20px"><div style="height:72px;display:flex;align-items:center">{{ s44 }}</div><span style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">44 · en listas</span></div>
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:28px 20px 20px;display:flex;flex-direction:column;align-items:center;gap:20px"><div style="height:72px;display:flex;align-items:center">{{ s72 }}</div><span style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">72 · pantalla completa</span></div>
+<div style="background:oklch(0.21 0.012 250);border-radius:16px;padding:28px 20px 20px;display:flex;flex-direction:column;align-items:center;gap:20px"><div style="height:72px;display:flex;align-items:center">{{ s44w }}</div><span style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.85 0.006 250)">44 · sobre oscuro</span></div>
+</div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:14px">
+<div style="font-size:14px;font-weight:600;color:oklch(0.47 0.012 250)">En uso</div>
+<div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+<div style="width:375px;height:800px;border:10px solid oklch(0.18 0.01 250);border-radius:48px;background:oklch(0.975 0.003 250);overflow:hidden;display:flex;flex-direction:column;box-sizing:content-box;flex:none">
+<div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-weight:600;font-size:15px;flex:none"><span>9:41</span><span style="width:24px;height:11px;border:1.5px solid currentColor;border-radius:3px"></span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding-bottom:80px">{{ s72b }}<span role="status" style="font-size:16px;font-weight:600;color:oklch(0.38 0.012 250)">{{ label }}</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;width:343px;max-width:100%">
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px">
+<span style="font-size:13px;color:oklch(0.47 0.012 250)">Botón mientras guarda</span>
+<button disabled="{{ true }}" style="width:100%;height:56px;border-radius:12px;border:none;background:oklch(0.21 0.012 250);color:oklch(1 0 0);font:700 17px 'Atkinson Hyperlegible Next',sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;cursor:default">{{ s20w }}Guardando…</button>
+</div>
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px">
+<span style="font-size:13px;color:oklch(0.47 0.012 250)">Dentro de una tarjeta</span>
+<div style="display:flex;align-items:center;gap:12px;min-height:64px">{{ s44b }}<span style="font-size:15px;color:oklch(0.38 0.012 250)">Calculando fechas…</span></div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;velocidad&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.4,&quot;min&quot;:0.6,&quot;max&quot;:3,&quot;step&quot;:0.1,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;},&quot;movimiento&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;giro&quot;,&quot;latido&quot;],&quot;default&quot;:&quot;giro&quot;,&quot;tsType&quot;:&quot;'giro'|'latido'&quot;},&quot;texto&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Cargando pacientes…&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { reduce: false };
+  componentDidMount() {
+    this.mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this.on = () => this.setState({ reduce: this.mq.matches });
+    this.on(); this.mq.addEventListener('change', this.on);
+  }
+  componentWillUnmount() { this.mq && this.mq.removeEventListener('change', this.on); }
+  beat(size, ink, key) {
+    // Latido elegido: medidas proporcionales a la versión de 44 (aro de 3 px, punto de 16).
+    const e = React.createElement, d = this.props.velocidad ?? 1.4;
+    const reduce = this.state.reduce;
+    const [bw, dot] = size === 20 ? [2, 8] : size === 72 ? [4, 26] : [3, 16];
+    return e('div', { key, style: { position: 'relative', width: size, height: size, display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 'none' } },
+      reduce ? null : e('span', { style: { position: 'absolute', inset: 0, borderRadius: '50%', border: `${bw}px solid ${ink}`, boxSizing: 'border-box', animation: `gg-ping ${d}s ease-out infinite` } }),
+      e('span', { style: { width: dot, height: dot, borderRadius: '50%', background: ink, animation: reduce ? `gg-pulse ${d}s ease-in-out infinite` : 'none' } }));
+  }
+  mark(size, ink, track, key) {
+    const e = React.createElement, dur = (this.props.velocidad ?? 1.4) + 's';
+    const reduce = this.state.reduce || this.props.movimiento === 'latido';
+    const sw = size <= 24 ? 2.5 : 3, r = 20 - sw / 2, c = 2 * Math.PI * r;
+    const anim = reduce ? `gg-pulse ${dur} ease-in-out infinite` : `gg-spin ${dur} linear infinite`;
+    return e('svg', { key, width: size, height: size, viewBox: '-2 -6 44 48', 'aria-hidden': true, style: { display: 'block', overflow: 'visible', flex: 'none' } },
+      e('circle', { cx: 20, cy: 20, r, fill: 'none', stroke: track, strokeWidth: sw }),
+      e('g', { style: { transformOrigin: '20px 20px', transformBox: 'view-box', animation: anim } },
+        e('circle', { cx: 20, cy: 20, r, fill: 'none', stroke: ink, strokeWidth: sw, strokeLinecap: 'round', strokeDasharray: `${c * 0.28} ${c}`, transform: 'rotate(-90 20 20)' })),
+      e('line', { x1: 20, y1: -4, x2: 20, y2: 10, stroke: ink, strokeWidth: sw, strokeLinecap: 'round' }));
+  }
+  classic(kind, ink, track, key) {
+    const e = React.createElement, d = this.props.velocidad ?? 1.4;
+    const reduce = this.state.reduce || this.props.movimiento === 'latido';
+    const pulse = `gg-pulse ${d}s ease-in-out infinite`;
+    if (kind === 'aro') {
+      const r = 19, c = 2 * Math.PI * r;
+      return e('svg', { key, width: 44, height: 44, viewBox: '0 0 44 44', 'aria-hidden': true, style: { display: 'block' } },
+        e('circle', { cx: 22, cy: 22, r, fill: 'none', stroke: track, strokeWidth: 4 }),
+        e('g', { style: { transformOrigin: '22px 22px', animation: reduce ? pulse : `gg-spin ${d * 0.7}s linear infinite` } },
+          e('circle', { cx: 22, cy: 22, r, fill: 'none', stroke: ink, strokeWidth: 4, strokeLinecap: 'round', strokeDasharray: `${c * 0.3} ${c}`, transform: 'rotate(-90 22 22)' })));
+    }
+    if (kind === 'puntos') return e('div', { key, style: { display: 'flex', gap: 8 } },
+      [0, 1, 2].map(i => e('span', { key: i, style: { width: 12, height: 12, borderRadius: '50%', background: ink, animation: reduce ? pulse : `gg-dots ${d}s ease-in-out ${i * d / 7}s infinite both` } })));
+    if (kind === 'rayos') return e('svg', { key, width: 44, height: 44, viewBox: '0 0 44 44', 'aria-hidden': true, style: { display: 'block' } },
+      Array.from({ length: 8 }, (_, i) => e('line', { key: i, x1: 22, y1: 5, x2: 22, y2: 13, stroke: ink, strokeWidth: 4, strokeLinecap: 'round', transform: `rotate(${i * 45} 22 22)`, style: { animation: reduce ? pulse : `gg-ray ${d * 0.8}s linear ${(i - 8) * d * 0.1}s infinite` } })));
+    if (kind === 'barra') return e('div', { key, style: { width: 120, height: 6, borderRadius: 3, background: track, overflow: 'hidden' } },
+      e('div', { style: { width: '40%', height: '100%', borderRadius: 3, background: ink, animation: reduce ? pulse : `gg-bar ${d}s ease-in-out infinite` } }));
+    return e('div', { key, style: { position: 'relative', width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center' } },
+      e('span', { style: { position: 'absolute', inset: 0, borderRadius: '50%', border: `3px solid ${ink}`, boxSizing: 'border-box', animation: reduce ? 'none' : `gg-ping ${d}s ease-out infinite`, opacity: reduce ? 0 : 1 } }),
+      e('span', { style: { width: 16, height: 16, borderRadius: '50%', background: ink, animation: reduce ? pulse : 'none' } }));
+  }
+  renderVals() {
+    const CL = [['aro', 'Aro', 'El clásico de los sistemas. Sirve en cualquier tamaño, también dentro de botones.'], ['puntos', 'Tres puntos', 'Liviano, para cargas cortas en línea con texto.'], ['rayos', 'Rayos', 'Ocho rayos que se apagan en ronda, como en iOS.'], ['barra', 'Barra', 'Para arriba de una lista o abajo del encabezado; no tapa el contenido.'], ['pulso', 'Latido', 'Un punto con una onda que se expande. Remite al monitoreo fetal.']];
+    const cINK = 'oklch(0.21 0.012 250)', cTR = 'oklch(0.89 0.006 250)', cALR = 'oklch(0.50 0.10 30)', cALT = 'oklch(0.88 0.04 30)', cW = 'oklch(1 0 0)';
+    const classics = CL.map(([k, name, desc]) => ({ name, desc, ink: this.classic(k, cINK, cTR, k + 'i'), alr: this.classic(k, cALR, cALT, k + 'a') }));
+    const latido = {
+      b20: this.beat(20, cINK, 'l20'), b44: this.beat(44, cINK, 'l44'), b72: this.beat(72, cINK, 'l72'), b44w: this.beat(44, cW, 'l44w'),
+      b72b: this.beat(72, cINK, 'l72b'), b20w: this.beat(20, cW, 'l20w'), b44b: this.beat(44, cINK, 'l44b'), rays: this.classic('rayos', cINK, cTR, 'rays')
+    };
+    return { classics, ...latido, ...this.renderOld() };
+  }
+  renderOld() {
+    const INK = 'oklch(0.21 0.012 250)', TR = 'oklch(0.89 0.006 250)', W = 'oklch(1 0 0)', TRW = 'oklch(0.38 0.012 250)';
+    return {
+      s20: this.mark(20, INK, TR, 'a'), s44: this.mark(44, INK, TR, 'b'), s72: this.mark(72, INK, TR, 'c'),
+      s44w: this.mark(44, W, TRW, 'd'), s72b: this.mark(72, INK, TR, 'e'), s20w: this.mark(20, W, TRW, 'f'), s44b: this.mark(44, INK, TR, 'g'),
+      label: this.props.texto ?? 'Cargando pacientes…'
+    };
+  }
+}
+</script>
+</body>
+</html>
