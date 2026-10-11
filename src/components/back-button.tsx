@@ -5,6 +5,8 @@ import { colors, fonts } from '@/theme';
 
 type BackButtonProps = {
   label?: string;
+  /** Muestra la flecha «‹». Se oculta para acciones como «Cancelar». */
+  chevron?: boolean;
   /** Por defecto vuelve a la pantalla anterior (o a Inicio si no hay historial). */
   onPress?: () => void;
 };
@@ -17,7 +19,7 @@ function goBack() {
   }
 }
 
-export function BackButton({ label = 'Atrás', onPress = goBack }: BackButtonProps) {
+export function BackButton({ label = 'Atrás', chevron = true, onPress = goBack }: BackButtonProps) {
   return (
     <Pressable
       accessibilityRole="button"
@@ -25,7 +27,7 @@ export function BackButton({ label = 'Atrás', onPress = goBack }: BackButtonPro
       onPress={onPress}
       hitSlop={8}
       style={({ pressed }) => [styles.button, pressed && styles.pressed]}>
-      <Text style={styles.chevron}>‹</Text>
+      {chevron ? <Text style={styles.chevron}>‹</Text> : null}
       <Text style={styles.label}>{label}</Text>
     </Pressable>
   );

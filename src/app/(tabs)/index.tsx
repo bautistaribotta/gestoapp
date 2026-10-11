@@ -35,7 +35,7 @@ export default function PatientsScreen() {
     <View style={styles.screen}>
       <View style={styles.actions}>
         <SearchField value={query} onChangeText={setQuery} />
-        <Button label="+ Nueva paciente" onPress={() => openNew()} />
+        <Button label="+ Nueva paciente" variant="accent" onPress={() => openNew()} />
       </View>
 
       <ScrollView

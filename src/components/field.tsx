@@ -87,6 +87,39 @@ export function TextField({ label, hint, unit, mono, onFocus, onBlur, ...props }
   );
 }
 
+type TextAreaProps = Omit<TextInputProps, 'style' | 'multiline'> & {
+  label?: string;
+  hint?: string;
+  /** md: 3 líneas, lg: 4 líneas. */
+  size?: 'md' | 'lg';
+};
+
+/** Campo de texto de varias líneas (ej. la nota de la paciente). */
+export function TextArea({ label, hint, size = 'md', onFocus, onBlur, ...props }: TextAreaProps) {
+  const [focused, setFocused] = useState(false);
+
+  return (
+    <Field label={label} hint={hint}>
+      <TextInput
+        multiline
+        textAlignVertical="top"
+        placeholderTextColor={colors.textMuted}
+        accessibilityLabel={label}
+        style={[styles.area, size === 'lg' && styles.areaLarge, focused && styles.areaFocused]}
+        onFocus={(event) => {
+          setFocused(true);
+          onFocus?.(event);
+        }}
+        onBlur={(event) => {
+          setFocused(false);
+          onBlur?.(event);
+        }}
+        {...props}
+      />
+    </Field>
+  );
+}
+
 export const fieldStyles = StyleSheet.create({
   box: {
     height: 52,
@@ -159,6 +192,28 @@ const styles = StyleSheet.create({
   },
   inputMono: {
     fontFamily: fonts.monoMedium,
+  },
+  area: {
+    borderWidth: 1,
+    borderColor: colors.borderStrong,
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    backgroundColor: colors.surface,
+    fontFamily: fonts.regular,
+    fontSize: 16,
+    lineHeight: 22,
+    color: colors.ink,
+    minHeight: 90,
+  },
+  areaLarge: {
+    minHeight: 112,
+  },
+  areaFocused: {
+    borderWidth: 2,
+    borderColor: colors.focus,
+    paddingVertical: 11,
+    paddingHorizontal: 13,
   },
   unit: {
     fontFamily: fonts.regular,

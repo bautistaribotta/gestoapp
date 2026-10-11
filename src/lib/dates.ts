@@ -49,6 +49,17 @@ export function formatLongDay(day: number): string {
   return `${WEEKDAYS[date.getUTCDay()]} ${date.getUTCDate()} de ${MONTHS_LONG[date.getUTCMonth()]}`;
 }
 
+/** Ej. "5 oct 2026". */
+export function formatMediumDay(day: number): string {
+  const date = new Date(day * DAY_MS);
+  return `${date.getUTCDate()} ${MONTHS_SHORT[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
+}
+
+/** Día de la semana en minúscula, ej. "lunes". */
+export function weekdayName(day: number): string {
+  return WEEKDAYS[new Date(day * DAY_MS).getUTCDay()].toLowerCase();
+}
+
 export function seenLabel(day: number, today: number): string {
   const diff = today - day;
   if (diff <= 0) return 'Hoy';

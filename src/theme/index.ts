@@ -20,6 +20,7 @@ const palette = {
   alertStrong: 'oklch(0.50 0.10 30)',
   transparent: 'oklch(0 0 0 / 0)',
   shadow: 'oklch(0.21 0.012 250 / 0.15)',
+  scrim: 'oklch(0.21 0.012 250 / 0.5)',
 } as const satisfies Record<string, OklchColor>;
 
 type ColorName = keyof typeof palette;

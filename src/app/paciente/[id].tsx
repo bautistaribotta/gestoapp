@@ -1,19 +1,24 @@
-import { useLocalSearchParams } from 'expo-router';
+import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
-import { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useCallback, useState } from 'react';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Avatar } from '@/components/avatar';
+import { Button } from '@/components/button';
+import { DeletePatientSheet } from '@/components/delete-patient-sheet';
 import { DiscordanceCard } from '@/components/discordance-card';
 import { GestationCard } from '@/components/gestation-card';
+import { KeyDatesCard } from '@/components/key-dates-card';
+import { NoteCard } from '@/components/note-card';
 import { ScreenHeader } from '@/components/screen-header';
-import { getPatient, type Patient } from '@/db/patients';
+import { deletePatient, getPatient, updatePatientNote, type Patient } from '@/db/patients';
 import { dayFromIso, seenLabel, todayDay } from '@/lib/dates';
 import {
   datingReference,
   discordance,
   fumError,
   gestationFromReference,
+  keyDates,
 } from '@/lib/gestation';
 import { formatDecimal } from '@/lib/text';
 import { colors, fonts } from '@/theme';
@@ -22,24 +27,76 @@ export default function PatientScreen() {
   const db = useSQLiteContext();
   const { id } = useLocalSearchParams<{ id: string }>();
   const [patient, setPatient] = useState<Patient | null | undefined>(undefined);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
-  useEffect(() => {
+  const load = useCallback(() => {
     getPatient(db, Number(id)).then(setPatient);
   }, [db, id]);
 
+  // Recarga al volver de «Editar datos».
+  useFocusEffect(load);
+
+  const saveNote = async (note: string) => {
+    if (!patient) return;
+    await updatePatientNote(db, patient.id, note);
+    load();
+  };
+
+  const remove = async () => {
+    if (!patient) return;
+    setConfirmDelete(false);
+    await deletePatient(db, patient.id);
+    router.back();
+  };
+
   return (
     <View style={styles.screen}>
-      <ScreenHeader />
+      <ScreenHeader
+        backLabel="Inicio"
+        right={
+          patient ? (
+            <Button
+              label="Editar datos"
+              variant="outline"
+              size="sm"
+              onPress={() =>
+                router.push({
+                  pathname: '/paciente/editar/[id]',
+                  params: { id: String(patient.id) },
+                })
+              }
+            />
+          ) : null
+        }
+      />
       {patient === null ? (
-        <Text style={[styles.note, styles.notFound]}>No encontramos esta paciente.</Text>
+        <Text style={[styles.empty, styles.notFound]}>No encontramos esta paciente.</Text>
       ) : patient ? (
-        <PatientDetail patient={patient} />
+        <>
+          <PatientDetail
+            patient={patient}
+            onSaveNote={saveNote}
+            onDelete={() => setConfirmDelete(true)}
+          />
+          <DeletePatientSheet
+            visible={confirmDelete}
+            name={patient.name}
+            onConfirm={remove}
+            onCancel={() => setConfirmDelete(false)}
+          />
+        </>
       ) : null}
     </View>
   );
 }
 
-function PatientDetail({ patient }: { patient: Patient }) {
+type PatientDetailProps = {
+  patient: Patient;
+  onSaveNote: (note: string) => Promise<void>;
+  onDelete: () => void;
+};
+
+function PatientDetail({ patient, onSaveNote, onDelete }: PatientDetailProps) {
   const today = todayDay();
   const reference = datingReference(patient, today);
   const gestation = reference ? gestationFromReference(reference.day, today) : null;
@@ -48,43 +105,50 @@ function PatientDetail({ patient }: { patient: Patient }) {
   const bmi = weight && heightCm ? weight / (heightCm / 100) ** 2 : null;
 
   return (
-    <ScrollView contentContainerStyle={styles.content}>
-      <View style={styles.card}>
-        <View style={styles.identity}>
-          <Avatar name={patient.name} size="lg" />
-          <View style={styles.identityText}>
-            <Text style={styles.name} accessibilityRole="header">
-              {patient.name}
-            </Text>
-            <Text style={styles.meta}>
-              {patient.age} años · vista{' '}
-              {seenLabel(dayFromIso(patient.lastSeen) ?? today, today).toLowerCase()}
-            </Text>
+    <KeyboardAvoidingView
+      style={styles.flex}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+        <View style={styles.card}>
+          <View style={styles.identity}>
+            <Avatar name={patient.name} size="lg" />
+            <View style={styles.identityText}>
+              <Text style={styles.name} accessibilityRole="header">
+                {patient.name}
+              </Text>
+              <Text style={styles.meta}>
+                {patient.age} años · vista{' '}
+                {seenLabel(dayFromIso(patient.lastSeen) ?? today, today).toLowerCase()}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.stats}>
+            <Stat label="Peso" value={weight ? `${formatDecimal(weight)} kg` : '—'} />
+            <Stat label="Altura" value={heightCm ? `${Math.round(heightCm)} cm` : '—'} />
+            <Stat label="IMC" value={bmi ? formatDecimal(bmi, 1) : '—'} />
           </View>
         </View>
-        <View style={styles.stats}>
-          <Stat label="Peso" value={weight ? `${formatDecimal(weight)} kg` : '—'} />
-          <Stat label="Altura" value={heightCm ? `${Math.round(heightCm)} cm` : '—'} />
-          <Stat label="IMC" value={bmi ? formatDecimal(bmi, 1) : '—'} />
+
+        {gestation && reference ? (
+          <>
+            <GestationCard gestation={gestation} title="Edad gestacional hoy" />
+            {comparison ? <DiscordanceCard discordance={comparison} /> : null}
+            <KeyDatesCard dates={keyDates(reference)} />
+          </>
+        ) : (
+          <Text style={styles.empty}>
+            {fumError(patient.fum, today) ??
+              'Sin FUM ni ecografía cargadas. Podés cargarlas desde «Editar datos».'}
+          </Text>
+        )}
+
+        <NoteCard note={patient.note} updatedAt={patient.noteUpdatedAt} onSave={onSaveNote} />
+
+        <View style={styles.deleteAction}>
+          <Button label="Eliminar paciente" variant="danger" onPress={onDelete} />
         </View>
-      </View>
-
-      {gestation && reference ? (
-        <GestationCard
-          gestation={gestation}
-          title="Edad gestacional hoy"
-          reference={reference.label}
-          detailed
-        />
-      ) : (
-        <Text style={styles.note}>
-          {fumError(patient.fum, today) ??
-            'Sin FUM ni ecografía cargadas. La ficha completa (datos y gestograma) sigue el diseño del sistema.'}
-        </Text>
-      )}
-
-      {comparison ? <DiscordanceCard discordance={comparison} /> : null}
-    </ScrollView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -101,6 +165,9 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: colors.background,
+  },
+  flex: {
+    flex: 1,
   },
   content: {
     paddingTop: 4,
@@ -157,7 +224,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.ink,
   },
-  note: {
+  empty: {
     fontFamily: fonts.regular,
     fontSize: 14,
     lineHeight: 20,
@@ -169,5 +236,8 @@ const styles = StyleSheet.create({
   },
   notFound: {
     marginHorizontal: 16,
+  },
+  deleteAction: {
+    marginTop: 8,
   },
 });

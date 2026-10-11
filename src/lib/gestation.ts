@@ -28,8 +28,8 @@ export type DatingReference = {
   /** Día equivalente a la FUM (real o corregida por ecografía). */
   day: number;
   source: 'fum' | 'eco';
-  /** Ej. "ecografía 20/05/2026" o "FUM 26/03/2026". */
-  label: string;
+  /** Día de la FUM o de la ecografía, según la fuente. */
+  sourceDay: number;
 };
 
 export type Discordance = {
@@ -75,11 +75,11 @@ export function fumError(fum: string | null, today: number): string | null {
 export function datingReference(input: DatingInput, today: number): DatingReference | null {
   const eco = validEco(input, today);
   if (eco) {
-    return { day: eco.day - eco.gaDays, source: 'eco', label: `ecografía ${formatDay(eco.day)}` };
+    return { day: eco.day - eco.gaDays, source: 'eco', sourceDay: eco.day };
   }
   const fumDay = validFumDay(input.fum, today);
   if (fumDay !== null) {
-    return { day: fumDay, source: 'fum', label: `FUM ${formatDay(fumDay)}` };
+    return { day: fumDay, source: 'fum', sourceDay: fumDay };
   }
   return null;
 }
@@ -130,4 +130,50 @@ export function discordance(input: DatingInput, today: number): Discordance | nu
     gaEco: formatWeeksDays(today - (eco.day - eco.gaDays)),
     rule: `Umbral ACOG para eco a ${range}: más de ${threshold} d.`,
   };
+}
+
+export type KeyDate = {
+  label: string;
+  /** Aclaración opcional debajo del nombre. */
+  sub: string | null;
+  day: number;
+};
+
+/** Fechas clave a partir del día de referencia (FUM real o corregida por ecografía). */
+export function keyDates(reference: DatingReference): KeyDate[] {
+  const fromEco = reference.source === 'eco';
+  return [
+    {
+      label: fromEco ? 'FUM por ecografía' : 'FUM',
+      sub: fromEco
+        ? `Calculada desde la eco del ${formatDay(reference.sourceDay)}`
+        : 'Fecha de última menstruación',
+      day: reference.day,
+    },
+    { label: 'Concepción', sub: null, day: reference.day + 14 },
+    { label: '2° trimestre', sub: null, day: reference.day + 98 },
+    { label: '3° trimestre', sub: null, day: reference.day + 196 },
+    { label: 'FPP', sub: 'Fecha probable de parto', day: reference.day + PREGNANCY_DAYS },
+  ];
+}
+
+/** Valida la ecografía cargada y devuelve la EG en días, o un mensaje si falta algo. */
+export function ecoGaDaysFrom(date: string | null, weeks: string, days: string, today: number) {
+  const ecoDay = dayFromIso(date);
+  const parsedWeeks = weeks ? parseInt(weeks, 10) : NaN;
+  const parsedDays = days ? parseInt(days, 10) : 0;
+  if (ecoDay === null || Number.isNaN(parsedWeeks)) {
+    return { gaDays: null, message: 'Completá la fecha y las semanas de la ecografía.' };
+  }
+  if (ecoDay > today) {
+    return { gaDays: null, message: 'La ecografía no puede ser posterior a hoy.' };
+  }
+  if (parsedWeeks > 42 || Number.isNaN(parsedDays) || parsedDays > 6) {
+    return { gaDays: null, message: 'La EG va de 0 a 42 semanas y de 0 a 6 días.' };
+  }
+  const gaDays = parsedWeeks * 7 + parsedDays;
+  if (gaDays <= 0) {
+    return { gaDays: null, message: 'La EG por ecografía tiene que ser mayor a 0.' };
+  }
+  return { gaDays, message: null };
 }

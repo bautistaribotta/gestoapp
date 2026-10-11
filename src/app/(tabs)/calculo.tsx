@@ -4,15 +4,35 @@ import { ScrollView, StyleSheet, Text } from 'react-native';
 
 import { Button } from '@/components/button';
 import { DateField } from '@/components/date-field';
-import { GestationCard } from '@/components/gestation-card';
+import { DiscordanceCard } from '@/components/discordance-card';
+import { EcoFields, EMPTY_ECO } from '@/components/eco-fields';
+import { KeyDatesCard } from '@/components/key-dates-card';
 import { todayDay } from '@/lib/dates';
-import { fumError, gestationFromFum } from '@/lib/gestation';
+import { datingReference, discordance, ecoGaDaysFrom, fumError, keyDates } from '@/lib/gestation';
 import { colors, fonts } from '@/theme';
 
 export default function QuickCalcScreen() {
   const [fum, setFum] = useState<string | null>(null);
+  const [eco, setEco] = useState(EMPTY_ECO);
   const today = todayDay();
-  const gestation = gestationFromFum(fum, today);
+
+  const ecoResult = eco.on ? ecoGaDaysFrom(eco.date, eco.weeks, eco.days, today) : null;
+  const dating = {
+    fum,
+    ecoDate: ecoResult?.gaDays ? eco.date : null,
+    ecoGaDays: ecoResult?.gaDays ?? null,
+  };
+  const reference = datingReference(dating, today);
+  const comparison = discordance(dating, today);
+
+  const saveAsPatient = () =>
+    router.push({
+      pathname: '/paciente/nueva',
+      params: {
+        ...(fum ? { fum } : {}),
+        ...(dating.ecoDate ? { ecoDate: dating.ecoDate, ecoWeeks: eco.weeks, ecoDays: eco.days } : {}),
+      },
+    });
 
   return (
     <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
@@ -26,14 +46,22 @@ export default function QuickCalcScreen() {
         value={fum}
         onChange={setFum}
       />
+      <EcoFields
+        label="¿Tiene ecografía?"
+        value={eco}
+        onChange={setEco}
+        message={ecoResult?.message}
+      />
 
-      {gestation && fum ? (
+      {reference ? (
         <>
-          <GestationCard gestation={gestation} detailed />
+          {comparison ? <DiscordanceCard discordance={comparison} /> : null}
+          <KeyDatesCard dates={keyDates(reference)} />
           <Button
-            label="Guardar como paciente nueva"
-            variant="outline"
-            onPress={() => router.push({ pathname: '/paciente/nueva', params: { fum } })}
+            label="¿Guardar como nueva paciente?"
+            variant="link"
+            size="sm"
+            onPress={saveAsPatient}
           />
         </>
       ) : null}

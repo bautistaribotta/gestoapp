@@ -4,8 +4,8 @@ import { colors, fonts } from '@/theme';
 
 type ButtonProps = Omit<PressableProps, 'children' | 'style'> & {
   label: string;
-  variant?: 'primary' | 'outline' | 'accent';
-  size?: 'md' | 'lg';
+  variant?: 'primary' | 'outline' | 'accent' | 'link' | 'danger' | 'dangerSolid';
+  size?: 'sm' | 'md' | 'lg';
 };
 
 export function Button({ label, variant = 'primary', size = 'md', disabled, ...props }: ButtonProps) {
@@ -15,7 +15,7 @@ export function Button({ label, variant = 'primary', size = 'md', disabled, ...p
       disabled={disabled}
       style={({ pressed }) => [
         styles.base,
-        size === 'lg' ? styles.large : styles.medium,
+        sizeStyles[size],
         styles[variant],
         pressed && pressedStyles[variant],
         disabled && styles.disabled,
@@ -24,7 +24,7 @@ export function Button({ label, variant = 'primary', size = 'md', disabled, ...p
       <Text
         style={[
           styles.label,
-          size === 'lg' && styles.labelLarge,
+          labelSizeStyles[size],
           labelStyles[variant],
           disabled && styles.labelDisabled,
         ]}>
@@ -41,12 +41,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 16,
   },
-  medium: {
-    minHeight: 52,
-  },
-  large: {
-    minHeight: 56,
-  },
   primary: {
     backgroundColor: colors.ink,
   },
@@ -60,6 +54,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.accentBorder,
   },
+  link: {
+    alignSelf: 'center',
+    paddingHorizontal: 8,
+  },
+  danger: {
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.alertBorder,
+  },
+  dangerSolid: {
+    backgroundColor: colors.alertStrong,
+  },
   disabled: {
     backgroundColor: colors.border,
     borderWidth: 0,
@@ -68,11 +74,32 @@ const styles = StyleSheet.create({
     fontFamily: fonts.bold,
     fontSize: 16,
   },
-  labelLarge: {
-    fontSize: 17,
-  },
   labelDisabled: {
     color: colors.textMuted,
+  },
+});
+
+const sizeStyles = StyleSheet.create({
+  sm: {
+    minHeight: 44,
+    borderRadius: 10,
+    paddingHorizontal: 14,
+  },
+  md: {
+    minHeight: 52,
+  },
+  lg: {
+    minHeight: 56,
+  },
+});
+
+const labelSizeStyles = StyleSheet.create({
+  sm: {
+    fontSize: 15,
+  },
+  md: {},
+  lg: {
+    fontSize: 17,
   },
 });
 
@@ -86,6 +113,15 @@ const pressedStyles = StyleSheet.create({
   accent: {
     borderColor: colors.accentText,
   },
+  link: {
+    opacity: 0.6,
+  },
+  danger: {
+    backgroundColor: colors.alertSoft,
+  },
+  dangerSolid: {
+    backgroundColor: colors.alertText,
+  },
 });
 
 const labelStyles = StyleSheet.create({
@@ -98,5 +134,17 @@ const labelStyles = StyleSheet.create({
   },
   accent: {
     color: colors.accentText,
+  },
+  link: {
+    color: colors.accentText,
+    fontFamily: fonts.semibold,
+    fontSize: 14,
+  },
+  danger: {
+    color: colors.alertText,
+    fontSize: 15,
+  },
+  dangerSolid: {
+    color: colors.surface,
   },
 });
