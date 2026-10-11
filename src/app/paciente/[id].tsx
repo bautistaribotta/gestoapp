@@ -8,6 +8,7 @@ import { Button } from '@/components/button';
 import { DeletePatientSheet } from '@/components/delete-patient-sheet';
 import { DiscordanceCard } from '@/components/discordance-card';
 import { GestationCard } from '@/components/gestation-card';
+import { LoadingState } from '@/components/heartbeat';
 import { KeyDatesCard } from '@/components/key-dates-card';
 import { NoteCard } from '@/components/note-card';
 import { ScreenHeader } from '@/components/screen-header';
@@ -18,6 +19,7 @@ import {
   updatePatientNote,
   type Patient,
 } from '@/db/patients';
+import { useDelayedFlag } from '@/hooks/use-delayed-flag';
 import { dayFromIso, seenLabel, todayDay } from '@/lib/dates';
 import {
   datingReference,
@@ -35,6 +37,7 @@ export default function PatientScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [patient, setPatient] = useState<Patient | null | undefined>(undefined);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const showLoading = useDelayedFlag(patient === undefined);
   const showToast = useToast();
 
   const load = useCallback(() => {
@@ -99,6 +102,8 @@ export default function PatientScreen() {
             onCancel={() => setConfirmDelete(false)}
           />
         </>
+      ) : showLoading ? (
+        <LoadingState label="Cargando paciente…" />
       ) : null}
     </View>
   );

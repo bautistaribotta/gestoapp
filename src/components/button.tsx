@@ -1,44 +1,71 @@
 import { Pressable, StyleSheet, Text, type PressableProps } from 'react-native';
 
+import { Heartbeat } from '@/components/heartbeat';
+import { useDelayedFlag } from '@/hooks/use-delayed-flag';
+
 import { colors, fonts } from '@/theme';
 
 type ButtonProps = Omit<PressableProps, 'children' | 'style'> & {
   label: string;
   variant?: 'primary' | 'outline' | 'link' | 'danger' | 'dangerSolid';
   size?: 'sm' | 'md' | 'lg';
+  /** Operación en curso: el botón no responde y, si tarda, muestra Latido y `loadingLabel`. */
+  loading?: boolean;
+  loadingLabel?: string;
 };
 
-export function Button({ label, variant = 'primary', size = 'md', disabled, ...props }: ButtonProps) {
+export function Button({
+  label,
+  variant = 'primary',
+  size = 'md',
+  disabled,
+  loading = false,
+  loadingLabel = 'Guardando…',
+  ...props
+}: ButtonProps) {
+  const showLoading = useDelayedFlag(loading);
+  // Mientras se muestra la carga, el botón conserva su color en lugar del gris de deshabilitado.
+  const looksDisabled = disabled && !showLoading;
+
   return (
     <Pressable
       accessibilityRole="button"
-      disabled={disabled}
+      accessibilityState={{ disabled: disabled || loading, busy: loading }}
+      disabled={disabled || loading}
       style={({ pressed }) => [
         styles.base,
         sizeStyles[size],
         styles[variant],
         pressed && pressedStyles[variant],
-        disabled && styles.disabled,
+        looksDisabled && styles.disabled,
       ]}
       {...props}>
+      {showLoading ? (
+        <Heartbeat size={20} tone={INVERSE_VARIANTS.has(variant) ? 'inverse' : 'ink'} />
+      ) : null}
       <Text
         style={[
           styles.label,
           labelSizeStyles[size],
           labelStyles[variant],
-          disabled && styles.labelDisabled,
+          looksDisabled && styles.labelDisabled,
         ]}>
-        {label}
+        {showLoading ? loadingLabel : label}
       </Text>
     </Pressable>
   );
 }
 
+/** Variantes con fondo oscuro, donde Latido va en blanco. */
+const INVERSE_VARIANTS = new Set<ButtonProps['variant']>(['primary', 'dangerSolid']);
+
 const styles = StyleSheet.create({
   base: {
     borderRadius: 12,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 10,
     paddingHorizontal: 16,
   },
   primary: {

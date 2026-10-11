@@ -22,7 +22,8 @@ export default function ProfileScreen() {
 
   const trimmedName = name.trim();
   const changed = title !== profile?.title || trimmedName !== profile?.name.trim();
-  const canSave = changed && trimmedName.length > 0 && !saving;
+  const valid = changed && trimmedName.length > 0;
+  const canSave = valid && !saving;
 
   const submit = async () => {
     if (!canSave) return;
@@ -70,7 +71,13 @@ export default function ProfileScreen() {
         </ScrollView>
 
         <SafeAreaView edges={['bottom']} style={styles.footer}>
-          <Button label="Guardar cambios" size="lg" disabled={!canSave} onPress={submit} />
+          <Button
+            label="Guardar cambios"
+            size="lg"
+            disabled={!valid}
+            loading={saving}
+            onPress={submit}
+          />
         </SafeAreaView>
       </KeyboardAvoidingView>
     </View>

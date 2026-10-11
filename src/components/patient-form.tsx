@@ -61,8 +61,8 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
     { fum: values.fum, ecoDate, ecoGaDays: eco?.gaDays ?? null },
     today,
   );
-  const canSave =
-    values.name.trim().length > 1 && parsedAge > 0 && !fumMessage && !eco?.message && !saving;
+  const valid = values.name.trim().length > 1 && parsedAge > 0 && !fumMessage && !eco?.message;
+  const canSave = valid && !saving;
 
   const save = async () => {
     if (!canSave) return;
@@ -175,7 +175,8 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
           <Button
             label={isNew ? 'Guardar paciente' : 'Guardar cambios'}
             size="lg"
-            disabled={!canSave}
+            disabled={!valid}
+            loading={saving}
             onPress={save}
           />
         </SafeAreaView>

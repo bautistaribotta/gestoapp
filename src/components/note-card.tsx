@@ -23,7 +23,8 @@ export function NoteCard({ note, updatedAt, onSave }: NoteCardProps) {
   const dateLabel =
     updatedDay === null ? null : updatedDay === todayDay() ? 'Hoy' : formatDay(updatedDay);
   const showEditor = !note || editing;
-  const canSave = draft.trim().length > 0 && !saving;
+  const valid = draft.trim().length > 0;
+  const canSave = valid && !saving;
 
   const save = async () => {
     if (!canSave) return;
@@ -71,7 +72,8 @@ export function NoteCard({ note, updatedAt, onSave }: NoteCardProps) {
             <View style={styles.action}>
               <Button
                 label={note ? 'Guardar nota' : 'Agregar nota'}
-                disabled={!canSave}
+                disabled={!valid}
+                loading={saving}
                 onPress={save}
               />
             </View>
