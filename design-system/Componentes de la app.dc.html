@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&family=Atkinson+Hyperlegible+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
+.ca-page{font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;max-width:1240px;margin:0 auto;padding:48px 24px 96px;display:flex;flex-direction:column;gap:64px}
+.ca-head{display:flex;flex-direction:column;gap:12px;max-width:760px}
+.ca-kicker{font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)}
+.ca-h1{margin:0;font-size:40px;line-height:44px;font-weight:700;letter-spacing:-0.02em}
+.ca-h2{margin:0;font-size:24px;line-height:30px;font-weight:700;letter-spacing:-0.01em}
+.ca-lead{margin:0;font-size:17px;line-height:26px;color:oklch(0.38 0.012 250);text-wrap:pretty}
+.ca-desc{margin:0;font-size:15px;line-height:22px;color:oklch(0.38 0.012 250);max-width:720px;text-wrap:pretty}
+.ca-section{display:flex;flex-direction:column;gap:20px}
+.ca-grid{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start}
+.ca-spec{width:375px;display:flex;flex-direction:column;gap:10px}
+.ca-spec-title{font:600 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)}
+.ca-frame{background:oklch(0.975 0.003 250);border:1px solid oklch(0.89 0.006 250);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:16px}
+.ca-note{font-size:13px;line-height:18px;color:oklch(0.38 0.012 250)}
+.ca-mono{font-family:'Atkinson Hyperlegible Mono',monospace}
+
+.ca-notch{height:12px;border-bottom:1px dashed oklch(0.80 0.05 215);font:400 11px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.38 0.09 215)}
+.ca-bar{height:52px;display:flex;align-items:center;padding:0 8px;margin:0 -16px}
+.ca-bar-side{flex:1;display:flex}
+.ca-bar-title{font-size:16px;font-weight:700}
+.ca-back{height:44px;padding:0 10px;display:flex;align-items:center;gap:6px;border:none;background:none;font:600 16px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);cursor:pointer}
+.ca-back-chevron{font-size:24px;line-height:26px}
+
+.ca-field{display:flex;flex-direction:column;gap:6px}
+.ca-label{font-size:14px;font-weight:600}
+.ca-label-hint{font-weight:400;color:oklch(0.47 0.012 250)}
+.ca-help{font-size:13px;line-height:18px;color:oklch(0.47 0.012 250)}
+.ca-row{display:flex;align-items:center;gap:8px}
+.ca-cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.ca-cols-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ca-box{height:52px;box-sizing:border-box;flex:1;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:0 14px;background:oklch(1 0 0);display:flex;align-items:center;gap:4px;font:500 17px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.21 0.012 250)}
+.ca-box-unit{padding:0 10px}
+.ca-box-open{border:2px solid oklch(0.50 0.10 215);padding:0 13px}
+.ca-box-error{border-color:oklch(0.50 0.10 30)}
+.ca-placeholder{color:oklch(0.47 0.012 250)}
+.ca-unit{margin-left:auto;font:400 13px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.47 0.012 250)}
+.ca-clear{height:52px;padding:0 12px;display:flex;align-items:center;font-size:15px;font-weight:600;color:oklch(0.38 0.09 215)}
+.ca-error{display:flex;align-items:center;gap:6px;font-size:13px;line-height:18px;color:oklch(0.42 0.11 30)}
+.ca-tri{width:11px;height:10px;background:currentColor;clip-path:polygon(50% 0,100% 100%,0 100%);flex:none}
+.ca-calendar{background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;height:120px;display:flex;align-items:center;justify-content:center;font-size:13px;color:oklch(0.47 0.012 250)}
+
+.ca-card{background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.ca-switch-row{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px}
+.ca-switch-text{display:flex;flex-direction:column}
+.ca-switch-label{font-size:15px;font-weight:600}
+.ca-switch-desc{font-size:13px;color:oklch(0.47 0.012 250)}
+.ca-track{width:48px;height:28px;border-radius:999px;background:oklch(0.62 0.012 250);position:relative;flex:none}
+.ca-track-on{background:oklch(0.50 0.10 215)}
+.ca-thumb{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:oklch(1 0 0)}
+.ca-track-on .ca-thumb{left:23px}
+
+.ca-ga{font:700 40px/44px 'Atkinson Hyperlegible Mono',monospace;letter-spacing:-0.03em}
+.ca-chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ca-chip{display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 10px;border-radius:999px;background:oklch(0.96 0.02 215);border:1px solid oklch(0.80 0.05 215);color:oklch(0.38 0.09 215);font-size:13px;font-weight:600}
+.ca-chip-bars{display:flex;gap:2px}
+.ca-chip-bar{width:3px;height:10px;border-radius:1px;background:currentColor}
+.ca-ref{font-size:13px;color:oklch(0.38 0.012 250)}
+.ca-fpp{display:flex;justify-content:space-between;border-top:1px solid oklch(0.95 0.004 250);padding-top:12px}
+.ca-fpp-label{font-size:14px;font-weight:600}
+.ca-fpp-value{font:500 17px 'Atkinson Hyperlegible Mono',monospace}
+
+.ca-empty{display:flex;flex-direction:column;gap:12px;align-items:flex-start;padding:24px 4px}
+.ca-empty-title{font-size:16px;font-weight:600}
+.ca-empty-text{font-size:14px;line-height:20px;color:oklch(0.38 0.012 250)}
+.ca-btn-outline{height:48px;padding:0 16px;border-radius:10px;border:1px solid oklch(0.62 0.012 250);background:oklch(1 0 0);font:600 15px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250)}
+.ca-info{font-size:14px;line-height:20px;color:oklch(0.38 0.012 250);background:oklch(0.95 0.004 250);border-radius:10px;padding:12px 14px}
+
+.ca-gesture{position:relative;height:200px;border-radius:20px;border:1px solid oklch(0.89 0.006 250);background:oklch(1 0 0);overflow:hidden}
+.ca-gesture-prev{position:absolute;inset:0;background:oklch(0.95 0.004 250)}
+.ca-gesture-cur{position:absolute;top:0;bottom:0;left:38%;right:-38%;background:oklch(1 0 0);border-left:1px solid oklch(0.89 0.006 250);box-shadow:-8px 0 16px oklch(0.21 0.012 250 / 0.08);padding:16px;font-size:13px;color:oklch(0.47 0.012 250)}
+.ca-gesture-arrow{position:absolute;left:16px;top:50%;margin-top:-12px;font:700 20px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.38 0.09 215)}
+
+.ca-tokens{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.ca-token{background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:12px;padding:12px;display:flex;gap:12px;align-items:center}
+.ca-swatch{width:40px;height:40px;border-radius:8px;border:1px solid oklch(0.89 0.006 250);flex:none}
+.ca-token-text{display:flex;flex-direction:column;gap:2px;font-size:13px}
+.ca-token-name{font:600 13px 'Atkinson Hyperlegible Mono',monospace}
+.ca-sw-alert-strong{background:oklch(0.50 0.10 30)}
+.ca-sw-alert-soft{background:oklch(0.97 0.015 30)}
+.ca-sw-alert-text{background:oklch(0.42 0.11 30)}
+.ca-sw-focus{background:oklch(0.50 0.10 215)}
+</style>
+</helmet>
+<div class="ca-page">
+
+<header class="ca-head">
+<div class="ca-kicker">COMPONENTES DE LA APP · v0.1 · COMPLEMENTA AL DESIGN SYSTEM OBSTÉTRICO</div>
+<h1 class="ca-h1">Componentes de la app</h1>
+<p class="ca-lead">Piezas definidas al implementar Onboarding, Inicio (1c), alta y ficha de paciente en React Native. Usan los mismos tokens y la misma tipografía del design system; acá se documentan para reutilizarlas en las próximas vistas.</p>
+</header>
+
+<section class="ca-section">
+<h2 class="ca-h2">Encabezado de pantalla y botón Atrás</h2>
+<p class="ca-desc">Todas las pantallas secundarias (alta, ficha y las que vengan) usan el mismo encabezado: el botón «‹ Atrás» a la izquierda y un título opcional centrado. Reemplaza a «Cancelar» y «‹ Inicio». Respeta el área segura y suma 12 px extra arriba para separarse del notch. La barra mide 52 px y el botón tiene 44 px de alto como área táctil mínima.</p>
+<div class="ca-grid">
+<div class="ca-spec"><span class="ca-spec-title">Con título · alta</span>
+<div class="ca-frame"><div class="ca-notch">área segura + 12 px</div><div class="ca-bar"><div class="ca-bar-side"><button class="ca-back"><span class="ca-back-chevron">‹</span>Atrás</button></div><span class="ca-bar-title">Nueva paciente</span><div class="ca-bar-side"></div></div></div></div>
+<div class="ca-spec"><span class="ca-spec-title">Sin título · ficha</span>
+<div class="ca-frame"><div class="ca-notch">área segura + 12 px</div><div class="ca-bar"><div class="ca-bar-side"><button class="ca-back"><span class="ca-back-chevron">‹</span>Atrás</button></div></div></div></div>
+</div>
+</section>
+
+<section class="ca-section">
+<h2 class="ca-h2">Gesto para volver</h2>
+<p class="ca-desc">Desde cualquier pantalla secundaria se vuelve a la anterior deslizando el dedo hacia la derecha. En iOS el gesto funciona desde cualquier punto de la pantalla, no solo desde el borde; en Android se usa el gesto de volver del sistema. El botón «Atrás» sigue visible como alternativa.</p>
+<div class="ca-grid">
+<div class="ca-spec"><span class="ca-spec-title">Deslizar → vuelve a la pantalla anterior</span>
+<div class="ca-gesture"><div class="ca-gesture-prev"></div><div class="ca-gesture-cur">Pantalla actual desplazándose</div><span class="ca-gesture-arrow">→</span></div></div>
+</div>
+</section>
+
+<section class="ca-section">
+<h2 class="ca-h2">Campo de fecha</h2>
+<p class="ca-desc">Abre el selector nativo: un calendario dentro de la pantalla en iOS y el diálogo del sistema en Android. Muestra la fecha en dd/mm/aaaa con la tipografía mono y nunca permite fechas futuras. Si el campo es opcional, aparece «Borrar» al lado. Cuando hay un error, el borde pasa a ladrillo y el mensaje se muestra con ▲ en lugar de la ayuda.</p>
+<div class="ca-grid">
+<div class="ca-spec"><span class="ca-spec-title">Vacío · opcional</span>
+<div class="ca-frame"><div class="ca-field"><span class="ca-label">FUM <span class="ca-label-hint">· opcional</span></span><div class="ca-row"><div class="ca-box"><span class="ca-placeholder">dd/mm/aaaa</span></div></div><span class="ca-help">Fecha de última menstruación. Se usa para calcular la edad gestacional si no hay ecografía cargada.</span></div></div></div>
+<div class="ca-spec"><span class="ca-spec-title">Cargado · abierto (iOS)</span>
+<div class="ca-frame"><div class="ca-field"><span class="ca-label">FUM <span class="ca-label-hint">· opcional</span></span><div class="ca-row"><div class="ca-box ca-box-open">26/03/2026</div><span class="ca-clear">Borrar</span></div><div class="ca-calendar">Calendario nativo en línea</div></div></div></div>
+<div class="ca-spec"><span class="ca-spec-title">Error</span>
+<div class="ca-frame"><div class="ca-field"><span class="ca-label">FUM <span class="ca-label-hint">· fecha de última menstruación</span></span><div class="ca-row"><div class="ca-box ca-box-error">01/01/2025</div></div><div class="ca-error"><span class="ca-tri"></span>La FUM supera las 42 semanas.</div></div></div></div>
+</div>
+</section>
+
+<section class="ca-section">
+<h2 class="ca-h2">Campos con unidad</h2>
+<p class="ca-desc">El valor va en mono y la unidad en gris a la derecha, dentro del campo. La altura se carga en centímetros (número entero, ej. 163) y el peso en kg con coma decimal. El IMC de la ficha se calcula con la altura en metros.</p>
+<div class="ca-grid">
+<div class="ca-spec"><span class="ca-spec-title">Alta · datos de la paciente</span>
+<div class="ca-frame"><div class="ca-cols">
+<div class="ca-field"><span class="ca-label">Edad</span><div class="ca-box ca-box-unit">31<span class="ca-unit">años</span></div></div>
+<div class="ca-field"><span class="ca-label">Peso</span><div class="ca-box ca-box-unit">64,5<span class="ca-unit">kg</span></div></div>
+<div class="ca-field"><span class="ca-label">Altura</span><div class="ca-box ca-box-unit"><span class="ca-placeholder">163</span><span class="ca-unit">cm</span></div></div>
+</div></div></div>
+</div>
+</section>
+
+<section class="ca-section">
+<h2 class="ca-h2">Ecografía en el alta</h2>
+<p class="ca-desc">La tarjeta «Ecografía como referencia» del design system se suma al alta, debajo de la FUM. Con el interruptor apagado se usa la FUM. Encendido, pide la fecha y la EG de la ecografía (semanas de 0 a 42 y días de 0 a 6), que reemplaza a la FUM. Mientras falte algún dato, una línea en gris explica qué completar y «Guardar paciente» queda deshabilitado.</p>
+<div class="ca-grid">
+<div class="ca-spec"><span class="ca-spec-title">Apagado</span>
+<div class="ca-frame"><div class="ca-card"><div class="ca-switch-row"><span class="ca-switch-text"><span class="ca-switch-label">Ecografía como referencia</span><span class="ca-switch-desc">Si se carga, reemplaza a la FUM</span></span><span class="ca-track"><span class="ca-thumb"></span></span></div></div></div></div>
+<div class="ca-spec"><span class="ca-spec-title">Encendido · incompleto</span>
+<div class="ca-frame"><div class="ca-card"><div class="ca-switch-row"><span class="ca-switch-text"><span class="ca-switch-label">Ecografía como referencia</span><span class="ca-switch-desc">Si se carga, reemplaza a la FUM</span></span><span class="ca-track ca-track-on"><span class="ca-thumb"></span></span></div>
+<div class="ca-field"><span class="ca-label">Fecha de la ecografía</span><div class="ca-row"><div class="ca-box">20/05/2026</div></div></div>
+<div class="ca-field"><span class="ca-label">EG por ecografía</span><div class="ca-cols-2"><div class="ca-box ca-box-unit"><span class="ca-placeholder">&nbsp;</span><span class="ca-unit">s</span></div><div class="ca-box ca-box-unit"><span class="ca-placeholder">0</span><span class="ca-unit">d</span></div></div></div>
+<span class="ca-help">Completá la fecha y las semanas de la ecografía.</span></div></div></div>
+</div>
+</section>
+
+<section class="ca-section">
+<h2 class="ca-h2">Tarjeta de edad gestacional con referencia</h2>
+<p class="ca-desc">En la ficha, la tarjeta indica con qué se calculó: «Ref.: ecografía dd/mm/aaaa» o «Ref.: FUM dd/mm/aaaa». Si hay FUM y ecografía, debajo aparece la alerta de discordancia del design system (umbral ACOG).</p>
+<div class="ca-grid">
+<div class="ca-spec"><span class="ca-spec-title">Ficha · edad gestacional hoy</span>
+<div class="ca-frame"><div class="ca-card">
+<span class="ca-label">Edad gestacional hoy</span>
+<span class="ca-ga">28 s 2 d</span>
+<div class="ca-chips"><span class="ca-chip"><span class="ca-chip-bars"><span class="ca-chip-bar"></span><span class="ca-chip-bar"></span><span class="ca-chip-bar"></span></span>T3 · 3° trimestre</span><span class="ca-ref">Ref.: ecografía 24/05/2026</span></div>
+<div class="ca-fpp"><span class="ca-fpp-label">FPP</span><span class="ca-fpp-value">01/01/2027</span></div>
+</div></div></div>
+</div>
+</section>
+
+<section class="ca-section">
+<h2 class="ca-h2">Estados vacíos y avisos</h2>
+<p class="ca-desc">Mensajes simples alineados a la izquierda y, cuando corresponde, una acción secundaria con borde.</p>
+<div class="ca-grid">
+<div class="ca-spec"><span class="ca-spec-title">Listado sin pacientes</span>
+<div class="ca-frame"><div class="ca-empty"><span class="ca-empty-title">Todavía no cargaste pacientes</span><span class="ca-empty-text">Usá «+ Nueva paciente» para agregar la primera.</span></div></div></div>
+<div class="ca-spec"><span class="ca-spec-title">Búsqueda sin resultados</span>
+<div class="ca-frame"><div class="ca-empty"><span class="ca-empty-title">Sin resultados para «Gimena»</span><button class="ca-btn-outline">Agregar «Gimena» como paciente</button></div></div></div>
+<div class="ca-spec"><span class="ca-spec-title">Ficha sin referencia</span>
+<div class="ca-frame"><div class="ca-info">Sin FUM ni ecografía cargadas. La ficha completa (datos y gestograma) sigue el diseño del sistema.</div></div></div>
+</div>
+</section>
+
+<section class="ca-section">
+<h2 class="ca-h2">Tokens usados en la app</h2>
+<p class="ca-desc">Los mismos del design system. En React Native los colores se declaran en oklch y se convierten a rgba al cargar la app, porque la plataforma no interpreta oklch.</p>
+<div class="ca-tokens">
+<div class="ca-token"><span class="ca-swatch ca-sw-focus"></span><span class="ca-token-text"><span class="ca-token-name">focus</span><span class="ca-mono">oklch(0.50 0.10 215)</span><span>Foco, interruptor encendido</span></span></div>
+<div class="ca-token"><span class="ca-swatch ca-sw-alert-strong"></span><span class="ca-token-text"><span class="ca-token-name">alertStrong</span><span class="ca-mono">oklch(0.50 0.10 30)</span><span>Borde de campo con error</span></span></div>
+<div class="ca-token"><span class="ca-swatch ca-sw-alert-text"></span><span class="ca-token-text"><span class="ca-token-name">alertText</span><span class="ca-mono">oklch(0.42 0.11 30)</span><span>Mensaje de error, ▲</span></span></div>
+<div class="ca-token"><span class="ca-swatch ca-sw-alert-soft"></span><span class="ca-token-text"><span class="ca-token-name">alertSoft</span><span class="ca-mono">oklch(0.97 0.015 30)</span><span>Fondo de discordancia</span></span></div>
+</div>
+</section>
+
+</div>
+</x-dc>
+</body>
+</html>
