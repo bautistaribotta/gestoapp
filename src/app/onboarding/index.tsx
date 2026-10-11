@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -10,24 +11,19 @@ import { greeting, type ProfileTitle } from '@/db/profile';
 import { useProfile } from '@/providers/profile-provider';
 import { colors, fonts } from '@/theme';
 
-export default function OnboardingScreen() {
-  const { save } = useProfile();
-  const [title, setTitle] = useState<ProfileTitle>('Dra.');
-  const [name, setName] = useState('');
-  const [saving, setSaving] = useState(false);
+/** Paso 1 del onboarding: cómo saludar a la persona en Inicio. */
+export default function OnboardingNameScreen() {
+  // Si ya hay perfil (por ejemplo, cambiaron los documentos legales), se parte de esos datos.
+  const { profile } = useProfile();
+  const [title, setTitle] = useState<ProfileTitle>(profile?.title ?? 'Dra.');
+  const [name, setName] = useState(profile?.name ?? '');
 
   const trimmedName = name.trim();
-  const canFinish = trimmedName.length > 0 && !saving;
+  const canContinue = trimmedName.length > 0;
 
-  const finish = async () => {
-    if (!canFinish) return;
-    setSaving(true);
-    try {
-      // Al guardar el perfil, el layout raíz habilita Inicio y redirige solo.
-      await save({ title, name: trimmedName });
-    } finally {
-      setSaving(false);
-    }
+  const next = () => {
+    if (!canContinue) return;
+    router.push({ pathname: '/onboarding/legal', params: { title, name: trimmedName } });
   };
 
   return (
@@ -42,7 +38,7 @@ export default function OnboardingScreen() {
             <View style={styles.logo}>
               <Logo />
             </View>
-            <Text style={styles.brand}>GESTOGRAMA</Text>
+            <Text style={styles.brand}>GESTOGRAMA · PASO 1 DE 2</Text>
             <Text style={styles.heading} accessibilityRole="header">
               ¿Cómo querés que te llamemos?
             </Text>
@@ -62,7 +58,7 @@ export default function OnboardingScreen() {
               autoCapitalize="words"
               autoCorrect={false}
               returnKeyType="done"
-              onSubmitEditing={finish}
+              onSubmitEditing={next}
             />
 
             <Text style={styles.preview}>
@@ -72,7 +68,7 @@ export default function OnboardingScreen() {
 
           <View style={styles.flex} />
 
-          <Button label="Continuar" size="lg" disabled={!canFinish} onPress={finish} />
+          <Button label="Siguiente" size="lg" disabled={!canContinue} onPress={next} />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

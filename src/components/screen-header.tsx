@@ -13,13 +13,15 @@ type ScreenHeaderProps = {
   backChevron?: boolean;
   /** Acción opcional a la derecha (ej. «Editar datos»). */
   right?: ReactNode;
+  /** Línea inferior, para separar la barra de un texto largo que se desplaza. */
+  divider?: boolean;
 };
 
 /** Barra superior de las pantallas secundarias: botón Atrás, título opcional centrado y una acción. */
-export function ScreenHeader({ title, backLabel, backChevron, right }: ScreenHeaderProps) {
+export function ScreenHeader({ title, backLabel, backChevron, right, divider }: ScreenHeaderProps) {
   return (
     <SafeAreaView edges={['top']} style={styles.safeArea}>
-      <View style={styles.bar}>
+      <View style={[styles.bar, divider && styles.divider]}>
         <View style={styles.side}>
           <BackButton label={backLabel} chevron={backChevron} />
         </View>
@@ -44,6 +46,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 8,
+  },
+  divider: {
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
   },
   side: {
     flex: 1,

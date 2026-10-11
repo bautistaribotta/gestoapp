@@ -53,7 +53,7 @@ export default function RootLayout() {
 }
 
 function RootStack() {
-  const { loading, profile } = useProfile();
+  const { loading, ready } = useProfile();
 
   useEffect(() => {
     if (!loading) SplashScreen.hideAsync();
@@ -71,16 +71,19 @@ function RootStack() {
         gestureEnabled: true,
         fullScreenGestureEnabled: true,
       }}>
-      <Stack.Protected guard={profile !== null}>
+      <Stack.Protected guard={ready}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="paciente/nueva" />
         <Stack.Screen name="paciente/[id]" />
         <Stack.Screen name="paciente/editar/[id]" />
         <Stack.Screen name="perfil" />
       </Stack.Protected>
-      <Stack.Protected guard={profile === null}>
-        <Stack.Screen name="onboarding" />
+      <Stack.Protected guard={!ready}>
+        <Stack.Screen name="onboarding/index" />
+        <Stack.Screen name="onboarding/legal" />
       </Stack.Protected>
+      {/* Los documentos legales se leen tanto en el onboarding como desde el perfil. */}
+      <Stack.Screen name="legal/[doc]" />
     </Stack>
   );
 }

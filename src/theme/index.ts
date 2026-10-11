@@ -3,6 +3,8 @@ import { oklchToRgba, type OklchColor } from './oklch';
 const palette = {
   ink: 'oklch(0.21 0.012 250)',
   inkPressed: 'oklch(0.30 0.012 250)',
+  /** Texto corrido largo, como los documentos legales. */
+  textBody: 'oklch(0.30 0.012 250)',
   textSecondary: 'oklch(0.38 0.012 250)',
   textMuted: 'oklch(0.47 0.012 250)',
   borderStrong: 'oklch(0.62 0.012 250)',
