@@ -79,6 +79,15 @@ body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
 .ca-empty{display:flex;flex-direction:column;gap:12px;align-items:flex-start;padding:24px 4px}
 .ca-empty-title{font-size:16px;font-weight:600}
 .ca-empty-text{font-size:14px;line-height:20px;color:oklch(0.38 0.012 250)}
+.ca-home-empty{min-height:470px;display:flex;flex-direction:column;justify-content:center;padding:0 22px 24px}
+.ca-home-empty-brand{display:flex;flex-direction:column;align-items:center;gap:12px}
+.ca-home-empty-wordmark{font-size:20px;line-height:26px;font-weight:700}
+.ca-home-empty-copy{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:32px;text-align:center}
+.ca-home-empty-title{font-size:19px;line-height:26px;font-weight:700}
+.ca-home-empty-text{font-size:15px;line-height:24px;color:oklch(0.38 0.012 250);text-wrap:pretty}
+.ca-home-empty-actions{display:flex;flex-direction:column;gap:8px;margin-top:32px}
+.ca-btn-primary-lg{height:56px;border:0;border-radius:12px;background:oklch(0.21 0.012 250);font:700 17px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(1 0 0)}
+.ca-btn-link{height:52px;border:0;background:none;font:600 14px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);text-decoration:underline}
 .ca-btn-outline{height:48px;padding:0 16px;border-radius:10px;border:1px solid oklch(0.62 0.012 250);background:oklch(1 0 0);font:600 15px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250)}
 .ca-info{font-size:14px;line-height:20px;color:oklch(0.38 0.012 250);background:oklch(0.95 0.004 250);border-radius:10px;padding:12px 14px}
 
@@ -193,10 +202,10 @@ body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
 
 <section class="ca-section">
 <h2 class="ca-h2">Estados vacíos y avisos</h2>
-<p class="ca-desc">Mensajes simples alineados a la izquierda y, cuando corresponde, una acción secundaria con borde.</p>
+<p class="ca-desc">Inicio sin pacientes ocupa toda el área entre el saludo y la barra de pestañas: logo «Cuna» a 96 px con «Gestograma», qué calcula la app y las dos acciones, todo en un solo bloque centrado (márgenes laterales de 38 px). El resto son mensajes simples alineados a la izquierda y, cuando corresponde, una acción secundaria con borde.</p>
 <div class="ca-grid">
 <div class="ca-spec"><span class="ca-spec-title">Listado sin pacientes</span>
-<div class="ca-frame"><div class="ca-empty"><span class="ca-empty-title">Todavía no cargaste pacientes</span><span class="ca-empty-text">Usá «+ Nueva paciente» para agregar la primera.</span></div></div></div>
+<div class="ca-frame"><div class="ca-home-empty"><div class="ca-home-empty-brand"><svg width="96" height="96" viewBox="0 0 100 100" role="img" aria-label="Gestograma"><path d="M18 52 A32 32 0 0 0 82 52 Z" fill="oklch(0.21 0.012 250)"/><circle cx="36" cy="40" r="11" fill="oklch(0.50 0.10 30)"/></svg><span class="ca-home-empty-wordmark">Gestograma</span></div><div class="ca-home-empty-copy"><span class="ca-home-empty-title">Todavía no cargaste pacientes</span><span class="ca-home-empty-text">Con la FUM o una ecografía calculamos la edad gestacional, la fecha probable de parto y los controles de cada trimestre.</span></div><div class="ca-home-empty-actions"><button class="ca-btn-primary-lg">+ Nueva paciente</button><button class="ca-btn-link">Hacer un cálculo rápido</button></div></div></div><span class="ca-note">Sin pacientes no se muestran la búsqueda ni el botón superior: vuelven con la primera paciente.</span></div>
 <div class="ca-spec"><span class="ca-spec-title">Búsqueda sin resultados</span>
 <div class="ca-frame"><div class="ca-empty"><span class="ca-empty-title">Sin resultados para «Gimena»</span><button class="ca-btn-outline">Agregar «Gimena» como paciente</button></div></div></div>
 <div class="ca-spec"><span class="ca-spec-title">Ficha sin referencia</span>
