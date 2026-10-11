@@ -1,141 +1,147 @@
-import { router, useFocusEffect } from 'expo-router';
-import { useSQLiteContext } from 'expo-sqlite';
-import { useCallback, useEffect, useState } from 'react';
-import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { router } from 'expo-router';
+import { useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '@/components/button';
-import { EmptyPatients } from '@/components/empty-patients';
-import { LoadingState } from '@/components/heartbeat';
-import { PatientList } from '@/components/patient-list';
-import { SearchField } from '@/components/search-field';
-import { listPatients, onPatientsChanged, type Patient } from '@/db/patients';
-import { useDelayedFlag } from '@/hooks/use-delayed-flag';
+import { DateField } from '@/components/date-field';
+import { DiscordanceCard } from '@/components/discordance-card';
+import { EcoFields, EMPTY_ECO } from '@/components/eco-fields';
+import { KeyDatesCard } from '@/components/key-dates-card';
 import { todayDay } from '@/lib/dates';
-import { normalizeForSearch } from '@/lib/text';
+import { datingReference, discordance, ecoGaDaysFrom, fumError, keyDates } from '@/lib/gestation';
+import { useToast } from '@/providers/toast-provider';
 import { colors, fonts } from '@/theme';
 
-export default function PatientsScreen() {
-  const db = useSQLiteContext();
-  const [patients, setPatients] = useState<Patient[] | null>(null);
-  const [query, setQuery] = useState('');
-  const [refreshing, setRefreshing] = useState(false);
-  const showLoading = useDelayedFlag(patients === null);
+export default function QuickCalcScreen() {
+  const [fum, setFum] = useState<string | null>(null);
+  const [eco, setEco] = useState(EMPTY_ECO);
+  const showToast = useToast();
+  const today = todayDay();
 
-  const load = useCallback(async () => {
-    setPatients(await listPatients(db));
-  }, [db]);
+  const ecoResult = eco.on ? ecoGaDaysFrom(eco.date, eco.weeks, eco.days, today) : null;
+  const dating = {
+    fum,
+    ecoDate: ecoResult?.gaDays ? eco.date : null,
+    ecoGaDays: ecoResult?.gaDays ?? null,
+  };
+  const reference = datingReference(dating, today);
+  const comparison = discordance(dating, today);
+  const dirty = Boolean(fum || eco.on || eco.date || eco.weeks || eco.days);
 
-  // La base es local y responde al instante: se deja el indicador un momento para que el gesto tenga respuesta.
-  const refresh = async () => {
-    setRefreshing(true);
-    await Promise.all([load(), new Promise((resolve) => setTimeout(resolve, MIN_REFRESH_MS))]);
-    setRefreshing(false);
+  const reset = () => {
+    const previous = { fum, eco };
+    setFum(null);
+    setEco(EMPTY_ECO);
+    showToast({
+      message: 'Datos borrados',
+      placement: 'tabBar',
+      onUndo: () => {
+        setFum(previous.fum);
+        setEco(previous.eco);
+      },
+    });
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      load();
-    }, [load]),
-  );
-  // Recarga aunque Inicio ya esté visible, por ejemplo al deshacer una eliminación.
-  useEffect(
-    () =>
-      onPatientsChanged(() => {
-        load();
-      }),
-    [load],
-  );
-
-  const trimmedQuery = query.trim();
-  const normalizedQuery = normalizeForSearch(trimmedQuery);
-  const visible = (patients ?? []).filter(
-    (patient) => !normalizedQuery || normalizeForSearch(patient.name).includes(normalizedQuery),
-  );
-
-  const openNew = (name?: string) =>
-    router.push({ pathname: '/paciente/nueva', params: name ? { name } : {} });
-
-  // Sin pacientes no hay nada que buscar: la pantalla entera explica qué hacer primero.
-  if (!showLoading && patients !== null && patients.length === 0) {
-    return <EmptyPatients onNew={() => openNew()} onQuickCalc={() => router.navigate('/calculo')} />;
-  }
+  const saveAsPatient = () =>
+    router.push({
+      pathname: '/paciente/nueva',
+      params: {
+        ...(fum ? { fum } : {}),
+        ...(dating.ecoDate ? { ecoDate: dating.ecoDate, ecoWeeks: eco.weeks, ecoDays: eco.days } : {}),
+      },
+    });
 
   return (
-    <View style={styles.screen}>
-      <View style={styles.actions}>
-        <SearchField value={query} onChangeText={setQuery} />
-        <Button label="+ Nueva paciente" onPress={() => openNew()} />
+    <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+      <View style={styles.header}>
+        <Text style={styles.title} accessibilityRole="header">
+          Cálculo rápido
+        </Text>
+        {dirty ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Nuevo cálculo"
+            accessibilityHint="Borra la FUM y la ecografía cargadas"
+            onPress={reset}
+            hitSlop={4}
+            style={({ pressed }) => [styles.reset, pressed && styles.resetPressed]}>
+            <Text style={styles.resetIcon}>↺</Text>
+            <Text style={styles.resetLabel}>Nuevo cálculo</Text>
+          </Pressable>
+        ) : null}
       </View>
+      <DateField
+        label="FUM"
+        hint="fecha de última menstruación"
+        error={fumError(fum, today)}
+        value={fum}
+        onChange={setFum}
+      />
+      <EcoFields
+        label="¿Tiene ecografía?"
+        value={eco}
+        onChange={setEco}
+        message={ecoResult?.message}
+      />
 
-      {showLoading ? (
-        <LoadingState label="Cargando pacientes…" />
-      ) : (
-        <ScrollView
-          style={styles.flex}
-          contentContainerStyle={styles.content}
-          keyboardShouldPersistTaps="handled"
-          keyboardDismissMode="on-drag"
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={refresh}
-              tintColor={colors.ink}
-              colors={[colors.ink]}
-              accessibilityLabel="Actualizar pacientes"
-            />
-          }>
-          <PatientList
-            patients={visible}
-            today={todayDay()}
-            onOpen={(patient) =>
-              router.push({ pathname: '/paciente/[id]', params: { id: String(patient.id) } })
-            }
+      {reference ? (
+        <>
+          {comparison ? <DiscordanceCard discordance={comparison} /> : null}
+          <KeyDatesCard dates={keyDates(reference)} />
+          <Button
+            label="¿Guardar como nueva paciente?"
+            variant="link"
+            size="sm"
+            onPress={saveAsPatient}
           />
-
-          {patients !== null && trimmedQuery && visible.length === 0 ? (
-            <View style={styles.empty}>
-              <Text style={styles.emptyTitle}>Sin resultados para «{trimmedQuery}»</Text>
-              <Button
-                label={`Agregar «${trimmedQuery}» como paciente`}
-                variant="outline"
-                onPress={() => openNew(trimmedQuery)}
-              />
-            </View>
-          ) : null}
-        </ScrollView>
-      )}
-    </View>
+        </>
+      ) : null}
+    </ScrollView>
   );
 }
 
-const MIN_REFRESH_MS = 600;
-
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-  flex: {
-    flex: 1,
-  },
-  actions: {
-    paddingHorizontal: 16,
-    paddingBottom: 12,
-    gap: 10,
-  },
   content: {
+    paddingTop: 4,
     paddingHorizontal: 16,
-    paddingBottom: 16,
+    paddingBottom: 24,
     gap: 16,
   },
-  empty: {
-    alignItems: 'flex-start',
+  header: {
+    minHeight: 40,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     gap: 12,
-    paddingVertical: 24,
-    paddingHorizontal: 4,
   },
-  emptyTitle: {
+  title: {
+    fontFamily: fonts.bold,
+    fontSize: 17,
+    color: colors.ink,
+  },
+  reset: {
+    height: 40,
+    paddingHorizontal: 14,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: colors.borderStrong,
+    backgroundColor: colors.surface,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  resetPressed: {
+    backgroundColor: colors.sunken,
+  },
+  resetIcon: {
     fontFamily: fonts.semibold,
     fontSize: 16,
+    lineHeight: 18,
+    color: colors.ink,
+  },
+  resetLabel: {
+    fontFamily: fonts.semibold,
+    fontSize: 14,
     color: colors.ink,
   },
 });

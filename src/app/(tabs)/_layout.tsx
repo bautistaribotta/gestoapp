@@ -32,11 +32,12 @@ export default function HomeTabsLayout() {
       </View>
       <TabList asChild>
         <SafeAreaView edges={['bottom']} style={styles.tabBar}>
+          {/* Cálculo rápido va primero y es la pestaña con la que abre la app («/»). */}
           <TabTrigger name="index" href="/" asChild>
-            <TabButton label="Pacientes" />
-          </TabTrigger>
-          <TabTrigger name="calculo" href="/calculo" asChild>
             <TabButton label="Cálculo rápido" />
+          </TabTrigger>
+          <TabTrigger name="pacientes" href="/pacientes" asChild>
+            <TabButton label="Pacientes" />
           </TabTrigger>
         </SafeAreaView>
       </TabList>
