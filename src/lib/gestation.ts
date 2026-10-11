@@ -8,6 +8,10 @@ export type Trimester = 1 | 2 | 3;
 export type Gestation = {
   /** Edad gestacional, ej. "12 s 3 d". */
   age: string;
+  /** Semanas en palabras, ej. "12 semanas" o "1 semana". */
+  weeksLabel: string;
+  /** Días en palabras, ej. "3 días" o "1 día"; null si son 0. */
+  daysLabel: string | null;
   /** Mes aproximado, ej. "≈ 3° mes". */
   month: string;
   trimester: Trimester;
@@ -42,6 +46,10 @@ export type Discordance = {
 
 export function formatWeeksDays(days: number): string {
   return `${Math.floor(days / 7)} s ${days % 7} d`;
+}
+
+function plural(count: number, singular: string, pluralForm: string): string {
+  return `${count} ${count === 1 ? singular : pluralForm}`;
 }
 
 function trimesterOf(days: number): Trimester {
@@ -92,6 +100,8 @@ export function gestationFromReference(referenceDay: number, today: number): Ges
   const trimester = trimesterOf(days);
   return {
     age: formatWeeksDays(days),
+    weeksLabel: plural(Math.floor(days / 7), 'semana', 'semanas'),
+    daysLabel: days % 7 ? plural(days % 7, 'día', 'días') : null,
     month: `≈ ${Math.floor(days / 30.4) + 1}° mes`,
     trimester,
     trimesterLabel: `T${trimester} · ${trimester}° trimestre`,
