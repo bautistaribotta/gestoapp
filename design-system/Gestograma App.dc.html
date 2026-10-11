@@ -28,7 +28,7 @@
 <sc-for list="{{ titles }}" as="t" hint-placeholder-count="3"><button onClick="{{ t.pick }}" style="height:44px;border-radius:9px;border:none;font:600 15px 'Atkinson Hyperlegible Next',sans-serif;cursor:pointer;background:{{ t.bg }};color:oklch(0.21 0.012 250);box-shadow:{{ t.sh }}">{{ t.label }}</button></sc-for>
 </div></div>
 <label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600">Apellido o nombre</span>
-<input value="{{ name }}" onChange="{{ setName }}" placeholder="Ej.: Martínez" autocomplete="off" style="height:52px;box-sizing:border-box;width:100%;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:0 14px;font:500 17px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);background:oklch(1 0 0);outline:none" style-focus="border:2px solid oklch(0.50 0.10 215);padding:0 13px;box-shadow:0 0 0 3px oklch(0.92 0.04 215)"></label>
+<input value="{{ name }}" onChange="{{ setName }}" placeholder="Ej.: Martínez" autocomplete="off" style="height:52px;box-sizing:border-box;width:100%;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:0 14px;font:500 17px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);background:oklch(1 0 0);outline:none" style-focus="border:2px solid oklch(0.21 0.012 250);padding:0 13px;box-shadow:0 0 0 3px oklch(0.89 0.006 250)"></label>
 <div style="font-size:14px;color:oklch(0.38 0.012 250);min-height:20px">{{ greetPreview }}</div>
 </div>
 <div style="flex:1"></div>
@@ -85,7 +85,7 @@
 </div>
 </sc-for>
 </div>
-<button onClick="{{ calcToPatient }}" style="align-self:center;min-height:44px;padding:0 8px;border:none;background:none;font:600 14px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.38 0.09 215);cursor:pointer" style-active="color:oklch(0.21 0.012 250)">¿Guardar como nueva paciente?</button>
+<button onClick="{{ calcToPatient }}" style="align-self:center;min-height:44px;padding:0 8px;border:none;background:none;font:600 14px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);text-decoration:underline;cursor:pointer" style-active="color:oklch(0.38 0.012 250)">¿Guardar como nueva paciente?</button>
 </sc-if>
 </div>
 </sc-if>
@@ -169,7 +169,7 @@
 </div>
 </sc-for>
 </div>
-<button onClick="{{ calcToPatient }}" style="align-self:center;min-height:44px;padding:0 8px;border:none;background:none;font:600 14px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.38 0.09 215);cursor:pointer" style-active="color:oklch(0.21 0.012 250)">¿Guardar como nueva paciente?</button>
+<button onClick="{{ calcToPatient }}" style="align-self:center;min-height:44px;padding:0 8px;border:none;background:none;font:600 14px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);text-decoration:underline;cursor:pointer" style-active="color:oklch(0.38 0.012 250)">¿Guardar como nueva paciente?</button>
 </sc-if>
 </div>
 </div>
@@ -179,7 +179,7 @@
 <div style="flex:1;display:flex;flex-direction:column;min-height:0">
 <div style="height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;flex:none"><button onClick="{{ altaCancel }}" style="height:44px;padding:0 10px;border:none;background:none;font:600 16px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);cursor:pointer">Cancelar</button><span style="font-size:16px;font-weight:700">{{ altaTitle }}</span><span style="width:84px"></span></div>
 <div style="flex:1;overflow:auto;padding:8px 16px 16px;display:flex;flex-direction:column;gap:16px">
-<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600">Nombre y apellido</span><input value="{{ form.name }}" onChange="{{ f.name }}" autocomplete="off" style="height:52px;box-sizing:border-box;width:100%;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:0 14px;font:500 17px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);background:oklch(1 0 0);outline:none" style-focus="border:2px solid oklch(0.50 0.10 215);padding:0 13px"></label>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600">Nombre y apellido</span><input value="{{ form.name }}" onChange="{{ f.name }}" autocomplete="off" style="height:52px;box-sizing:border-box;width:100%;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:0 14px;font:500 17px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);background:oklch(1 0 0);outline:none" style-focus="border:2px solid oklch(0.21 0.012 250);padding:0 13px"></label>
 <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
 <label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600">Edad</span><span style="height:52px;box-sizing:border-box;border:1px solid oklch(0.62 0.012 250);border-radius:10px;display:flex;align-items:center;gap:4px;padding:0 10px;background:oklch(1 0 0)"><input type="number" inputmode="numeric" value="{{ form.age }}" onChange="{{ f.age }}" style="width:100%;min-width:0;border:none;outline:none;background:none;font:500 17px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.21 0.012 250)"><span style="font-size:13px;color:oklch(0.47 0.012 250)">años</span></span></label>
 <label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600">Peso</span><span style="height:52px;box-sizing:border-box;border:1px solid oklch(0.62 0.012 250);border-radius:10px;display:flex;align-items:center;gap:4px;padding:0 10px;background:oklch(1 0 0)"><input inputmode="decimal" value="{{ form.weight }}" onChange="{{ f.weight }}" style="width:100%;min-width:0;border:none;outline:none;background:none;font:500 17px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.21 0.012 250)"><span style="font-size:13px;color:oklch(0.47 0.012 250)">kg</span></span></label>
@@ -194,7 +194,7 @@
 </div>
 </sc-for>
 </div></sc-if>
-<sc-if value="{{ isNewPatient }}" hint-placeholder-val="{{ true }}"><label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600">Nota <span style="font-weight:400;color:oklch(0.47 0.012 250)">· opcional</span></span><textarea rows="3" value="{{ form.notes }}" onChange="{{ f.notes }}" placeholder="Antecedentes, indicaciones, recordatorios" style="box-sizing:border-box;width:100%;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:12px 14px;font:400 16px/22px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);background:oklch(1 0 0);outline:none;resize:none" style-focus="border:2px solid oklch(0.50 0.10 215);padding:11px 13px"></textarea></label></sc-if>
+<sc-if value="{{ isNewPatient }}" hint-placeholder-val="{{ true }}"><label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600">Nota <span style="font-weight:400;color:oklch(0.47 0.012 250)">· opcional</span></span><textarea rows="3" value="{{ form.notes }}" onChange="{{ f.notes }}" placeholder="Antecedentes, indicaciones, recordatorios" style="box-sizing:border-box;width:100%;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:12px 14px;font:400 16px/22px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);background:oklch(1 0 0);outline:none;resize:none" style-focus="border:2px solid oklch(0.21 0.012 250);padding:11px 13px"></textarea></label></sc-if>
 </div>
 <div style="padding:12px 16px 24px;flex:none;border-top:1px solid oklch(0.89 0.006 250);background:oklch(1 0 0)"><button onClick="{{ savePatient }}" disabled="{{ cantSave }}" style="width:100%;height:56px;border-radius:12px;border:none;font:700 17px 'Atkinson Hyperlegible Next',sans-serif;cursor:pointer;background:{{ saveBg }};color:{{ saveFg }}">{{ saveLabel }}</button></div>
 </div>
@@ -234,7 +234,7 @@
 <button onClick="{{ startEditNote }}" style="height:52px;border-radius:12px;border:{{ ac.btnBd }};font:700 16px 'Atkinson Hyperlegible Next',sans-serif;cursor:pointer;background:{{ ac.btnBg }};color:{{ ac.btnFg }}">Editar nota</button>
 </sc-if>
 <sc-if value="{{ noteEdit }}" hint-placeholder-val="{{ true }}">
-<textarea rows="4" value="{{ noteDraft }}" onChange="{{ setNoteDraft }}" placeholder="Antecedentes, indicaciones, recordatorios" style="box-sizing:border-box;width:100%;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:12px 14px;font:400 16px/22px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);background:oklch(1 0 0);outline:none;resize:none" style-focus="border:2px solid oklch(0.50 0.10 215);padding:11px 13px"></textarea>
+<textarea rows="4" value="{{ noteDraft }}" onChange="{{ setNoteDraft }}" placeholder="Antecedentes, indicaciones, recordatorios" style="box-sizing:border-box;width:100%;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:12px 14px;font:400 16px/22px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);background:oklch(1 0 0);outline:none;resize:none" style-focus="border:2px solid oklch(0.21 0.012 250);padding:11px 13px"></textarea>
 <div style="display:flex;gap:8px">
 <sc-if value="{{ sel.hasNote }}" hint-placeholder-val="{{ false }}"><button onClick="{{ cancelEditNote }}" style="flex:1;height:52px;border-radius:12px;border:1px solid oklch(0.62 0.012 250);background:oklch(1 0 0);font:700 16px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);cursor:pointer">Cancelar</button></sc-if>
 <button onClick="{{ saveNote }}" disabled="{{ cantAddNote }}" style="flex:1;height:52px;border-radius:12px;border:{{ noteBtnBd }};font:700 16px 'Atkinson Hyperlegible Next',sans-serif;cursor:pointer;background:{{ noteBtnBg }};color:{{ noteBtnFg }}">{{ noteBtnLabel }}</button>
@@ -373,7 +373,7 @@ class Component extends DCLogic {
       tabs: [['pac', 'Pacientes'], ['calc', 'Cálculo rápido']].map(([k, l]) => ({ label: l, pick: () => set({ tab: k }), fg: st.tab === k ? 'oklch(0.21 0.012 250)' : 'oklch(0.47 0.012 250)', bar: st.tab === k ? ac.bar : 'transparent', font: (st.tab === k ? '700' : '500') + " 14px 'Atkinson Hyperlegible Next',sans-serif" })),
       calcFum: st.calcFum, setCalcFum: e => set({ calcFum: e.target.value }),
       calcEco: !!st.calcEco, toggleCalcEco: () => set({ calcEco: !st.calcEco }),
-      calcEcoSw: { bg: st.calcEco ? 'oklch(0.50 0.10 215)' : 'oklch(0.62 0.012 250)', x: st.calcEco ? '23px' : '3px' },
+      calcEcoSw: { bg: st.calcEco ? 'oklch(0.21 0.012 250)' : 'oklch(0.62 0.012 250)', x: st.calcEco ? '23px' : '3px' },
       calcEcoDate: st.calcEcoDate || '', calcEcoW: st.calcEcoW || '', calcEcoD: st.calcEcoD || '',
       setCalcEcoDate: e => set({ calcEcoDate: e.target.value }), setCalcEcoW: e => set({ calcEcoW: e.target.value }), setCalcEcoD: e => set({ calcEcoD: e.target.value }), todayIso: iso(T), calc,
       calcToPatient: () => set({ scr: 'alta', form: { ...EMPTY, fum: st.calcFum } }),

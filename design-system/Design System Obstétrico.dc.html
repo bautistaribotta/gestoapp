@@ -122,7 +122,7 @@
 </div>
 <div style="display:flex;flex-direction:column;gap:6px">
 <span style="font-size:14px;font-weight:600">FUM</span>
-<div style="height:52px;border:2px solid oklch(0.50 0.10 215);box-shadow:0 0 0 3px oklch(0.92 0.04 215);border-radius:10px;display:flex;align-items:center;justify-content:space-between;padding:0 13px;font:500 17px 'Atkinson Hyperlegible Mono',monospace"><span>26/03/2026</span><span style="font:400 13px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.47 0.012 250)">hace 28 s 2 d</span></div>
+<div style="height:52px;border:2px solid oklch(0.21 0.012 250);box-shadow:0 0 0 3px oklch(0.89 0.006 250);border-radius:10px;display:flex;align-items:center;justify-content:space-between;padding:0 13px;font:500 17px 'Atkinson Hyperlegible Mono',monospace"><span>26/03/2026</span><span style="font:400 13px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.47 0.012 250)">hace 28 s 2 d</span></div>
 </div>
 <div style="display:flex;flex-direction:column;gap:6px">
 <span style="font-size:14px;font-weight:600">FUM</span>
@@ -264,7 +264,7 @@
 <div style="display:flex;flex-direction:column;gap:6px;flex:none">
 <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:14px;font-weight:600">FUM</span><button onClick="{{ toggleHelp }}" style="height:32px;padding:0 10px;border-radius:999px;border:1px solid oklch(0.89 0.006 250);background:oklch(1 0 0);font:600 13px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.38 0.012 250);cursor:pointer">{{ helpBtn }}</button></div>
 <sc-if value="{{ help }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;line-height:18px;color:oklch(0.38 0.012 250);background:oklch(0.95 0.004 250);border-radius:6px;padding:8px 10px">FUM: fecha de última menstruación. Primer día del último período. Se usa para calcular la edad gestacional si no hay ecografía cargada.</div></sc-if>
-<input type="date" value="{{ fum }}" onChange="{{ setFum }}" max="{{ todayIso }}" style="height:52px;box-sizing:border-box;width:100%;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:0 14px;font:500 17px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.21 0.012 250);background:oklch(1 0 0);outline:none" style-focus="border:2px solid oklch(0.50 0.10 215);padding:0 13px;box-shadow:0 0 0 3px oklch(0.92 0.04 215)">
+<input type="date" value="{{ fum }}" onChange="{{ setFum }}" max="{{ todayIso }}" style="height:52px;box-sizing:border-box;width:100%;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:0 14px;font:500 17px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.21 0.012 250);background:oklch(1 0 0);outline:none" style-focus="border:2px solid oklch(0.21 0.012 250);padding:0 13px;box-shadow:0 0 0 3px oklch(0.89 0.006 250)">
 <sc-if value="{{ fumError }}" hint-placeholder-val="{{ false }}"><div style="display:flex;align-items:center;gap:6px;font-size:13px;color:oklch(0.42 0.11 30)"><span style="width:11px;height:10px;background:currentColor;clip-path:polygon(50% 0,100% 100%,0 100%)"></span>{{ fumError }}</div></sc-if>
 </div>
 
@@ -274,7 +274,7 @@
 <span style="width:48px;height:28px;border-radius:999px;background:{{ ecoSwitch.bg }};position:relative;flex:none"><span style="position:absolute;top:3px;left:{{ ecoSwitch.x }};width:22px;height:22px;border-radius:50%;background:oklch(1 0 0);transition:left .15s"></span></span>
 </button>
 <sc-if value="{{ ecoOn }}" hint-placeholder-val="{{ true }}">
-<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600">Fecha de la ecografía</span><input type="date" value="{{ ecoDate }}" onChange="{{ setEcoDate }}" max="{{ todayIso }}" style="height:52px;box-sizing:border-box;width:100%;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:0 14px;font:500 17px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.21 0.012 250);background:oklch(1 0 0);outline:none" style-focus="border:2px solid oklch(0.50 0.10 215);padding:0 13px"></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600">Fecha de la ecografía</span><input type="date" value="{{ ecoDate }}" onChange="{{ setEcoDate }}" max="{{ todayIso }}" style="height:52px;box-sizing:border-box;width:100%;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:0 14px;font:500 17px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.21 0.012 250);background:oklch(1 0 0);outline:none" style-focus="border:2px solid oklch(0.21 0.012 250);padding:0 13px"></div>
 <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600">EG por ecografía</span>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
 <label style="height:52px;box-sizing:border-box;border:1px solid oklch(0.62 0.012 250);border-radius:10px;display:flex;align-items:center;padding:0 14px;gap:6px;background:oklch(1 0 0)"><input type="number" min="0" max="42" value="{{ ecoW }}" onChange="{{ setEcoW }}" inputmode="numeric" style="width:100%;border:none;outline:none;font:500 17px 'Atkinson Hyperlegible Mono',monospace;background:none;color:oklch(0.21 0.012 250)"><span style="font-size:14px;color:oklch(0.47 0.012 250)">s</span></label>
@@ -388,9 +388,9 @@ const lum = (L, Cc, h) => {
 const ratio = (y1, y2) => ((Math.max(y1, y2) + 0.05) / (Math.min(y1, y2) + 0.05)).toFixed(1).replace('.', ',');
 const TOK = [
   { title: 'Neutros', desc: 'Superficies, bordes y texto.', items: [
-    ['n-0', 1, 0, 250, 'Superficie de tarjeta'], ['n-25', 0.975, 0.003, 250, 'Fondo de app'], ['n-100', 0.95, 0.004, 250, 'Hundido, avatar, divisores'], ['n-200', 0.89, 0.006, 250, 'Borde sutil'], ['n-400', 0.62, 0.012, 250, 'Borde de campo (≥ 3:1)'], ['n-600', 0.47, 0.012, 250, 'Texto secundario'], ['n-700', 0.38, 0.012, 250, 'Texto de apoyo'], ['n-900', 0.21, 0.012, 250, 'Texto principal, botón primario']] },
-  { title: 'Trimestre · petróleo h215', desc: 'Tono creciente T1 → T3 + barras 1/2/3 + rótulo.', items: [
-    ['tri-50', 0.96, 0.02, 215, 'Fondo de chip'], ['tri-t1', 0.88, 0.05, 215, 'Banda T1'], ['tri-t2', 0.70, 0.09, 215, 'Banda T2'], ['tri-t3', 0.50, 0.10, 215, 'Banda T3, foco'], ['tri-ink', 0.38, 0.09, 215, 'Texto sobre tri-50']] },
+    ['n-0', 1, 0, 250, 'Superficie de tarjeta'], ['n-25', 0.975, 0.003, 250, 'Fondo de app'], ['n-100', 0.95, 0.004, 250, 'Hundido, avatar, divisores'], ['n-200', 0.89, 0.006, 250, 'Borde sutil'], ['n-400', 0.62, 0.012, 250, 'Borde de campo (≥ 3:1)'], ['n-600', 0.47, 0.012, 250, 'Texto secundario'], ['n-700', 0.38, 0.012, 250, 'Texto de apoyo'], ['n-900', 0.21, 0.012, 250, 'Texto principal, acciones, foco']] },
+  { title: 'Trimestre · petróleo h215', desc: 'Tono creciente T1 → T3 + barras 1/2/3 + rótulo. Solo para datos, nunca para acciones.', items: [
+    ['tri-50', 0.96, 0.02, 215, 'Fondo de chip'], ['tri-t1', 0.88, 0.05, 215, 'Banda T1'], ['tri-t2', 0.70, 0.09, 215, 'Banda T2'], ['tri-t3', 0.50, 0.10, 215, 'Banda T3'], ['tri-ink', 0.38, 0.09, 215, 'Texto sobre tri-50']] },
   { title: 'Tipo de control · violeta h300', desc: 'Control ●, ecografía ◆, laboratorio ■.', items: [
     ['ctl-50', 0.97, 0.012, 300, 'Fondo de sugerencia'], ['ctl-500', 0.50, 0.10, 300, 'Marcadores del disco'], ['ctl-ink', 0.40, 0.09, 300, 'Texto de categoría']] },
   { title: 'Alerta · ladrillo h30', desc: 'Discordancia, error, fuera de rango. Siempre con ▲ y texto.', items: [
@@ -500,7 +500,7 @@ class Component extends DCLogic {
       setFum: e => this.setState({ fum: e.target.value, sel: null }),
       help: st.help, helpBtn: st.help ? 'Cerrar ayuda' : '¿Qué es FUM?', toggleHelp: () => this.setState({ help: !st.help }),
       ecoOn: st.ecoOn, toggleEco: () => this.setState({ ecoOn: !st.ecoOn, sel: null }),
-      ecoSwitch: { bg: st.ecoOn ? 'oklch(0.50 0.10 215)' : 'oklch(0.62 0.012 250)', x: st.ecoOn ? '23px' : '3px' },
+      ecoSwitch: { bg: st.ecoOn ? 'oklch(0.21 0.012 250)' : 'oklch(0.62 0.012 250)', x: st.ecoOn ? '23px' : '3px' },
       ecoDate: st.ecoDate, ecoW: st.ecoW, ecoD: st.ecoD,
       setEcoDate: e => this.setState({ ecoDate: e.target.value, sel: null }),
       setEcoW: e => this.setState({ ecoW: e.target.value, sel: null }),

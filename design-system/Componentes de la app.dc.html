@@ -42,11 +42,11 @@ body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
 .ca-cols-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .ca-box{height:52px;box-sizing:border-box;flex:1;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:0 14px;background:oklch(1 0 0);display:flex;align-items:center;gap:4px;font:500 17px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.21 0.012 250)}
 .ca-box-unit{padding:0 10px}
-.ca-box-open{border:2px solid oklch(0.50 0.10 215);padding:0 13px}
+.ca-box-open{border:2px solid oklch(0.21 0.012 250);padding:0 13px}
 .ca-box-error{border-color:oklch(0.50 0.10 30)}
 .ca-placeholder{color:oklch(0.47 0.012 250)}
 .ca-unit{margin-left:auto;font:400 13px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.47 0.012 250)}
-.ca-clear{height:52px;padding:0 12px;display:flex;align-items:center;font-size:15px;font-weight:600;color:oklch(0.38 0.09 215)}
+.ca-clear{height:52px;padding:0 12px;display:flex;align-items:center;font-size:15px;font-weight:600;color:oklch(0.21 0.012 250);text-decoration:underline}
 .ca-error{display:flex;align-items:center;gap:6px;font-size:13px;line-height:18px;color:oklch(0.42 0.11 30)}
 .ca-tri{width:11px;height:10px;background:currentColor;clip-path:polygon(50% 0,100% 100%,0 100%);flex:none}
 .ca-calendar{background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;height:120px;display:flex;align-items:center;justify-content:center;font-size:13px;color:oklch(0.47 0.012 250)}
@@ -57,7 +57,7 @@ body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
 .ca-switch-label{font-size:15px;font-weight:600}
 .ca-switch-desc{font-size:13px;color:oklch(0.47 0.012 250)}
 .ca-track{width:48px;height:28px;border-radius:999px;background:oklch(0.62 0.012 250);position:relative;flex:none}
-.ca-track-on{background:oklch(0.50 0.10 215)}
+.ca-track-on{background:oklch(0.21 0.012 250)}
 .ca-thumb{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:oklch(1 0 0)}
 .ca-track-on .ca-thumb{left:23px}
 
@@ -90,7 +90,7 @@ body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
 .ca-sw-alert-strong{background:oklch(0.50 0.10 30)}
 .ca-sw-alert-soft{background:oklch(0.97 0.015 30)}
 .ca-sw-alert-text{background:oklch(0.42 0.11 30)}
-.ca-sw-focus{background:oklch(0.50 0.10 215)}
+.ca-sw-focus{background:oklch(0.21 0.012 250)}
 </style>
 </helmet>
 <div class="ca-page">
@@ -190,9 +190,9 @@ body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
 
 <section class="ca-section">
 <h2 class="ca-h2">Tokens usados en la app</h2>
-<p class="ca-desc">Los mismos del design system. En React Native los colores se declaran en oklch y se convierten a rgba al cargar la app, porque la plataforma no interpreta oklch.</p>
+<p class="ca-desc">Los mismos del design system. Las acciones usan oscuro sólido; el petróleo queda solo para datos (trimestres, gestograma). En React Native los colores se declaran en oklch y se convierten a rgba al cargar la app, porque la plataforma no interpreta oklch.</p>
 <div class="ca-tokens">
-<div class="ca-token"><span class="ca-swatch ca-sw-focus"></span><span class="ca-token-text"><span class="ca-token-name">focus</span><span class="ca-mono">oklch(0.50 0.10 215)</span><span>Foco, interruptor encendido</span></span></div>
+<div class="ca-token"><span class="ca-swatch ca-sw-focus"></span><span class="ca-token-text"><span class="ca-token-name">ink</span><span class="ca-mono">oklch(0.21 0.012 250)</span><span>Acciones, foco, interruptor encendido y pestaña activa</span></span></div>
 <div class="ca-token"><span class="ca-swatch ca-sw-alert-strong"></span><span class="ca-token-text"><span class="ca-token-name">alertStrong</span><span class="ca-mono">oklch(0.50 0.10 30)</span><span>Borde de campo con error</span></span></div>
 <div class="ca-token"><span class="ca-swatch ca-sw-alert-text"></span><span class="ca-token-text"><span class="ca-token-name">alertText</span><span class="ca-mono">oklch(0.42 0.11 30)</span><span>Mensaje de error, ▲</span></span></div>
 <div class="ca-token"><span class="ca-swatch ca-sw-alert-soft"></span><span class="ca-token-text"><span class="ca-token-name">alertSoft</span><span class="ca-mono">oklch(0.97 0.015 30)</span><span>Fondo de discordancia</span></span></div>
