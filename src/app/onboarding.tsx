@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Button } from '@/components/button';
 import { TextField } from '@/components/field';
+import { Logo } from '@/components/logo';
 import { TitlePicker } from '@/components/title-picker';
 import { greeting, type ProfileTitle } from '@/db/profile';
 import { useProfile } from '@/providers/profile-provider';
@@ -39,7 +40,7 @@ export default function OnboardingScreen() {
           keyboardShouldPersistTaps="handled">
           <View style={styles.intro}>
             <View style={styles.logo}>
-              <View style={styles.logoTick} />
+              <Logo />
             </View>
             <Text style={styles.brand}>GESTOGRAMA</Text>
             <Text style={styles.heading} accessibilityRole="header">
@@ -98,19 +99,8 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   logo: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    borderWidth: 3,
-    borderColor: colors.ink,
-  },
-  logoTick: {
-    position: 'absolute',
-    left: 17,
-    top: -3,
-    width: 3,
-    height: 16,
-    backgroundColor: colors.ink,
+    // El dibujo deja aire a la izquierda; se corre para alinearlo con el texto, como en el diseño.
+    marginLeft: -6,
   },
   brand: {
     marginTop: 8,
