@@ -61,15 +61,20 @@ body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
 .ca-thumb{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:oklch(1 0 0)}
 .ca-track-on .ca-thumb{left:23px}
 
-.ca-ga{font:700 40px/44px 'Atkinson Hyperlegible Mono',monospace;letter-spacing:-0.03em}
-.ca-chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.ca-chip{display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 10px;border-radius:999px;background:oklch(0.96 0.02 215);border:1px solid oklch(0.80 0.05 215);color:oklch(0.38 0.09 215);font-size:13px;font-weight:600}
-.ca-chip-bars{display:flex;gap:2px}
-.ca-chip-bar{width:3px;height:10px;border-radius:1px;background:currentColor}
-.ca-ref{font-size:13px;color:oklch(0.38 0.012 250)}
-.ca-fpp{display:flex;justify-content:space-between;border-top:1px solid oklch(0.95 0.004 250);padding-top:12px}
-.ca-fpp-label{font-size:14px;font-weight:600}
-.ca-fpp-value{font:500 17px 'Atkinson Hyperlegible Mono',monospace}
+.ca-ga-title{font-size:14px;font-weight:600;color:oklch(0.38 0.012 250)}
+.ca-ga{display:flex;flex-direction:column}
+.ca-ga-weeks{font:700 40px/44px 'Atkinson Hyperlegible Mono',monospace;letter-spacing:-0.03em}
+.ca-ga-days{font:500 24px/30px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.38 0.012 250)}
+
+.ca-identity{display:flex;align-items:center;gap:12px}
+.ca-avatar{width:44px;height:44px;border-radius:50%;background:oklch(0.95 0.004 250);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex:none}
+.ca-identity-text{display:flex;flex-direction:column}
+.ca-identity-name{font-size:17px;font-weight:700}
+.ca-identity-meta{font-size:13px;color:oklch(0.47 0.012 250)}
+.ca-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.ca-stat{background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px}
+.ca-stat-label{font-size:13px;color:oklch(0.47 0.012 250)}
+.ca-stat-value{font:500 16px 'Atkinson Hyperlegible Mono',monospace}
 
 .ca-empty{display:flex;flex-direction:column;gap:12px;align-items:flex-start;padding:24px 4px}
 .ca-empty-title{font-size:16px;font-weight:600}
@@ -136,7 +141,7 @@ body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
 
 <section class="ca-section">
 <h2 class="ca-h2">Campos con unidad</h2>
-<p class="ca-desc">El valor va en mono y la unidad en gris a la derecha, dentro del campo. La altura se carga en centímetros (número entero, ej. 163) y el peso en kg con coma decimal. El IMC de la ficha se calcula con la altura en metros.</p>
+<p class="ca-desc">El valor va en mono y la unidad en gris a la derecha, dentro del campo. La altura se carga en centímetros (número entero, ej. 163) y el peso en kg con coma decimal.</p>
 <div class="ca-grid">
 <div class="ca-spec"><span class="ca-spec-title">Alta · datos de la paciente</span>
 <div class="ca-frame"><div class="ca-cols">
@@ -162,15 +167,26 @@ body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
 </section>
 
 <section class="ca-section">
-<h2 class="ca-h2">Tarjeta de edad gestacional con referencia</h2>
-<p class="ca-desc">En la ficha, la tarjeta indica con qué se calculó: «Ref.: ecografía dd/mm/aaaa» o «Ref.: FUM dd/mm/aaaa». Si hay FUM y ecografía, debajo aparece la alerta de discordancia del design system (umbral ACOG).</p>
+<h2 class="ca-h2">Ficha · datos y edad gestacional</h2>
+<p class="ca-desc">Debajo del nombre solo va cuándo se vio a la paciente («Vista hoy», «Vista ayer», «Vista hace 3 días» o «Vista 5 oct»). Los tres recuadros muestran peso, altura y edad; el IMC no se muestra. La edad gestacional usa palabras completas, con singular y plural: las semanas en grande y, debajo, los días; si los días son 0, solo se muestran las semanas. Las fechas clave y la alerta de discordancia van en tarjetas aparte. En el resto de la app (discordancia, umbral ACOG) se mantiene el formato corto «28 s 2 d».</p>
 <div class="ca-grid">
-<div class="ca-spec"><span class="ca-spec-title">Ficha · edad gestacional hoy</span>
+<div class="ca-spec"><span class="ca-spec-title">Ficha · identificación</span>
 <div class="ca-frame"><div class="ca-card">
-<span class="ca-label">Edad gestacional hoy</span>
-<span class="ca-ga">28 s 2 d</span>
-<div class="ca-chips"><span class="ca-chip"><span class="ca-chip-bars"><span class="ca-chip-bar"></span><span class="ca-chip-bar"></span><span class="ca-chip-bar"></span></span>T3 · 3° trimestre</span><span class="ca-ref">Ref.: ecografía 24/05/2026</span></div>
-<div class="ca-fpp"><span class="ca-fpp-label">FPP</span><span class="ca-fpp-value">01/01/2027</span></div>
+<div class="ca-identity"><span class="ca-avatar">LF</span><span class="ca-identity-text"><span class="ca-identity-name">Lucía Fernández</span><span class="ca-identity-meta">Vista hoy</span></span></div>
+<div class="ca-stats"><div class="ca-stat"><span class="ca-stat-label">Peso</span><span class="ca-stat-value">64 kg</span></div><div class="ca-stat"><span class="ca-stat-label">Altura</span><span class="ca-stat-value">163 cm</span></div><div class="ca-stat"><span class="ca-stat-label">Edad</span><span class="ca-stat-value">31 años</span></div></div>
+</div></div></div>
+<div class="ca-spec"><span class="ca-spec-title">Edad gestacional · con días</span>
+<div class="ca-frame"><div class="ca-card">
+<span class="ca-ga-title">Edad gestacional hoy</span>
+<span class="ca-ga"><span class="ca-ga-weeks">28 semanas</span><span class="ca-ga-days">2 días</span></span>
+</div></div></div>
+<div class="ca-spec"><span class="ca-spec-title">Edad gestacional · días en 0 y singular</span>
+<div class="ca-frame"><div class="ca-card">
+<span class="ca-ga-title">Edad gestacional hoy</span>
+<span class="ca-ga"><span class="ca-ga-weeks">12 semanas</span></span>
+</div><div class="ca-card">
+<span class="ca-ga-title">Edad gestacional hoy</span>
+<span class="ca-ga"><span class="ca-ga-weeks">1 semana</span><span class="ca-ga-days">1 día</span></span>
 </div></div></div>
 </div>
 </section>

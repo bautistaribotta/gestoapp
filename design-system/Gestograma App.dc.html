@@ -205,17 +205,17 @@
 <div style="height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;flex:none"><button onClick="{{ goHome }}" style="height:44px;padding:0 10px;border:none;background:none;font:600 16px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);cursor:pointer">‹ Inicio</button><button onClick="{{ openEdit }}" style="height:44px;padding:0 14px;border-radius:10px;border:1px solid oklch(0.62 0.012 250);background:oklch(1 0 0);font:600 15px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);cursor:pointer">Editar datos</button></div>
 <div style="flex:1;overflow:auto;padding:4px 16px 24px;display:flex;flex-direction:column;gap:16px">
 <div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:14px">
-<div style="display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:50%;background:oklch(0.95 0.004 250);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px">{{ sel.ini }}</div><div style="display:flex;flex-direction:column"><span style="font-size:17px;font-weight:700">{{ sel.name }}</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">{{ sel.age }} años · vista {{ sel.seenLow }}</span></div></div>
+<div style="display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:50%;background:oklch(0.95 0.004 250);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px">{{ sel.ini }}</div><div style="display:flex;flex-direction:column"><span style="font-size:17px;font-weight:700">{{ sel.name }}</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Vista {{ sel.seenLow }}</span></div></div>
 <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
 <div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">Peso</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">{{ sel.weight }}</span></div>
 <div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">Altura</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">{{ sel.height }}</span></div>
-<div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">IMC</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">{{ sel.bmi }}</span></div>
+<div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">Edad</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">{{ sel.age }} años</span></div>
 </div>
 </div>
 <sc-if value="{{ sel.hasFum }}" hint-placeholder-val="{{ true }}">
 <div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px">
 <span style="font-size:14px;font-weight:600;color:oklch(0.38 0.012 250)">Edad gestacional hoy</span>
-<span style="font:700 40px/44px 'Atkinson Hyperlegible Mono',monospace;letter-spacing:-0.03em">{{ sel.ga }}</span>
+<div style="display:flex;flex-direction:column"><span style="font:700 40px/44px 'Atkinson Hyperlegible Mono',monospace;letter-spacing:-0.03em">{{ sel.gaWeeks }}</span><sc-if value="{{ sel.hasGaDays }}" hint-placeholder-val="{{ true }}"><span style="font:500 24px/30px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.38 0.012 250)">{{ sel.gaDays }}</span></sc-if></div>
 </div>
 <div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:4px 16px;display:flex;flex-direction:column">
 <sc-for list="{{ sel.dates }}" as="k" hint-placeholder-count="5">
@@ -271,6 +271,7 @@ const todayDn = () => { const t = new Date(); return Math.round(Date.UTC(t.getFu
 const iso = n => { const d = new Date(n * DAY); return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()); };
 const fmt = n => { const d = new Date(n * DAY); return pad(d.getUTCDate()) + '/' + pad(d.getUTCMonth() + 1) + '/' + d.getUTCFullYear(); };
 const sd = x => Math.floor(x / 7) + ' s ' + (x % 7) + ' d';
+const plural = (n, one, many) => n + ' ' + (n === 1 ? one : many);
 const norm = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 const initials = n => n.trim().split(/\s+/).slice(0, 2).map(w => w[0] || '').join('').toUpperCase();
 const seenLabel = (d, T) => { const k = T - d; if (k <= 0) return 'Hoy'; if (k === 1) return 'Ayer'; if (k < 7) return 'Hace ' + k + ' días'; const x = new Date(d * DAY); return x.getUTCDate() + ' ' + MES[x.getUTCMonth()]; };
@@ -338,8 +339,9 @@ class Component extends DCLogic {
       const w = num(sp.weight), h = num(sp.height);
       return { ini: initials(sp.name), name: sp.name, age: sp.age, seenLow: seenLabel(sp.seen, T).toLowerCase(),
         weight: w ? String(w).replace('.', ',') + ' kg' : '—', height: h ? Math.round(h) + ' cm' : '—',
-        bmi: w && h ? (w / (h / 100) ** 2).toFixed(1).replace('.', ',') : '—', hasFum: sfum != null, noFum: sfum == null,
-        ga: sfum != null ? sd(T - sfum) : '', fpp: sfum != null ? fmt(sfum + 280) : '', dates: sfum != null ? keyDates(sfum, null) : [],
+        hasFum: sfum != null, noFum: sfum == null,
+        ga: sfum != null ? sd(T - sfum) : '', gaWeeks: sfum != null ? plural(Math.floor((T - sfum) / 7), 'semana', 'semanas') : '',
+        gaDays: sfum != null ? plural((T - sfum) % 7, 'día', 'días') : '', hasGaDays: sfum != null && (T - sfum) % 7 > 0, fpp: sfum != null ? fmt(sfum + 280) : '', dates: sfum != null ? keyDates(sfum, null) : [],
         hasNote: !!sp.note, noteText: sp.note ? sp.note.text : '', noteDate: sp.note ? (sp.note.d === T ? 'Hoy' : fmt(sp.note.d)) : '' };
     })() : { hasFum: false, noFum: true, hasNote: false };
     const canSave = st.form.name.trim().length > 1 && parseInt(st.form.age) > 0;

@@ -135,11 +135,11 @@
 <div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px">
 <div style="font-size:13px;font-weight:600;color:oklch(0.47 0.012 250)">Tarjeta de paciente</div>
 <div style="border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:14px">
-<div style="display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:50%;background:oklch(0.95 0.004 250);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px">LF</div><div style="display:flex;flex-direction:column"><span style="font-size:17px;font-weight:700">Lucía Fernández</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">31 años</span></div></div>
+<div style="display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:50%;background:oklch(0.95 0.004 250);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px">LF</div><div style="display:flex;flex-direction:column"><span style="font-size:17px;font-weight:700">Lucía Fernández</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Vista hoy</span></div></div>
 <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
 <div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">Peso</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">64 kg</span></div>
 <div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">Altura</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">163 cm</span></div>
-<div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">IMC</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">24,1</span></div>
+<div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">Edad</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">31 años</span></div>
 </div>
 </div>
 </div>
@@ -253,11 +253,11 @@
 <div style="flex:1;overflow:auto;display:flex;flex-direction:column;gap:16px;padding:0 16px 32px">
 
 <div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:14px;flex:none">
-<div style="display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:50%;background:oklch(0.95 0.004 250);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px">{{ patient.initials }}</div><div style="display:flex;flex-direction:column"><span style="font-size:17px;font-weight:700">{{ patient.name }}</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">{{ patient.age }}</span></div></div>
+<div style="display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:50%;background:oklch(0.95 0.004 250);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px">{{ patient.initials }}</div><div style="display:flex;flex-direction:column"><span style="font-size:17px;font-weight:700">{{ patient.name }}</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">{{ patient.seen }}</span></div></div>
 <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
 <div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">Peso</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">{{ patient.weight }}</span></div>
 <div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">Altura</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">{{ patient.height }}</span></div>
-<div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">IMC</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">{{ patient.bmi }}</span></div>
+<div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">Edad</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">{{ patient.age }}</span></div>
 </div>
 </div>
 
@@ -286,7 +286,7 @@
 <sc-if value="{{ hasRef }}" hint-placeholder-val="{{ true }}">
 <div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;flex:none">
 <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px"><span style="font-size:14px;font-weight:600;color:oklch(0.38 0.012 250)">Edad gestacional hoy</span><sc-if value="{{ showMonths }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;color:oklch(0.47 0.012 250)">{{ todayMonth }}</span></sc-if></div>
-<span style="font:700 44px/48px 'Atkinson Hyperlegible Mono',monospace;letter-spacing:-0.03em">{{ todayGA }}</span>
+<div style="display:flex;flex-direction:column"><span style="font:700 44px/48px 'Atkinson Hyperlegible Mono',monospace;letter-spacing:-0.03em">{{ todayWeeks }}</span><sc-if value="{{ hasTodayDays }}" hint-placeholder-val="{{ true }}"><span style="font:500 24px/30px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.38 0.012 250)">{{ todayDays }}</span></sc-if></div>
 <div style="position:relative;height:28px">
 <div style="position:absolute;left:0;right:0;top:8px;height:10px;display:flex;gap:2px"><div style="flex:14;background:oklch(0.88 0.05 215);border-radius:5px 0 0 5px"></div><div style="flex:14;background:oklch(0.70 0.09 215)"></div><div style="flex:12;background:oklch(0.50 0.10 215);border-radius:0 5px 5px 0"></div></div>
 <div style="position:absolute;left:{{ barPos }};top:0;width:4px;height:26px;margin-left:-2px;background:oklch(0.21 0.012 250);border-radius:2px;box-shadow:0 0 0 2px oklch(1 0 0)"></div>
@@ -346,6 +346,7 @@ const iso = n => { const d = new Date(n * DAY); return d.getUTCFullYear() + '-' 
 const fmt = n => { const d = new Date(n * DAY); return pad(d.getUTCDate()) + '/' + pad(d.getUTCMonth() + 1) + '/' + d.getUTCFullYear(); };
 const fmtL = n => { const d = new Date(n * DAY); return d.getUTCDate() + ' ' + MES[d.getUTCMonth()] + ' ' + d.getUTCFullYear(); };
 const sd = x => x < 0 ? '—' : Math.floor(x / 7) + ' s ' + (x % 7) + ' d';
+const plural = (n, one, many) => n + ' ' + (n === 1 ? one : many);
 const P = (r, a) => { const t = a * Math.PI / 180; return [+(C + r * Math.sin(t)).toFixed(2), +(C - r * Math.cos(t)).toFixed(2)]; };
 const arc = (r, a0, a1) => { const p0 = P(r, a0), p1 = P(r, a1); return `M ${p0[0]} ${p0[1]} A ${r} ${r} 0 ${a1 - a0 > 180 ? 1 : 0} 1 ${p1[0]} ${p1[1]}`; };
 const tri = d => d < 98 ? 1 : d < 196 ? 2 : 3;
@@ -474,7 +475,7 @@ class Component extends DCLogic {
 
     return {
       tokenGroups, spacing, showMonths,
-      patient: { name: 'Lucía Fernández', initials: 'LF', age: '31 años', weight: '64 kg', height: '163 cm', bmi: (64 / 1.63 / 1.63).toFixed(1).replace('.', ',') },
+      patient: { name: 'Lucía Fernández', initials: 'LF', age: '31 años', weight: '64 kg', height: '163 cm', seen: 'Vista hoy' },
       refLabel: c.ecoValid ? 'Eco' : 'FUM',
       refLong: c.ecoValid ? `ecografía ${fmt(c.ed)}` : c.fumOk ? `FUM ${fmt(c.f)}` : '—',
       svgRef: this.svgRef, discRot: `rotate(${rot} ${C} ${C})`,
@@ -506,7 +507,8 @@ class Component extends DCLogic {
       setEcoW: e => this.setState({ ecoW: e.target.value, sel: null }),
       setEcoD: e => this.setState({ ecoD: e.target.value, sel: null }),
       hasRef: c.ref != null,
-      todayGA: sd(todayGAd), todayMonth: month(Math.max(0, todayGAd)), todayTri: triInfo(Math.max(0, todayGAd)),
+      todayWeeks: todayGAd < 0 ? '—' : plural(Math.floor(todayGAd / 7), 'semana', 'semanas'),
+      todayDays: plural(Math.max(0, todayGAd) % 7, 'día', 'días'), hasTodayDays: todayGAd > 0 && todayGAd % 7 > 0, todayMonth: month(Math.max(0, todayGAd)), todayTri: triInfo(Math.max(0, todayGAd)),
       barPos: Math.max(0, Math.min(100, todayGAd / 280 * 100)).toFixed(1) + '%',
       disc,
       keyDates: [
