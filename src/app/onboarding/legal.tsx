@@ -28,8 +28,10 @@ export default function OnboardingLegalScreen() {
   const valid = title !== null && name.length > 0;
   const allAccepted = LEGAL_DOC_IDS.every((id) => accepted[id]);
 
+  // Abrir un documento lo marca como leído y aceptado; la casilla se puede desmarcar después.
   const open = (id: LegalDocId) => {
     setRead((current) => ({ ...current, [id]: true }));
+    setAccepted((current) => ({ ...current, [id]: true }));
     router.push({ pathname: '/legal/[doc]', params: { doc: id, desde: 'onboarding' } });
   };
 
@@ -80,6 +82,9 @@ export default function OnboardingLegalScreen() {
       </ScrollView>
 
       <SafeAreaView edges={['bottom']} style={styles.footer}>
+        <Text style={styles.consent}>
+          Al continuar, aceptás los Términos y Condiciones y la Política de Privacidad.
+        </Text>
         <Button
           label="Aceptar y continuar"
           size="lg"
@@ -131,5 +136,13 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingHorizontal: 20,
     paddingBottom: 28,
+    gap: 12,
+  },
+  consent: {
+    fontFamily: fonts.regular,
+    fontSize: 13,
+    lineHeight: 18,
+    textAlign: 'center',
+    color: colors.textMuted,
   },
 });
