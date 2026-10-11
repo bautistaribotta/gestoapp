@@ -1,0 +1,133 @@
+import { dayFromIso, formatDay } from './dates';
+
+const PREGNANCY_DAYS = 280;
+const MAX_GESTATION_DAYS = 300;
+
+export type Trimester = 1 | 2 | 3;
+
+export type Gestation = {
+  /** Edad gestacional, ej. "12 s 3 d". */
+  age: string;
+  /** Mes aproximado, ej. "≈ 3° mes". */
+  month: string;
+  trimester: Trimester;
+  trimesterLabel: string;
+  /** Fecha probable de parto, ej. "05/03/2027". */
+  dueDate: string;
+};
+
+/** Datos de datación de una paciente: FUM y, opcionalmente, una ecografía. */
+export type DatingInput = {
+  fum: string | null;
+  ecoDate: string | null;
+  /** Edad gestacional medida en la ecografía, en días. */
+  ecoGaDays: number | null;
+};
+
+export type DatingReference = {
+  /** Día equivalente a la FUM (real o corregida por ecografía). */
+  day: number;
+  source: 'fum' | 'eco';
+  /** Ej. "ecografía 20/05/2026" o "FUM 26/03/2026". */
+  label: string;
+};
+
+export type Discordance = {
+  over: boolean;
+  title: string;
+  gaFum: string;
+  gaEco: string;
+  rule: string;
+};
+
+export function formatWeeksDays(days: number): string {
+  return `${Math.floor(days / 7)} s ${days % 7} d`;
+}
+
+function trimesterOf(days: number): Trimester {
+  if (days < 98) return 1;
+  if (days < 196) return 2;
+  return 3;
+}
+
+function validFumDay(fum: string | null, today: number): number | null {
+  const day = dayFromIso(fum);
+  if (day === null || day > today || today - day > MAX_GESTATION_DAYS) return null;
+  return day;
+}
+
+function validEco(input: DatingInput, today: number) {
+  const day = dayFromIso(input.ecoDate);
+  if (day === null || day > today || !input.ecoGaDays || input.ecoGaDays <= 0) return null;
+  return { day, gaDays: input.ecoGaDays };
+}
+
+/** Mensaje de error de la FUM, o null si es válida o está vacía. */
+export function fumError(fum: string | null, today: number): string | null {
+  const day = dayFromIso(fum);
+  if (day === null) return null;
+  if (day > today) return 'La FUM no puede ser posterior a hoy.';
+  if (today - day > MAX_GESTATION_DAYS) return 'La FUM supera las 42 semanas.';
+  return null;
+}
+
+/** La ecografía, si está cargada, reemplaza a la FUM como referencia. */
+export function datingReference(input: DatingInput, today: number): DatingReference | null {
+  const eco = validEco(input, today);
+  if (eco) {
+    return { day: eco.day - eco.gaDays, source: 'eco', label: `ecografía ${formatDay(eco.day)}` };
+  }
+  const fumDay = validFumDay(input.fum, today);
+  if (fumDay !== null) {
+    return { day: fumDay, source: 'fum', label: `FUM ${formatDay(fumDay)}` };
+  }
+  return null;
+}
+
+/** Gestación a partir del día de referencia. Devuelve null si queda fuera de rango. */
+export function gestationFromReference(referenceDay: number, today: number): Gestation | null {
+  const days = today - referenceDay;
+  if (days < 0 || days > MAX_GESTATION_DAYS) return null;
+
+  const trimester = trimesterOf(days);
+  return {
+    age: formatWeeksDays(days),
+    month: `≈ ${Math.floor(days / 30.4) + 1}° mes`,
+    trimester,
+    trimesterLabel: `T${trimester} · ${trimester}° trimestre`,
+    dueDate: formatDay(referenceDay + PREGNANCY_DAYS),
+  };
+}
+
+export function gestationFromFum(fum: string | null, today: number): Gestation | null {
+  const fumDay = validFumDay(fum, today);
+  return fumDay === null ? null : gestationFromReference(fumDay, today);
+}
+
+/** Umbral ACOG de discordancia según la edad gestacional de la ecografía. */
+function acogThreshold(ecoGaDays: number): [days: number, range: string] {
+  if (ecoGaDays <= 62) return [5, 'hasta 8 s 6 d'];
+  if (ecoGaDays <= 97) return [7, '9 s 0 d – 13 s 6 d'];
+  if (ecoGaDays <= 111) return [7, '14 s 0 d – 15 s 6 d'];
+  if (ecoGaDays <= 153) return [10, '16 s 0 d – 21 s 6 d'];
+  if (ecoGaDays <= 195) return [14, '22 s 0 d – 27 s 6 d'];
+  return [21, '28 s 0 d o más'];
+}
+
+/** Compara la FUM con la ecografía cuando las dos están cargadas. */
+export function discordance(input: DatingInput, today: number): Discordance | null {
+  const eco = validEco(input, today);
+  const fumDay = validFumDay(input.fum, today);
+  if (!eco || fumDay === null) return null;
+
+  const diff = Math.abs(eco.day - fumDay - eco.gaDays);
+  const [threshold, range] = acogThreshold(eco.gaDays);
+  const over = diff > threshold;
+  return {
+    over,
+    title: over ? `Discordancia de ${diff} d` : `Concordante · diferencia ${diff} d`,
+    gaFum: formatWeeksDays(today - fumDay),
+    gaEco: formatWeeksDays(today - (eco.day - eco.gaDays)),
+    rule: `Umbral ACOG para eco a ${range}: más de ${threshold} d.`,
+  };
+}
