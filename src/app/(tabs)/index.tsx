@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '@/components/button';
+import { EmptyPatients } from '@/components/empty-patients';
 import { LoadingState } from '@/components/heartbeat';
 import { PatientList } from '@/components/patient-list';
 import { SearchField } from '@/components/search-field';
@@ -54,6 +55,11 @@ export default function PatientsScreen() {
   const openNew = (name?: string) =>
     router.push({ pathname: '/paciente/nueva', params: name ? { name } : {} });
 
+  // Sin pacientes no hay nada que buscar: la pantalla entera explica qué hacer primero.
+  if (!showLoading && patients !== null && patients.length === 0) {
+    return <EmptyPatients onNew={() => openNew()} onQuickCalc={() => router.navigate('/calculo')} />;
+  }
+
   return (
     <View style={styles.screen}>
       <View style={styles.actions}>
@@ -96,13 +102,6 @@ export default function PatientsScreen() {
               />
             </View>
           ) : null}
-
-          {patients !== null && patients.length === 0 ? (
-            <View style={styles.empty}>
-              <Text style={styles.emptyTitle}>Todavía no cargaste pacientes</Text>
-              <Text style={styles.emptyText}>Usá «+ Nueva paciente» para agregar la primera.</Text>
-            </View>
-          ) : null}
         </ScrollView>
       )}
     </View>
@@ -138,11 +137,5 @@ const styles = StyleSheet.create({
     fontFamily: fonts.semibold,
     fontSize: 16,
     color: colors.ink,
-  },
-  emptyText: {
-    fontFamily: fonts.regular,
-    fontSize: 14,
-    lineHeight: 20,
-    color: colors.textSecondary,
   },
 });
