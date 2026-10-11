@@ -1,16 +1,12 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
-import { seedPatients } from './seed';
-
-const DATABASE_VERSION = 3;
+const DATABASE_VERSION = 4;
 
 /** Migraciones versionadas con PRAGMA user_version. Se ejecuta en el onInit del SQLiteProvider. */
 export async function migrateDbIfNeeded(db: SQLiteDatabase) {
   const row = await db.getFirstAsync<{ user_version: number }>('PRAGMA user_version');
   let currentVersion = row?.user_version ?? 0;
   if (currentVersion >= DATABASE_VERSION) return;
-
-  const isNewDatabase = currentVersion === 0;
 
   if (currentVersion < 1) {
     await db.execAsync(`
@@ -54,8 +50,22 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
     currentVersion = 3;
   }
 
-  if (isNewDatabase) {
-    await seedPatients(db);
+  if (currentVersion < 4) {
+    // La app deja de cargar pacientes de ejemplo: se borran las que quedaron de instalaciones anteriores.
+    await db.execAsync(`
+      DELETE FROM patients WHERE (name, age, weight, height_cm) IN (VALUES
+        ('Lucía Fernández', 31, 64, 163), ('Camila Rodríguez', 27, 58, 160),
+        ('Valentina Gómez', 34, 71, 168), ('Sofía López', 29, 62, 165),
+        ('Martina Díaz', 38, 69, 158), ('Florencia Martínez', 25, 55, 162),
+        ('Agustina Pérez', 33, 66, 170), ('Julieta Sánchez', 30, 60, 164),
+        ('Micaela Romero', 36, 74, 166), ('Rocío Álvarez', 28, 57, 159),
+        ('Carolina Torres', 32, 68, 171), ('Paula Ruiz', 26, 61, 163),
+        ('Antonella Flores', 35, 70, 167), ('Belén Acosta', 24, 54, 157),
+        ('Daniela Medina', 39, 72, 165), ('Natalia Herrera', 31, 63, 162),
+        ('Victoria Castro', 29, 59, 168), ('Milagros Suárez', 37, 67, 160)
+      );
+    `);
+    currentVersion = 4;
   }
 
   await db.execAsync(`PRAGMA user_version = ${currentVersion}`);
