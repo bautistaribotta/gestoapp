@@ -36,10 +36,7 @@ export function DeletePatientSheet({ visible, name, onConfirm, onCancel }: Delet
           <Text style={styles.title} accessibilityRole="header">
             ¿Eliminar a {name}?
           </Text>
-          <Text style={styles.body}>
-            Se borran sus datos y su nota de esta app. Los turnos del sistema de la institución no
-            cambian.
-          </Text>
+          <Text style={styles.body}>Se borran sus datos y su nota de esta app.</Text>
           <View style={styles.actions}>
             <Button label="Sí, eliminar" variant="dangerSolid" onPress={onConfirm} />
             <Button label="Cancelar" variant="outline" onPress={onCancel} />
