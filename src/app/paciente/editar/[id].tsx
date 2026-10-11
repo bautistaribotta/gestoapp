@@ -6,6 +6,7 @@ import { EMPTY_ECO } from '@/components/eco-fields';
 import { EMPTY_PATIENT_FORM, PatientForm, type PatientFormValues } from '@/components/patient-form';
 import { getPatient, updatePatient, type Patient } from '@/db/patients';
 import { formatDecimal } from '@/lib/text';
+import { useToast } from '@/providers/toast-provider';
 
 function formValuesFrom(patient: Patient): PatientFormValues {
   const { ecoDate, ecoGaDays } = patient;
@@ -32,6 +33,7 @@ export default function EditPatientScreen() {
   const db = useSQLiteContext();
   const { id } = useLocalSearchParams<{ id: string }>();
   const [patient, setPatient] = useState<Patient | null>(null);
+  const showToast = useToast();
 
   useEffect(() => {
     getPatient(db, Number(id)).then(setPatient);
@@ -46,6 +48,7 @@ export default function EditPatientScreen() {
       onSubmit={async (data) => {
         await updatePatient(db, patient.id, data);
         router.back();
+        showToast({ message: 'Datos de la paciente actualizados' });
       }}
     />
   );

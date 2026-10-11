@@ -3,6 +3,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 
 import { EMPTY_PATIENT_FORM, PatientForm } from '@/components/patient-form';
 import { insertPatient } from '@/db/patients';
+import { useToast } from '@/providers/toast-provider';
 
 type NewPatientParams = {
   name?: string;
@@ -16,6 +17,7 @@ type NewPatientParams = {
 export default function NewPatientScreen() {
   const db = useSQLiteContext();
   const params = useLocalSearchParams<NewPatientParams>();
+  const showToast = useToast();
 
   return (
     <PatientForm
@@ -34,6 +36,7 @@ export default function NewPatientScreen() {
       onSubmit={async (patient) => {
         const id = await insertPatient(db, patient);
         router.replace({ pathname: '/paciente/[id]', params: { id: String(id) } });
+        showToast({ message: `${patient.name} agregada` });
       }}
     />
   );

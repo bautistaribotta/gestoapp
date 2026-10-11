@@ -30,6 +30,20 @@ export type NewPatient = PatientData & {
   note: string | null;
 };
 
+const listeners = new Set<() => void>();
+
+/** Avisa cuando cambian las pacientes, para recargar pantallas que siguen montadas (ej. Inicio). */
+export function onPatientsChanged(listener: () => void) {
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+  };
+}
+
+function notifyPatientsChanged() {
+  listeners.forEach((listener) => listener());
+}
+
 const PATIENT_COLUMNS = `id, name, age, weight, height_cm AS heightCm, fum,
   eco_date AS ecoDate, eco_ga_days AS ecoGaDays,
   note, note_updated_at AS noteUpdatedAt, last_seen AS lastSeen`;
@@ -64,6 +78,7 @@ export async function insertPatient(db: SQLiteDatabase, patient: NewPatient): Pr
       $lastSeen: today,
     },
   );
+  notifyPatientsChanged();
   return result.lastInsertRowId;
 }
 
@@ -84,6 +99,7 @@ export async function updatePatient(db: SQLiteDatabase, id: number, patient: Pat
       $ecoGaDays: patient.ecoGaDays,
     },
   );
+  notifyPatientsChanged();
 }
 
 /** Reemplaza la nota de la paciente y registra la fecha de hoy. */
@@ -94,8 +110,34 @@ export async function updatePatientNote(db: SQLiteDatabase, id: number, note: st
     isoFromDay(todayDay()),
     id,
   );
+  notifyPatientsChanged();
 }
 
 export async function deletePatient(db: SQLiteDatabase, id: number) {
   await db.runAsync('DELETE FROM patients WHERE id = ?', id);
+  notifyPatientsChanged();
+}
+
+/** Vuelve a insertar una paciente eliminada con el mismo id y todos sus datos («Deshacer»). */
+export async function restorePatient(db: SQLiteDatabase, patient: Patient) {
+  await db.runAsync(
+    `INSERT INTO patients
+       (id, name, age, weight, height_cm, fum, eco_date, eco_ga_days, note, note_updated_at, last_seen)
+     VALUES
+       ($id, $name, $age, $weight, $heightCm, $fum, $ecoDate, $ecoGaDays, $note, $noteUpdatedAt, $lastSeen)`,
+    {
+      $id: patient.id,
+      $name: patient.name,
+      $age: patient.age,
+      $weight: patient.weight,
+      $heightCm: patient.heightCm,
+      $fum: patient.fum,
+      $ecoDate: patient.ecoDate,
+      $ecoGaDays: patient.ecoGaDays,
+      $note: patient.note,
+      $noteUpdatedAt: patient.noteUpdatedAt,
+      $lastSeen: patient.lastSeen,
+    },
+  );
+  notifyPatientsChanged();
 }

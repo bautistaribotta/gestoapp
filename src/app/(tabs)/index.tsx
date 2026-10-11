@@ -1,12 +1,12 @@
 import { router, useFocusEffect } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '@/components/button';
 import { PatientList } from '@/components/patient-list';
 import { SearchField } from '@/components/search-field';
-import { listPatients, type Patient } from '@/db/patients';
+import { listPatients, onPatientsChanged, type Patient } from '@/db/patients';
 import { todayDay } from '@/lib/dates';
 import { normalizeForSearch } from '@/lib/text';
 import { colors, fonts } from '@/theme';
@@ -16,11 +16,13 @@ export default function PatientsScreen() {
   const [patients, setPatients] = useState<Patient[] | null>(null);
   const [query, setQuery] = useState('');
 
-  useFocusEffect(
-    useCallback(() => {
-      listPatients(db).then(setPatients);
-    }, [db]),
-  );
+  const load = useCallback(() => {
+    listPatients(db).then(setPatients);
+  }, [db]);
+
+  useFocusEffect(load);
+  // Recarga aunque Inicio ya esté visible, por ejemplo al deshacer una eliminación.
+  useEffect(() => onPatientsChanged(load), [load]);
 
   const trimmedQuery = query.trim();
   const normalizedQuery = normalizeForSearch(trimmedQuery);

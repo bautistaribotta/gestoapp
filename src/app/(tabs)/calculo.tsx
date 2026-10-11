@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '@/components/button';
 import { DateField } from '@/components/date-field';
@@ -9,11 +9,13 @@ import { EcoFields, EMPTY_ECO } from '@/components/eco-fields';
 import { KeyDatesCard } from '@/components/key-dates-card';
 import { todayDay } from '@/lib/dates';
 import { datingReference, discordance, ecoGaDaysFrom, fumError, keyDates } from '@/lib/gestation';
+import { useToast } from '@/providers/toast-provider';
 import { colors, fonts } from '@/theme';
 
 export default function QuickCalcScreen() {
   const [fum, setFum] = useState<string | null>(null);
   const [eco, setEco] = useState(EMPTY_ECO);
+  const showToast = useToast();
   const today = todayDay();
 
   const ecoResult = eco.on ? ecoGaDaysFrom(eco.date, eco.weeks, eco.days, today) : null;
@@ -24,6 +26,21 @@ export default function QuickCalcScreen() {
   };
   const reference = datingReference(dating, today);
   const comparison = discordance(dating, today);
+  const dirty = Boolean(fum || eco.on || eco.date || eco.weeks || eco.days);
+
+  const reset = () => {
+    const previous = { fum, eco };
+    setFum(null);
+    setEco(EMPTY_ECO);
+    showToast({
+      message: 'Datos borrados',
+      placement: 'tabBar',
+      onUndo: () => {
+        setFum(previous.fum);
+        setEco(previous.eco);
+      },
+    });
+  };
 
   const saveAsPatient = () =>
     router.push({
@@ -36,9 +53,23 @@ export default function QuickCalcScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-      <Text style={styles.title} accessibilityRole="header">
-        Cálculo rápido
-      </Text>
+      <View style={styles.header}>
+        <Text style={styles.title} accessibilityRole="header">
+          Cálculo rápido
+        </Text>
+        {dirty ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Nuevo cálculo"
+            accessibilityHint="Borra la FUM y la ecografía cargadas"
+            onPress={reset}
+            hitSlop={4}
+            style={({ pressed }) => [styles.reset, pressed && styles.resetPressed]}>
+            <Text style={styles.resetIcon}>↺</Text>
+            <Text style={styles.resetLabel}>Nuevo cálculo</Text>
+          </Pressable>
+        ) : null}
+      </View>
       <DateField
         label="FUM"
         hint="fecha de última menstruación"
@@ -76,9 +107,41 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     gap: 16,
   },
+  header: {
+    minHeight: 40,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
   title: {
     fontFamily: fonts.bold,
     fontSize: 17,
+    color: colors.ink,
+  },
+  reset: {
+    height: 40,
+    paddingHorizontal: 14,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: colors.borderStrong,
+    backgroundColor: colors.surface,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  resetPressed: {
+    backgroundColor: colors.sunken,
+  },
+  resetIcon: {
+    fontFamily: fonts.semibold,
+    fontSize: 16,
+    lineHeight: 18,
+    color: colors.ink,
+  },
+  resetLabel: {
+    fontFamily: fonts.semibold,
+    fontSize: 14,
     color: colors.ink,
   },
 });

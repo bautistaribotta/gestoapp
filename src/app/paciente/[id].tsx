@@ -11,7 +11,13 @@ import { GestationCard } from '@/components/gestation-card';
 import { KeyDatesCard } from '@/components/key-dates-card';
 import { NoteCard } from '@/components/note-card';
 import { ScreenHeader } from '@/components/screen-header';
-import { deletePatient, getPatient, updatePatientNote, type Patient } from '@/db/patients';
+import {
+  deletePatient,
+  getPatient,
+  restorePatient,
+  updatePatientNote,
+  type Patient,
+} from '@/db/patients';
 import { dayFromIso, seenLabel, todayDay } from '@/lib/dates';
 import {
   datingReference,
@@ -21,6 +27,7 @@ import {
   keyDates,
 } from '@/lib/gestation';
 import { formatDecimal } from '@/lib/text';
+import { useToast } from '@/providers/toast-provider';
 import { colors, fonts } from '@/theme';
 
 export default function PatientScreen() {
@@ -28,6 +35,7 @@ export default function PatientScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [patient, setPatient] = useState<Patient | null | undefined>(undefined);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const showToast = useToast();
 
   const load = useCallback(() => {
     getPatient(db, Number(id)).then(setPatient);
@@ -40,6 +48,7 @@ export default function PatientScreen() {
     if (!patient) return;
     await updatePatientNote(db, patient.id, note);
     load();
+    showToast({ message: patient.note ? 'Nota actualizada' : 'Nota guardada' });
   };
 
   const remove = async () => {
@@ -47,6 +56,11 @@ export default function PatientScreen() {
     setConfirmDelete(false);
     await deletePatient(db, patient.id);
     router.back();
+    showToast({
+      message: `${patient.name} eliminada`,
+      placement: 'tabBar',
+      onUndo: () => restorePatient(db, patient),
+    });
   };
 
   return (

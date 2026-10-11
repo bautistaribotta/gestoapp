@@ -20,6 +20,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { migrateDbIfNeeded } from '@/db/migrations';
 import { ProfileProvider, useProfile } from '@/providers/profile-provider';
+import { ToastProvider } from '@/providers/toast-provider';
 import { colors } from '@/theme';
 
 SplashScreen.preventAutoHideAsync();
@@ -41,8 +42,10 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <SQLiteProvider databaseName="gestoapp.db" onInit={migrateDbIfNeeded}>
         <ProfileProvider>
-          <StatusBar style="dark" />
-          <RootStack />
+          <ToastProvider>
+            <StatusBar style="dark" />
+            <RootStack />
+          </ToastProvider>
         </ProfileProvider>
       </SQLiteProvider>
     </SafeAreaProvider>
