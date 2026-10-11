@@ -53,7 +53,7 @@
 
 <sc-if value="{{ showCalcTab }}" hint-placeholder-val="{{ false }}">
 <div style="flex:1;overflow:auto;padding:4px 16px 24px;display:flex;flex-direction:column;gap:16px">
-<span style="font-size:17px;font-weight:700">Cálculo rápido</span>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:40px"><span style="font-size:17px;font-weight:700">Cálculo rápido</span><sc-if value="{{ calcDirty }}" hint-placeholder-val="{{ false }}"><button onClick="{{ calcReset }}" style="height:40px;padding:0 14px;border-radius:999px;border:1px solid oklch(0.62 0.012 250);background:oklch(1 0 0);font:600 14px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);cursor:pointer;display:flex;align-items:center;gap:6px" style-active="background:oklch(0.95 0.004 250)"><span style="font-size:16px;line-height:1">↺</span>Nuevo cálculo</button></sc-if></div>
 <label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600">FUM <span style="font-weight:400;color:oklch(0.47 0.012 250)">· fecha de última menstruación</span></span><input type="date" value="{{ calcFum }}" onChange="{{ setCalcFum }}" max="{{ todayIso }}" style="height:52px;box-sizing:border-box;width:100%;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:0 14px;font:500 17px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.21 0.012 250);background:oklch(1 0 0);outline:none"></label>
 <div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:12px 16px;display:flex;flex-direction:column;gap:12px">
 <button onClick="{{ toggleCalcEco }}" style="display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;padding:0;border:none;background:none;cursor:pointer;text-align:left;font-family:inherit;color:oklch(0.21 0.012 250)">
@@ -137,7 +137,7 @@
 <div style="flex:1;display:flex;flex-direction:column;min-height:0">
 <div style="height:52px;display:flex;align-items:center;gap:4px;padding:0 8px;flex:none"><button onClick="{{ goHome }}" style="height:44px;padding:0 10px;border:none;background:none;font:600 16px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);cursor:pointer">‹ Inicio</button></div>
 <div style="flex:1;overflow:auto;padding:4px 16px 24px;display:flex;flex-direction:column;gap:16px">
-<span style="font-size:24px;font-weight:700">Cálculo rápido</span>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:40px"><span style="font-size:24px;font-weight:700">Cálculo rápido</span><sc-if value="{{ calcDirty }}" hint-placeholder-val="{{ false }}"><button onClick="{{ calcReset }}" style="height:40px;padding:0 14px;border-radius:999px;border:1px solid oklch(0.62 0.012 250);background:oklch(1 0 0);font:600 14px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);cursor:pointer;display:flex;align-items:center;gap:6px" style-active="background:oklch(0.95 0.004 250)"><span style="font-size:16px;line-height:1">↺</span>Nuevo cálculo</button></sc-if></div>
 <label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600">FUM <span style="font-weight:400;color:oklch(0.47 0.012 250)">· fecha de última menstruación</span></span><input type="date" value="{{ calcFum }}" onChange="{{ setCalcFum }}" max="{{ todayIso }}" style="height:52px;box-sizing:border-box;width:100%;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:0 14px;font:500 17px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.21 0.012 250);background:oklch(1 0 0);outline:none"></label>
 <div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:12px 16px;display:flex;flex-direction:column;gap:12px">
 <button onClick="{{ toggleCalcEco }}" style="display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;padding:0;border:none;background:none;cursor:pointer;text-align:left;font-family:inherit;color:oklch(0.21 0.012 250)">
@@ -258,6 +258,14 @@
 </div>
 </div>
 </sc-if>
+<sc-if value="{{ toast.show }}" hint-placeholder-val="{{ false }}">
+<div role="status" aria-live="polite" style="position:absolute;left:12px;right:12px;bottom:{{ toast.bottom }};z-index:20;background:oklch(0.21 0.012 250);color:oklch(1 0 0);border-radius:14px;padding:6px 6px 6px 14px;min-height:52px;box-sizing:border-box;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px oklch(0.21 0.012 250 / 0.25)">
+<span style="width:20px;height:20px;flex:none;border-radius:50%;background:oklch(1 0 0);display:flex;align-items:center;justify-content:center"><span style="width:9px;height:5px;border-left:2px solid oklch(0.21 0.012 250);border-bottom:2px solid oklch(0.21 0.012 250);transform:rotate(-45deg) translate(1px,-1px)"></span></span>
+<span style="flex:1;min-width:0;font-size:15px;line-height:20px;font-weight:600">{{ toast.msg }}</span>
+<sc-if value="{{ toast.hasUndo }}" hint-placeholder-val="{{ false }}"><button onClick="{{ toast.undo }}" style="height:40px;padding:0 12px;border:none;border-radius:10px;background:none;font:700 15px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(1 0 0);text-decoration:underline;cursor:pointer" style-active="background:oklch(0.30 0.012 250)">Deshacer</button></sc-if>
+<button onClick="{{ toast.close }}" aria-label="Cerrar" style="width:40px;height:40px;flex:none;border:none;border-radius:10px;background:none;font:400 20px/1 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.85 0.006 250);cursor:pointer">×</button>
+</div>
+</sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:395,&quot;height&quot;:820},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;],&quot;default&quot;:&quot;a&quot;,&quot;tsType&quot;:&quot;'a'|'b'|'c'&quot;},&quot;start&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;onboarding&quot;,&quot;inicio&quot;],&quot;default&quot;:&quot;inicio&quot;,&quot;tsType&quot;:&quot;'onboarding'|'inicio'&quot;}}">
@@ -294,6 +302,8 @@ const GT = ['Hoy', 'Esta semana', 'Este mes', 'Antes'];
 const EMPTY = { name: '', age: '', weight: '', height: '', fum: '', notes: '' };
 
 class Component extends DCLogic {
+  toastMsg(msg, undo) { clearTimeout(this.tt); this.setState({ toast: { msg, undo } }); this.tt = setTimeout(() => this.setState({ toast: null }), undo ? 5000 : 3000); }
+  componentWillUnmount() { clearTimeout(this.tt); }
   constructor(p) {
     super(p);
     const T = todayDn();
@@ -362,6 +372,7 @@ class Component extends DCLogic {
     const ac = { ...AC, hdBg: band ? P5 : 'transparent', hdFg: band ? W : INK, hdSub: band ? 'oklch(0.93 0.02 215)' : 'oklch(0.47 0.012 250)', hdPadB: band ? '16px' : '12px', hdMb: band ? '12px' : '0px' };
     return {
       scr: { onb: st.scr === 'onb', home: st.scr === 'home', calc: st.scr === 'calc', alta: st.scr === 'alta', ficha: st.scr === 'ficha' },
+      toast: st.toast ? { show: true, msg: st.toast.msg, hasUndo: !!st.toast.undo, undo: st.toast.undo, close: () => { clearTimeout(this.tt); set({ toast: null }); }, bottom: st.scr === 'home' && isB ? '96px' : st.scr === 'alta' ? '104px' : '28px' } : { show: false },
       ac, isA, isB, isC, topSearch: !isC && !showCalcTab, showList: !showCalcTab, showCalcTab,
       titles: ['Dra.', 'Dr.', 'Sin título'].map(t => ({ label: t, pick: () => set({ title: t }), bg: st.title === t ? 'oklch(1 0 0)' : 'transparent', sh: st.title === t ? '0 1px 2px oklch(0.21 0.012 250 / 0.15)' : 'none' })),
       name: st.name, setName: e => set({ name: e.target.value }),
@@ -374,6 +385,8 @@ class Component extends DCLogic {
       openNew: () => set({ scr: 'alta', form: EMPTY }), openCalc: () => isB ? set({ tab: 'calc' }) : set({ scr: 'calc' }), goHome: () => set({ scr: 'home' }),
       tabs: [['pac', 'Pacientes'], ['calc', 'Cálculo rápido']].map(([k, l]) => ({ label: l, pick: () => set({ tab: k }), fg: st.tab === k ? 'oklch(0.21 0.012 250)' : 'oklch(0.47 0.012 250)', bar: st.tab === k ? ac.bar : 'transparent', font: (st.tab === k ? '700' : '500') + " 14px 'Atkinson Hyperlegible Next',sans-serif" })),
       calcFum: st.calcFum, setCalcFum: e => set({ calcFum: e.target.value }),
+      calcDirty: !!(st.calcFum || st.calcEco || st.calcEcoDate || st.calcEcoW || st.calcEcoD),
+      calcReset: () => { const prev = { calcFum: st.calcFum, calcEco: st.calcEco, calcEcoDate: st.calcEcoDate, calcEcoW: st.calcEcoW, calcEcoD: st.calcEcoD }; set({ calcFum: '', calcEco: false, calcEcoDate: '', calcEcoW: '', calcEcoD: '' }); this.toastMsg('Datos borrados', () => { clearTimeout(this.tt); this.setState({ ...prev, toast: null }); }); },
       calcEco: !!st.calcEco, toggleCalcEco: () => set({ calcEco: !st.calcEco }),
       calcEcoSw: { bg: st.calcEco ? 'oklch(0.21 0.012 250)' : 'oklch(0.62 0.012 250)', x: st.calcEco ? '23px' : '3px' },
       calcEcoDate: st.calcEcoDate || '', calcEcoW: st.calcEcoW || '', calcEcoD: st.calcEcoD || '',
@@ -384,10 +397,11 @@ class Component extends DCLogic {
       savePatient: () => {
         if (!canSave) return; const fm = st.form;
         const data = { name: fm.name.trim(), age: parseInt(fm.age), fum: fm.fum, weight: fm.weight, height: fm.height };
-        if (st.editId) return set({ patients: st.patients.map(p => p.id === st.editId ? { ...p, ...data } : p), scr: 'ficha', selId: st.editId, editId: null });
+        if (st.editId) { set({ patients: st.patients.map(p => p.id === st.editId ? { ...p, ...data } : p), scr: 'ficha', selId: st.editId, editId: null }); return this.toastMsg('Datos de la paciente actualizados'); }
         const id = Date.now();
         const note = fm.notes.trim() ? { d: T, text: fm.notes.trim() } : null;
         set({ noteEditing: false, patients: [{ id, ...data, seen: T, note }, ...st.patients], scr: 'ficha', selId: id, q: '', tab: 'pac', noteDraft: '' });
+        this.toastMsg(data.name + ' agregada');
       },
       altaHasDates: (() => { const x = dn(st.form.fum); return x != null && x <= T && T - x <= 300; })(),
       altaDates: (() => { const x = dn(st.form.fum); return x != null ? keyDates(x, null) : []; })(),
@@ -399,9 +413,9 @@ class Component extends DCLogic {
       noteView: !!(sp && sp.note) && !st.noteEditing, noteEdit: !(sp && sp.note) || st.noteEditing,
       noteBtnLabel: sp && sp.note ? 'Guardar nota' : 'Agregar nota',
       startEditNote: () => set({ noteEditing: true, noteDraft: sp.note.text }), cancelEditNote: () => set({ noteEditing: false, noteDraft: '' }),
-      saveNote: () => { const t = st.noteDraft.trim(); if (!t || !sp) return; set({ noteDraft: '', noteEditing: false, patients: st.patients.map(p => p.id === sp.id ? { ...p, note: { d: T, text: t } } : p) }); },
+      saveNote: () => { const t = st.noteDraft.trim(); if (!t || !sp) return; this.toastMsg(sp.note ? 'Nota actualizada' : 'Nota guardada'); set({ noteDraft: '', noteEditing: false, patients: st.patients.map(p => p.id === sp.id ? { ...p, note: { d: T, text: t } } : p) }); },
       confirmDel: st.confirmDel, askDelete: () => set({ confirmDel: true }), cancelDelete: () => set({ confirmDel: false }),
-      doDelete: () => set({ patients: st.patients.filter(p => p.id !== st.selId), confirmDel: false, selId: null, scr: 'home' }),
+      doDelete: () => { const prev = st.patients, id = st.selId, nm = sp ? sp.name : 'Paciente'; set({ patients: prev.filter(p => p.id !== id), confirmDel: false, selId: null, scr: 'home' }); this.toastMsg(nm + ' eliminada', () => { clearTimeout(this.tt); this.setState({ patients: prev, toast: null }); }); },
       sel
     };
   }
