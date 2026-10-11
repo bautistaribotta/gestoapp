@@ -9,7 +9,7 @@
 <x-dc>
 <helmet>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&family=Atkinson+Hyperlegible+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<style>body{margin:0}a{color:oklch(0.40 0.09 215)}a:hover{color:oklch(0.21 0.012 250)}input::placeholder{color:oklch(0.47 0.012 250)}</style>
+<style>body{margin:0}a{color:oklch(0.21 0.012 250);text-decoration:underline}a:hover{color:oklch(0.38 0.012 250)}input::placeholder{color:oklch(0.47 0.012 250)}</style>
 </helmet>
 <div style="font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;color:oklch(0.21 0.012 250);width:375px;height:800px;border:10px solid oklch(0.18 0.01 250);border-radius:48px;background:oklch(0.975 0.003 250);overflow:hidden;display:flex;flex-direction:column;box-sizing:content-box;position:relative">
 <div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-weight:600;font-size:15px;flex:none;background:{{ ac.hdBg }};color:{{ ac.hdFg }}"><span>9:41</span><span style="width:24px;height:11px;border:1.5px solid currentColor;border-radius:3px"></span></div>
@@ -23,7 +23,7 @@
 <p style="margin:0;font-size:15px;line-height:22px;color:oklch(0.38 0.012 250)">Lo usamos solo para saludarte en Inicio. Podés cambiarlo después.</p>
 </div>
 <div style="display:flex;flex-direction:column;gap:16px">
-<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600">Tratamiento</span>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600">Título</span>
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;background:oklch(0.95 0.004 250);border-radius:12px">
 <sc-for list="{{ titles }}" as="t" hint-placeholder-count="3"><button onClick="{{ t.pick }}" style="height:44px;border-radius:9px;border:none;font:600 15px 'Atkinson Hyperlegible Next',sans-serif;cursor:pointer;background:{{ t.bg }};color:oklch(0.21 0.012 250);box-shadow:{{ t.sh }}">{{ t.label }}</button></sc-for>
 </div></div>
@@ -39,14 +39,18 @@
 <sc-if value="{{ scr.home }}" hint-placeholder-val="{{ true }}">
 <div style="flex:1;display:flex;flex-direction:column;min-height:0">
 <div style="padding:8px 16px 12px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex:none;background:{{ ac.hdBg }}">
-<div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:{{ ac.hdSub }}">{{ todayLong }}</span><span style="font-size:24px;line-height:30px;font-weight:700;letter-spacing:-0.01em;color:{{ ac.hdFg }}">{{ greeting }}</span></div>
+<div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:13px;color:{{ ac.hdSub }}">{{ todayLong }}</span>
+<sc-if value="{{ greetTap }}" hint-placeholder-val="{{ true }}"><button onClick="{{ openPerfil }}" aria-label="Editar tus datos" style="display:flex;align-items:center;gap:6px;min-height:44px;margin:-7px -8px;padding:0 8px;border:none;border-radius:10px;background:none;cursor:pointer;font-family:inherit;text-align:left;color:{{ ac.hdFg }}" style-active="background:oklch(0.95 0.004 250)"><span style="font-size:24px;line-height:30px;font-weight:700;letter-spacing:-0.01em">{{ greeting }}</span><span style="font-size:24px;line-height:30px;color:oklch(0.47 0.012 250)">›</span></button></sc-if>
+<sc-if value="{{ greetPlain }}" hint-placeholder-val="{{ false }}"><span style="font-size:24px;line-height:30px;font-weight:700;letter-spacing:-0.01em;color:{{ ac.hdFg }}">{{ greeting }}</span></sc-if>
+</div>
+<sc-if value="{{ greetPlain }}" hint-placeholder-val="{{ false }}"><button onClick="{{ openPerfil }}" aria-label="Tus datos" style="width:48px;height:48px;flex:none;border-radius:50%;border:1px solid oklch(0.89 0.006 250);background:oklch(1 0 0);color:oklch(0.21 0.012 250);font:700 16px 'Atkinson Hyperlegible Next',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-left:auto" style-active="background:oklch(0.95 0.004 250)">{{ userIni }}</button></sc-if>
 <sc-if value="{{ isA }}" hint-placeholder-val="{{ true }}"><button onClick="{{ openNew }}" aria-label="Nueva paciente" style="width:48px;height:48px;flex:none;border-radius:50%;border:none;background:oklch(0.21 0.012 250);color:oklch(1 0 0);font:400 28px/1 'Atkinson Hyperlegible Next',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center" style-active="background:oklch(0.30 0.012 250)">+</button></sc-if>
 </div>
 
 <sc-if value="{{ topSearch }}" hint-placeholder-val="{{ true }}">
 <div style="padding:0 16px {{ ac.hdPadB }};display:flex;flex-direction:column;gap:10px;flex:none;background:{{ ac.hdBg }};margin-bottom:{{ ac.hdMb }}">
 <label style="height:48px;box-sizing:border-box;border:1px solid oklch(0.62 0.012 250);border-radius:10px;display:flex;align-items:center;gap:10px;padding:0 14px;background:oklch(1 0 0)"><span style="width:14px;height:14px;position:relative;flex:none"><span style="position:absolute;left:0;top:0;width:10px;height:10px;border:2px solid oklch(0.47 0.012 250);border-radius:50%"></span><span style="position:absolute;left:10px;top:11px;width:6px;height:2px;background:oklch(0.47 0.012 250);transform:rotate(45deg)"></span></span><input value="{{ q }}" onChange="{{ setQ }}" placeholder="Buscar paciente" style="flex:1;min-width:0;border:none;outline:none;background:none;font:400 16px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250)"></label>
-<sc-if value="{{ isA }}" hint-placeholder-val="{{ true }}"><button onClick="{{ openCalc }}" style="display:flex;align-items:center;justify-content:space-between;min-height:56px;padding:0 16px;border-radius:12px;border:1px solid oklch(0.80 0.05 215);background:oklch(0.96 0.02 215);cursor:pointer;font-family:inherit;text-align:left;color:oklch(0.21 0.012 250)"><span style="display:flex;flex-direction:column"><span style="font-size:15px;font-weight:700">Cálculo rápido</span><span style="font-size:13px;color:oklch(0.38 0.09 215)">FUM → semanas, FPP · sin crear paciente</span></span><span style="font-size:20px;color:oklch(0.38 0.09 215)">›</span></button></sc-if>
+<sc-if value="{{ isA }}" hint-placeholder-val="{{ true }}"><button onClick="{{ openCalc }}" style="display:flex;align-items:center;justify-content:space-between;min-height:56px;padding:0 16px;border-radius:12px;border:1px solid oklch(0.62 0.012 250);background:oklch(1 0 0);cursor:pointer;font-family:inherit;text-align:left;color:oklch(0.21 0.012 250)"><span style="display:flex;flex-direction:column"><span style="font-size:15px;font-weight:700">Cálculo rápido</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">FUM → semanas, FPP · sin crear paciente</span></span><span style="font-size:20px;color:oklch(0.47 0.012 250)">›</span></button></sc-if>
 <sc-if value="{{ isB }}" hint-placeholder-val="{{ false }}"><button onClick="{{ openNew }}" style="height:52px;border-radius:12px;border:{{ ac.btnBd }};background:{{ ac.btnBg }};color:{{ ac.btnFg }};font:700 16px 'Atkinson Hyperlegible Next',sans-serif;cursor:pointer">+ Nueva paciente</button></sc-if>
 </div>
 </sc-if>
@@ -119,7 +123,7 @@
 <div style="flex:none;padding:12px 16px 24px;background:oklch(1 0 0);border-top:1px solid oklch(0.89 0.006 250);display:flex;flex-direction:column;gap:10px">
 <label style="height:52px;box-sizing:border-box;border:1px solid oklch(0.62 0.012 250);border-radius:12px;display:flex;align-items:center;gap:10px;padding:0 14px;background:oklch(0.975 0.003 250)"><span style="width:14px;height:14px;position:relative;flex:none"><span style="position:absolute;left:0;top:0;width:10px;height:10px;border:2px solid oklch(0.47 0.012 250);border-radius:50%"></span><span style="position:absolute;left:10px;top:11px;width:6px;height:2px;background:oklch(0.47 0.012 250);transform:rotate(45deg)"></span></span><input value="{{ q }}" onChange="{{ setQ }}" placeholder="Buscar paciente" style="flex:1;min-width:0;border:none;outline:none;background:none;font:400 16px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250)"></label>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-<button onClick="{{ openCalc }}" style="height:52px;border-radius:12px;border:1px solid oklch(0.80 0.05 215);background:oklch(0.96 0.02 215);font:700 15px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.38 0.09 215);cursor:pointer">Cálculo rápido</button>
+<button onClick="{{ openCalc }}" style="height:52px;border-radius:12px;border:1px solid oklch(0.62 0.012 250);background:oklch(1 0 0);font:700 15px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);cursor:pointer">Cálculo rápido</button>
 <button onClick="{{ openNew }}" style="height:52px;border-radius:12px;border:none;background:oklch(0.21 0.012 250);font:700 15px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(1 0 0);cursor:pointer">+ Paciente</button>
 </div>
 </div>
@@ -258,6 +262,25 @@
 </div>
 </div>
 </sc-if>
+<sc-if value="{{ scr.perfil }}" hint-placeholder-val="{{ false }}">
+<div style="flex:1;display:flex;flex-direction:column;min-height:0">
+<div style="height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;flex:none"><button onClick="{{ perfilCancel }}" style="height:44px;padding:0 10px;border:none;background:none;font:600 16px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);cursor:pointer">Cancelar</button><span style="font-size:16px;font-weight:700">Tus datos</span><span style="width:84px"></span></div>
+<div style="flex:1;overflow:auto;padding:16px 16px 16px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600">Título</span>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;background:oklch(0.95 0.004 250);border-radius:12px">
+<sc-for list="{{ pTitles }}" as="t" hint-placeholder-count="3"><button onClick="{{ t.pick }}" style="height:44px;border-radius:9px;border:none;font:600 15px 'Atkinson Hyperlegible Next',sans-serif;cursor:pointer;background:{{ t.bg }};color:oklch(0.21 0.012 250);box-shadow:{{ t.sh }}">{{ t.label }}</button></sc-for>
+</div></div>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600">Apellido o nombre</span>
+<input value="{{ pName }}" onChange="{{ setPName }}" placeholder="Ej.: Martínez" autocomplete="off" style="height:52px;box-sizing:border-box;width:100%;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:0 14px;font:500 17px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);background:oklch(1 0 0);outline:none" style-focus="border:2px solid oklch(0.21 0.012 250);padding:0 13px;box-shadow:0 0 0 3px oklch(0.89 0.006 250)"></label>
+<sc-if value="{{ pEmpty }}" hint-placeholder-val="{{ false }}"><div style="display:flex;align-items:center;gap:6px;font-size:13px;color:oklch(0.42 0.11 30)"><span style="width:11px;height:10px;background:currentColor;clip-path:polygon(50% 0,100% 100%,0 100%)"></span>Escribí cómo querés que te llamemos.</div></sc-if>
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:4px">
+<span style="font-size:13px;color:oklch(0.47 0.012 250)">Así te saludamos en Inicio</span>
+<span style="font-size:20px;line-height:26px;font-weight:700;letter-spacing:-0.01em">{{ pGreet }}</span>
+</div>
+</div>
+<div style="padding:12px 16px 24px;flex:none;border-top:1px solid oklch(0.89 0.006 250);background:oklch(1 0 0)"><button onClick="{{ perfilSave }}" disabled="{{ pCantSave }}" style="width:100%;height:56px;border-radius:12px;border:none;font:700 17px 'Atkinson Hyperlegible Next',sans-serif;cursor:pointer;background:{{ pSaveBg }};color:{{ pSaveFg }}">Guardar cambios</button></div>
+</div>
+</sc-if>
 <sc-if value="{{ toast.show }}" hint-placeholder-val="{{ false }}">
 <div role="status" aria-live="polite" style="position:absolute;left:12px;right:12px;bottom:{{ toast.bottom }};z-index:20;background:oklch(0.21 0.012 250);color:oklch(1 0 0);border-radius:14px;padding:6px 6px 6px 14px;min-height:52px;box-sizing:border-box;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px oklch(0.21 0.012 250 / 0.25)">
 <span style="width:20px;height:20px;flex:none;border-radius:50%;background:oklch(1 0 0);display:flex;align-items:center;justify-content:center"><span style="width:9px;height:5px;border-left:2px solid oklch(0.21 0.012 250);border-bottom:2px solid oklch(0.21 0.012 250);transform:rotate(-45deg) translate(1px,-1px)"></span></span>
@@ -268,7 +291,7 @@
 </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:395,&quot;height&quot;:820},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;],&quot;default&quot;:&quot;a&quot;,&quot;tsType&quot;:&quot;'a'|'b'|'c'&quot;},&quot;start&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;onboarding&quot;,&quot;inicio&quot;],&quot;default&quot;:&quot;inicio&quot;,&quot;tsType&quot;:&quot;'onboarding'|'inicio'&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:395,&quot;height&quot;:820},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;],&quot;default&quot;:&quot;a&quot;,&quot;tsType&quot;:&quot;'a'|'b'|'c'&quot;},&quot;start&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;onboarding&quot;,&quot;inicio&quot;,&quot;perfil&quot;],&quot;default&quot;:&quot;inicio&quot;,&quot;tsType&quot;:&quot;'onboarding'|'inicio'|'perfil'&quot;},&quot;acceso&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;saludo&quot;,&quot;avatar&quot;],&quot;default&quot;:&quot;saludo&quot;,&quot;tsType&quot;:&quot;'saludo'|'avatar'&quot;}}">
 const DAY = 864e5;
 const MES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 const MESL = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
@@ -308,7 +331,7 @@ class Component extends DCLogic {
     super(p);
     const T = todayDn();
     this.state = {
-      scr: p.start === 'onboarding' ? 'onb' : 'home', title: 'Dra.', name: p.start === 'onboarding' ? '' : 'Martínez', q: '', tab: 'pac',
+      scr: p.start === 'onboarding' ? 'onb' : p.start === 'perfil' ? 'perfil' : 'home', pTitle: 'Dra.', pName: 'Martínez', title: 'Dra.', name: p.start === 'onboarding' ? '' : 'Martínez', q: '', tab: 'pac',
       patients: SEED.map((s, i) => ({ id: i + 1, name: s[0], age: s[1], seen: T - s[2], fum: iso(T - s[3]), weight: s[4], height: s[5], note: i === 0 ? { d: T - 28, text: 'Hipotiroidismo en tratamiento con levotiroxina 50 mcg. Pedir TSH en el próximo control.' } : null })),
       noteDraft: '', noteEditing: false, editId: null, confirmDel: false,
       form: EMPTY, calcFum: '', selId: null
@@ -371,7 +394,21 @@ class Component extends DCLogic {
     const band = A === 'banda' && home && !showCalcTab;
     const ac = { ...AC, hdBg: band ? P5 : 'transparent', hdFg: band ? W : INK, hdSub: band ? 'oklch(0.93 0.02 215)' : 'oklch(0.47 0.012 250)', hdPadB: band ? '16px' : '12px', hdMb: band ? '12px' : '0px' };
     return {
-      scr: { onb: st.scr === 'onb', home: st.scr === 'home', calc: st.scr === 'calc', alta: st.scr === 'alta', ficha: st.scr === 'ficha' },
+      ...(() => {
+        const mkGreet = (t, n) => n.trim() ? `Hola, ${t === 'Sin título' ? '' : t + ' '}${n.trim()}` : 'Hola';
+        const pChanged = st.pTitle !== st.title || st.pName.trim() !== st.name.trim(), pOk = pChanged && st.pName.trim().length > 0;
+        const tap = (this.props.acceso ?? 'saludo') === 'saludo';
+        return {
+          greetTap: tap, greetPlain: !tap, userIni: initials(st.name || '?'),
+          openPerfil: () => set({ scr: 'perfil', pTitle: st.title, pName: st.name }),
+          perfilCancel: () => set({ scr: 'home' }),
+          pTitles: ['Dra.', 'Dr.', 'Sin título'].map(t => ({ label: t, pick: () => set({ pTitle: t }), bg: st.pTitle === t ? 'oklch(1 0 0)' : 'transparent', sh: st.pTitle === t ? '0 1px 2px oklch(0.21 0.012 250 / 0.15)' : 'none' })),
+          pName: st.pName, setPName: e => set({ pName: e.target.value }), pEmpty: !st.pName.trim(), pGreet: mkGreet(st.pTitle, st.pName),
+          pCantSave: !pOk, pSaveBg: pOk ? 'oklch(0.21 0.012 250)' : 'oklch(0.89 0.006 250)', pSaveFg: pOk ? 'oklch(1 0 0)' : 'oklch(0.47 0.012 250)',
+          perfilSave: () => { if (!pOk) return; set({ title: st.pTitle, name: st.pName.trim(), scr: 'home' }); this.toastMsg('Tus datos se actualizaron'); }
+        };
+      })(),
+      scr: { perfil: st.scr === 'perfil', onb: st.scr === 'onb', home: st.scr === 'home', calc: st.scr === 'calc', alta: st.scr === 'alta', ficha: st.scr === 'ficha' },
       toast: st.toast ? { show: true, msg: st.toast.msg, hasUndo: !!st.toast.undo, undo: st.toast.undo, close: () => { clearTimeout(this.tt); set({ toast: null }); }, bottom: st.scr === 'home' && isB ? '96px' : st.scr === 'alta' ? '104px' : '28px' } : { show: false },
       ac, isA, isB, isC, topSearch: !isC && !showCalcTab, showList: !showCalcTab, showCalcTab,
       titles: ['Dra.', 'Dr.', 'Sin título'].map(t => ({ label: t, pick: () => set({ title: t }), bg: st.title === t ? 'oklch(1 0 0)' : 'transparent', sh: st.title === t ? '0 1px 2px oklch(0.21 0.012 250 / 0.15)' : 'none' })),
