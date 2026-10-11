@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&family=Atkinson+Hyperlegible+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}a{color:oklch(0.40 0.09 215)}a:hover{color:oklch(0.21 0.012 250)}input[type=date]::-webkit-calendar-picker-indicator{opacity:.6}</style>
+</helmet>
+<div style="font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;max-width:1240px;margin:0 auto;padding:48px 24px 96px;display:flex;flex-direction:column;gap:72px">
+
+<header style="display:flex;flex-direction:column;gap:12px;max-width:760px">
+<div style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">DESIGN SYSTEM · v0.1 · USO PROFESIONAL EN CONSULTA</div>
+<h1 style="margin:0;font-size:40px;line-height:44px;font-weight:700;letter-spacing:-0.02em">Apoyo obstétrico</h1>
+<p style="margin:0;font-size:17px;line-height:26px;color:oklch(0.38 0.012 250);text-wrap:pretty">Sistema para una app de celular, operada con una mano por obstetras y ginecólogos frente a la paciente. Prioriza lecturas rápidas: edad gestacional en semanas + días, fechas clave calculadas y una sugerencia de turno en texto que complementa el sistema de turnos de la institución.</p>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
+<span style="font-size:13px;padding:6px 10px;border-radius:999px;background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250)">Tipografía: Atkinson Hyperlegible (diseñada para legibilidad)</span>
+<span style="font-size:13px;padding:6px 10px;border-radius:999px;background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250)">3 acentos = 3 funciones</span>
+<span style="font-size:13px;padding:6px 10px;border-radius:999px;background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250)">Color + forma + texto en cada categoría</span>
+<span style="font-size:13px;padding:6px 10px;border-radius:999px;background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250)">Objetivos táctiles ≥ 48 px</span>
+</div>
+</header>
+
+<section style="display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">01</div><h2 style="margin:0;font-size:26px;font-weight:700;letter-spacing:-0.01em">Color</h2><p style="margin:0;font-size:15px;line-height:22px;color:oklch(0.38 0.012 250);max-width:680px">Base neutra levemente fría. Tres acentos con igual luminosidad y croma (oklch L 0,50 · C 0,10), uno por función. El contraste se calcula en vivo desde cada token.</p></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:20px">
+<sc-for list="{{ tokenGroups }}" as="g" hint-placeholder-count="4">
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:17px;font-weight:600">{{ g.title }}</div><div style="font-size:13px;line-height:18px;color:oklch(0.47 0.012 250)">{{ g.desc }}</div></div>
+<sc-for list="{{ g.items }}" as="t" hint-placeholder-count="4">
+<div style="display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:12px;align-items:center">
+<div style="width:48px;height:40px;border-radius:8px;background:{{ t.val }};border:1px solid oklch(0.89 0.006 250)"></div>
+<div style="display:flex;flex-direction:column;gap:1px;min-width:0"><div style="font:600 13px 'Atkinson Hyperlegible Mono',monospace">{{ t.name }}</div><div style="font-size:13px;line-height:17px;color:oklch(0.47 0.012 250)">{{ t.role }}</div></div>
+<div style="display:flex;flex-direction:column;align-items:flex-end;gap:1px;font:400 12px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.38 0.012 250)"><span>{{ t.cW }}</span><span>{{ t.cI }}</span></div>
+</div>
+</sc-for>
+</div>
+</sc-for>
+</div>
+<p style="margin:0;font-size:13px;color:oklch(0.47 0.012 250)">Columna derecha: contraste contra blanco (◻) y contra texto n-900 (◼). Pares de texto usados en la UI: todos ≥ 4,5:1.</p>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">02</div><h2 style="margin:0;font-size:26px;font-weight:700;letter-spacing:-0.01em">Categorías: color, forma y texto</h2><p style="margin:0;font-size:15px;line-height:22px;color:oklch(0.38 0.012 250);max-width:680px">Ninguna categoría depende solo del color. Trimestres: barras (1, 2, 3) + rótulo T1–T3 + tono creciente. Tipo de control: círculo, rombo o cuadrado + nombre. Alertas: triángulo + texto.</p></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:20px">
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:16px">
+<div style="font-size:13px;font-weight:600;color:oklch(0.47 0.012 250)">Color</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<span style="display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px;border-radius:999px;background:oklch(0.96 0.02 215);border:1px solid oklch(0.80 0.05 215);color:oklch(0.38 0.09 215);font-size:14px;font-weight:600"><span style="display:flex;gap:2px"><span style="width:3px;height:11px;border-radius:1px;background:currentColor"></span></span>T1 · 1° trimestre</span>
+<span style="display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px;border-radius:999px;background:oklch(0.96 0.02 215);border:1px solid oklch(0.80 0.05 215);color:oklch(0.38 0.09 215);font-size:14px;font-weight:600"><span style="display:flex;gap:2px"><span style="width:3px;height:11px;border-radius:1px;background:currentColor"></span><span style="width:3px;height:11px;border-radius:1px;background:currentColor"></span></span>T2 · 2° trimestre</span>
+<span style="display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px;border-radius:999px;background:oklch(0.50 0.10 215);border:1px solid oklch(0.50 0.10 215);color:oklch(1 0 0);font-size:14px;font-weight:600"><span style="display:flex;gap:2px"><span style="width:3px;height:11px;border-radius:1px;background:currentColor"></span><span style="width:3px;height:11px;border-radius:1px;background:currentColor"></span><span style="width:3px;height:11px;border-radius:1px;background:currentColor"></span></span>T3 · 3° trimestre</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<span style="display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px;border-radius:999px;background:oklch(0.96 0.02 300);border:1px solid oklch(0.80 0.05 300);color:oklch(0.40 0.09 300);font-size:14px;font-weight:600"><span style="width:9px;height:9px;border-radius:50%;background:currentColor"></span>Control</span>
+<span style="display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px;border-radius:999px;background:oklch(0.96 0.02 300);border:1px solid oklch(0.80 0.05 300);color:oklch(0.40 0.09 300);font-size:14px;font-weight:600"><span style="width:8px;height:8px;background:currentColor;transform:rotate(45deg)"></span>Ecografía</span>
+<span style="display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px;border-radius:999px;background:oklch(0.96 0.02 300);border:1px solid oklch(0.80 0.05 300);color:oklch(0.40 0.09 300);font-size:14px;font-weight:600"><span style="width:9px;height:9px;background:currentColor"></span>Laboratorio</span>
+<span style="display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px;border-radius:999px;background:oklch(0.96 0.02 30);border:1px solid oklch(0.80 0.06 30);color:oklch(0.42 0.11 30);font-size:14px;font-weight:600"><span style="width:11px;height:10px;background:currentColor;clip-path:polygon(50% 0,100% 100%,0 100%)"></span>Discordancia</span>
+</div>
+</div>
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:16px">
+<div style="font-size:13px;font-weight:600;color:oklch(0.47 0.012 250)">Simulación sin color (escala de grises): sigue siendo legible</div>
+<div style="display:flex;flex-direction:column;gap:16px;filter:grayscale(1)">
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<span style="display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px;border-radius:999px;background:oklch(0.96 0.02 215);border:1px solid oklch(0.80 0.05 215);color:oklch(0.38 0.09 215);font-size:14px;font-weight:600"><span style="display:flex;gap:2px"><span style="width:3px;height:11px;border-radius:1px;background:currentColor"></span></span>T1 · 1° trimestre</span>
+<span style="display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px;border-radius:999px;background:oklch(0.96 0.02 215);border:1px solid oklch(0.80 0.05 215);color:oklch(0.38 0.09 215);font-size:14px;font-weight:600"><span style="display:flex;gap:2px"><span style="width:3px;height:11px;border-radius:1px;background:currentColor"></span><span style="width:3px;height:11px;border-radius:1px;background:currentColor"></span></span>T2 · 2° trimestre</span>
+<span style="display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px;border-radius:999px;background:oklch(0.50 0.10 215);color:oklch(1 0 0);font-size:14px;font-weight:600"><span style="display:flex;gap:2px"><span style="width:3px;height:11px;border-radius:1px;background:currentColor"></span><span style="width:3px;height:11px;border-radius:1px;background:currentColor"></span><span style="width:3px;height:11px;border-radius:1px;background:currentColor"></span></span>T3 · 3° trimestre</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<span style="display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px;border-radius:999px;background:oklch(0.96 0.02 300);border:1px solid oklch(0.80 0.05 300);color:oklch(0.40 0.09 300);font-size:14px;font-weight:600"><span style="width:9px;height:9px;border-radius:50%;background:currentColor"></span>Control</span>
+<span style="display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px;border-radius:999px;background:oklch(0.96 0.02 300);border:1px solid oklch(0.80 0.05 300);color:oklch(0.40 0.09 300);font-size:14px;font-weight:600"><span style="width:8px;height:8px;background:currentColor;transform:rotate(45deg)"></span>Ecografía</span>
+<span style="display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px;border-radius:999px;background:oklch(0.96 0.02 300);border:1px solid oklch(0.80 0.05 300);color:oklch(0.40 0.09 300);font-size:14px;font-weight:600"><span style="width:9px;height:9px;background:currentColor"></span>Laboratorio</span>
+<span style="display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px;border-radius:999px;background:oklch(0.96 0.02 30);border:1px solid oklch(0.80 0.06 30);color:oklch(0.42 0.11 30);font-size:14px;font-weight:600"><span style="width:11px;height:10px;background:currentColor;clip-path:polygon(50% 0,100% 100%,0 100%)"></span>Discordancia</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:40px">
+<div style="display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">03</div><h2 style="margin:0;font-size:26px;font-weight:700;letter-spacing:-0.01em">Tipografía</h2><p style="margin:0;font-size:15px;line-height:22px;color:oklch(0.38 0.012 250)">Atkinson Hyperlegible Next para texto; Atkinson Hyperlegible Mono para semanas, días y fechas (dígitos de ancho fijo, no saltan al girar el disco). Tamaño mínimo 13 px.</p></div>
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:8px 20px;display:flex;flex-direction:column">
+<div style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid oklch(0.95 0.004 250)"><div style="font:400 12px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">data-xl<br>44/48 · 700</div><div style="font:700 44px/48px 'Atkinson Hyperlegible Mono',monospace;letter-spacing:-0.03em">28 s 2 d</div></div>
+<div style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid oklch(0.95 0.004 250)"><div style="font:400 12px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">title<br>22/28 · 700</div><div style="font-size:22px;line-height:28px;font-weight:700;letter-spacing:-0.01em">Lucía Fernández</div></div>
+<div style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid oklch(0.95 0.004 250)"><div style="font:400 12px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">heading<br>17/24 · 600</div><div style="font-size:17px;line-height:24px;font-weight:600">Sugerido: control de 28 semanas</div></div>
+<div style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid oklch(0.95 0.004 250)"><div style="font:400 12px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">body<br>16/24 · 400</div><div style="font-size:16px;line-height:24px">La ecografía reemplaza a la FUM como referencia.</div></div>
+<div style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid oklch(0.95 0.004 250)"><div style="font:400 12px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">data<br>17/24 · 500</div><div style="font:500 17px/24px 'Atkinson Hyperlegible Mono',monospace">02/01/2027</div></div>
+<div style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid oklch(0.95 0.004 250)"><div style="font:400 12px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">label<br>14/18 · 600</div><div style="font-size:14px;line-height:18px;font-weight:600;color:oklch(0.38 0.012 250)">FPP</div></div>
+<div style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:baseline;padding:14px 0"><div style="font:400 12px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">caption<br>13/18 · 400</div><div style="font-size:13px;line-height:18px;color:oklch(0.47 0.012 250)">≈ 7° mes · aproximado</div></div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">04</div><h2 style="margin:0;font-size:26px;font-weight:700;letter-spacing:-0.01em">Espaciado y forma</h2><p style="margin:0;font-size:15px;line-height:22px;color:oklch(0.38 0.012 250)">Base 4 px. Márgenes de pantalla 16 px; separación entre bloques 24 px. Radios suaves y pocos.</p></div>
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ spacing }}" as="s" hint-placeholder-count="9">
+<div style="display:grid;grid-template-columns:72px 44px minmax(0,1fr);gap:12px;align-items:center"><span style="font:600 13px 'Atkinson Hyperlegible Mono',monospace">{{ s.name }}</span><span style="font:400 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">{{ s.px }}</span><div style="height:12px;width:{{ s.w }};background:oklch(0.50 0.10 215);border-radius:2px"></div></div>
+</sc-for>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px">
+<div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><div style="width:56px;height:56px;border:2px solid oklch(0.21 0.012 250);border-radius:6px"></div><span style="font:400 12px 'Atkinson Hyperlegible Mono',monospace">r-sm 6<br>chips de dato</span></div>
+<div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><div style="width:56px;height:56px;border:2px solid oklch(0.21 0.012 250);border-radius:10px"></div><span style="font:400 12px 'Atkinson Hyperlegible Mono',monospace">r-md 10<br>campos, botones</span></div>
+<div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><div style="width:56px;height:56px;border:2px solid oklch(0.21 0.012 250);border-radius:16px"></div><span style="font:400 12px 'Atkinson Hyperlegible Mono',monospace">r-lg 16<br>tarjetas</span></div>
+<div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><div style="width:56px;height:56px;border:2px solid oklch(0.21 0.012 250);border-radius:999px"></div><span style="font:400 12px 'Atkinson Hyperlegible Mono',monospace">r-pill<br>categorías</span></div>
+</div>
+</div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">05</div><h2 style="margin:0;font-size:26px;font-weight:700;letter-spacing:-0.01em">Componentes</h2></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:20px;align-items:start">
+
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:18px">
+<div style="font-size:13px;font-weight:600;color:oklch(0.47 0.012 250)">Campo de fecha · vacío, completo, error</div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:14px;font-weight:600">FUM</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Fecha de última menstruación</span></div>
+<div style="height:52px;border:1px solid oklch(0.62 0.012 250);border-radius:10px;display:flex;align-items:center;padding:0 14px;font:400 17px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">DD/MM/AAAA</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<span style="font-size:14px;font-weight:600">FUM</span>
+<div style="height:52px;border:2px solid oklch(0.50 0.10 215);box-shadow:0 0 0 3px oklch(0.92 0.04 215);border-radius:10px;display:flex;align-items:center;justify-content:space-between;padding:0 13px;font:500 17px 'Atkinson Hyperlegible Mono',monospace"><span>26/03/2026</span><span style="font:400 13px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.47 0.012 250)">hace 28 s 2 d</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<span style="font-size:14px;font-weight:600">FUM</span>
+<div style="height:52px;border:2px solid oklch(0.50 0.10 30);border-radius:10px;display:flex;align-items:center;padding:0 13px;font:500 17px 'Atkinson Hyperlegible Mono',monospace">14/11/2026</div>
+<div style="display:flex;align-items:center;gap:6px;font-size:13px;color:oklch(0.42 0.11 30)"><span style="width:11px;height:10px;background:currentColor;clip-path:polygon(50% 0,100% 100%,0 100%)"></span>La FUM no puede ser posterior a hoy.</div>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:20px">
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px">
+<div style="font-size:13px;font-weight:600;color:oklch(0.47 0.012 250)">Tarjeta de paciente</div>
+<div style="border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:50%;background:oklch(0.95 0.004 250);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px">LF</div><div style="display:flex;flex-direction:column"><span style="font-size:17px;font-weight:700">Lucía Fernández</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">31 años</span></div></div>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+<div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">Peso</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">64 kg</span></div>
+<div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">Altura</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">1,63 m</span></div>
+<div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">IMC</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">24,1</span></div>
+</div>
+</div>
+</div>
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px">
+<div style="font-size:13px;font-weight:600;color:oklch(0.47 0.012 250)">Bloque de sugerencia de turno (solo texto)</div>
+<div style="border:1px solid oklch(0.80 0.05 300);background:oklch(0.97 0.012 300);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:oklch(0.40 0.09 300)"><span style="width:9px;height:9px;border-radius:50%;background:currentColor"></span>Control</div>
+<div style="font-size:19px;line-height:25px;font-weight:700">Sugerido: control de 28 semanas</div>
+<div style="font-size:14px;line-height:20px;color:oklch(0.38 0.012 250)">Ventana 28 s 0 d – 29 s 6 d · hasta el 22/10/2026</div>
+<div style="font-size:13px;line-height:18px;color:oklch(0.47 0.012 250);border-top:1px solid oklch(0.89 0.03 300);padding-top:8px">Coordiná el turno en el sistema de la institución.</div>
+</div>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:20px">
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px">
+<div style="font-size:13px;font-weight:600;color:oklch(0.47 0.012 250)">Indicador de semana</div>
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font:700 44px/48px 'Atkinson Hyperlegible Mono',monospace;letter-spacing:-0.03em">28 s 2 d</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">≈ 7° mes</span></div>
+<div style="position:relative;height:28px">
+<div style="position:absolute;left:0;right:0;top:8px;height:10px;display:flex;gap:2px"><div style="flex:14;background:oklch(0.88 0.05 215);border-radius:5px 0 0 5px"></div><div style="flex:14;background:oklch(0.70 0.09 215)"></div><div style="flex:12;background:oklch(0.50 0.10 215);border-radius:0 5px 5px 0"></div></div>
+<div style="position:absolute;left:70.7%;top:0;width:4px;height:26px;margin-left:-2px;background:oklch(0.21 0.012 250);border-radius:2px;box-shadow:0 0 0 2px oklch(1 0 0)"></div>
+</div>
+<div style="display:flex;justify-content:space-between;font:400 12px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)"><span>0</span><span>14 s</span><span>28 s</span><span>40 s</span></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><span style="display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 10px;border-radius:999px;background:oklch(0.50 0.10 215);color:oklch(1 0 0);font-size:13px;font-weight:600"><span style="display:flex;gap:2px"><span style="width:3px;height:10px;border-radius:1px;background:currentColor"></span><span style="width:3px;height:10px;border-radius:1px;background:currentColor"></span><span style="width:3px;height:10px;border-radius:1px;background:currentColor"></span></span>T3</span><span style="font-size:13px;color:oklch(0.38 0.012 250)">Referencia: FUM 26/03/2026</span></div>
+</div>
+</div>
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px">
+<div style="font-size:13px;font-weight:600;color:oklch(0.47 0.012 250)">Alerta de discordancia FUM / ecografía</div>
+<div style="border:1px solid oklch(0.80 0.06 30);background:oklch(0.97 0.015 30);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:center;gap:7px;font-size:15px;font-weight:700;color:oklch(0.42 0.11 30)"><span style="width:12px;height:11px;background:currentColor;clip-path:polygon(50% 0,100% 100%,0 100%)"></span>Discordancia de 10 d</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div style="display:flex;flex-direction:column"><span style="font-size:13px;color:oklch(0.38 0.012 250)">Por FUM</span><span style="font:500 17px 'Atkinson Hyperlegible Mono',monospace">28 s 2 d</span></div><div style="display:flex;flex-direction:column"><span style="font-size:13px;color:oklch(0.38 0.012 250)">Por ecografía · en uso</span><span style="font:700 17px 'Atkinson Hyperlegible Mono',monospace">29 s 5 d</span></div></div>
+<div style="font-size:13px;line-height:18px;color:oklch(0.38 0.012 250)">Umbral ACOG para eco a 9 s 0 d – 13 s 6 d: más de 7 d.</div>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">06</div><h2 style="margin:0;font-size:26px;font-weight:700;letter-spacing:-0.01em">En el celular</h2><p style="margin:0;font-size:15px;line-height:22px;color:oklch(0.38 0.012 250);max-width:720px">Las dos pantallas comparten los datos: cambiá la FUM o la ecografía en «Datos» y el disco se recalcula. En el disco, arrastrá en círculo para girarlo; la línea superior marca el día leído.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+
+<div data-screen-label="Gestograma digital" style="display:flex;flex-direction:column;gap:12px;align-items:center">
+<div style="width:375px;height:800px;border:10px solid oklch(0.18 0.01 250);border-radius:48px;background:oklch(0.975 0.003 250);overflow:hidden;display:flex;flex-direction:column;box-sizing:content-box">
+<div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font:600 15px 'Atkinson Hyperlegible Next',sans-serif;flex:none"><span>9:41</span><span style="width:24px;height:11px;border:1.5px solid currentColor;border-radius:3px"></span></div>
+<div style="padding:4px 16px 12px;display:flex;align-items:center;justify-content:space-between;flex:none">
+<div style="display:flex;flex-direction:column"><span style="font-size:13px;color:oklch(0.47 0.012 250)">Gestograma</span><span style="font-size:19px;font-weight:700">{{ patient.name }}</span></div>
+<span style="display:inline-flex;align-items:center;height:28px;padding:0 10px;border-radius:6px;background:oklch(0.95 0.004 250);font-size:13px;font-weight:600">Ref.: {{ refLabel }}</span>
+</div>
+<div style="flex:1;overflow:auto;display:flex;flex-direction:column;gap:14px;padding:0 16px 24px">
+<div style="position:relative;width:328px;height:328px;margin:0 auto;flex:none">
+<svg ref="{{ svgRef }}" width="328" height="328" onPointerDown="{{ onDown }}" onPointerMove="{{ onMove }}" onPointerUp="{{ onUp }}" onPointerCancel="{{ onUp }}" style="display:block;touch-action:none;cursor:grab;user-select:none">
+<g transform="translate(4 4)">
+<circle cx="160" cy="160" r="159" style="fill:oklch(1 0 0);stroke:oklch(0.89 0.006 250);stroke-width:1"></circle>
+<g transform="{{ discRot }}">
+<sc-for list="{{ triArcs }}" as="a" hint-placeholder-count="3"><path d="{{ a.d }}" style="fill:none;stroke-width:14;stroke:{{ a.c }}"></path></sc-for>
+<sc-for list="{{ monthArcs }}" as="a" hint-placeholder-count="10"><path d="{{ a.d }}" style="fill:none;stroke-width:12;stroke:{{ a.c }}"></path></sc-for>
+<sc-for list="{{ ticks }}" as="t" hint-placeholder-count="42"><line x1="{{ t.x1 }}" y1="{{ t.y1 }}" x2="{{ t.x2 }}" y2="{{ t.y2 }}" style="stroke:oklch(0.47 0.012 250);stroke-width:{{ t.w }}"></line></sc-for>
+{{ discLabels }}
+<sc-for list="{{ markers }}" as="m" hint-placeholder-count="10"><path d="{{ m.d }}" transform="{{ m.tr }}" style="fill:{{ m.c }};stroke:oklch(1 0 0);stroke-width:1.5"></path></sc-for>
+<circle cx="{{ todayDot.x }}" cy="{{ todayDot.y }}" r="4" style="fill:oklch(0.21 0.012 250);stroke:oklch(1 0 0);stroke-width:2"></circle>
+</g>
+<line x1="160" y1="0" x2="160" y2="94" style="stroke:oklch(0.21 0.012 250);stroke-width:2"></line>
+<path d="M 152 -4 L 168 -4 L 160 6 Z" style="fill:oklch(0.21 0.012 250)"></path>
+<circle cx="160" cy="160" r="66" style="fill:oklch(1 0 0);stroke:oklch(0.89 0.006 250);stroke-width:1"></circle>
+</g>
+</svg>
+<div style="position:absolute;left:84px;top:104px;width:160px;height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;pointer-events:none;text-align:center">
+<sc-if value="{{ isToday }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;font-weight:700;padding:2px 7px;border-radius:999px;background:oklch(0.21 0.012 250);color:oklch(1 0 0)">HOY</span></sc-if>
+<span style="font:700 28px/32px 'Atkinson Hyperlegible Mono',monospace;letter-spacing:-0.03em">{{ selGA }}</span>
+<span style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.38 0.012 250)">{{ selDate }}</span>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;flex:none">
+<button onClick="{{ stepBack }}" style="height:48px;border-radius:10px;border:1px solid oklch(0.62 0.012 250);background:oklch(1 0 0);font:600 15px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);cursor:pointer" style-active="background:oklch(0.95 0.004 250)">− 1 sem</button>
+<button onClick="{{ goToday }}" style="height:48px;border-radius:10px;border:none;background:oklch(0.21 0.012 250);font:600 15px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(1 0 0);cursor:pointer" style-active="background:oklch(0.30 0.012 250)">Hoy</button>
+<button onClick="{{ stepFwd }}" style="height:48px;border-radius:10px;border:1px solid oklch(0.62 0.012 250);background:oklch(1 0 0);font:600 15px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);cursor:pointer" style-active="background:oklch(0.95 0.004 250)">+ 1 sem</button>
+</div>
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;flex:none">
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+<span style="display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 10px;border-radius:999px;background:oklch(0.96 0.02 215);border:1px solid oklch(0.80 0.05 215);color:oklch(0.38 0.09 215);font-size:13px;font-weight:600"><span style="display:flex;gap:2px"><sc-for list="{{ selTri.bars }}" as="b" hint-placeholder-count="3"><span style="width:3px;height:10px;border-radius:1px;background:currentColor"></span></sc-for></span>{{ selTri.label }}</span>
+<sc-if value="{{ showMonths }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;color:oklch(0.38 0.012 250)">{{ selMonth }}</span></sc-if>
+</div>
+<div style="display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:{{ selSug.tc }}">
+<sc-if value="{{ selSug.isCtl }}" hint-placeholder-val="{{ true }}"><span style="width:9px;height:9px;border-radius:50%;background:currentColor"></span></sc-if>
+<sc-if value="{{ selSug.isEco }}" hint-placeholder-val="{{ false }}"><span style="width:8px;height:8px;background:currentColor;transform:rotate(45deg)"></span></sc-if>
+<sc-if value="{{ selSug.isLab }}" hint-placeholder-val="{{ false }}"><span style="width:9px;height:9px;background:currentColor"></span></sc-if>
+<sc-if value="{{ selSug.isAlr }}" hint-placeholder-val="{{ false }}"><span style="width:11px;height:10px;background:currentColor;clip-path:polygon(50% 0,100% 100%,0 100%)"></span></sc-if>
+{{ selSug.type }}</div>
+<div style="font-size:17px;line-height:23px;font-weight:700">{{ selSug.title }}</div>
+<div style="font-size:13px;line-height:18px;color:oklch(0.38 0.012 250)">{{ selSug.window }}</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:oklch(0.38 0.012 250);flex:none">
+<span style="display:flex;align-items:center;gap:6px"><span style="width:9px;height:9px;border-radius:50%;background:oklch(0.50 0.10 300)"></span>Control</span>
+<span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;background:oklch(0.50 0.10 300);transform:rotate(45deg)"></span>Ecografía</span>
+<span style="display:flex;align-items:center;gap:6px"><span style="width:9px;height:9px;background:oklch(0.50 0.10 300)"></span>Laboratorio</span>
+<span style="display:flex;align-items:center;gap:6px"><span style="width:11px;height:10px;background:oklch(0.50 0.10 30);clip-path:polygon(50% 0,100% 100%,0 100%)"></span>Alerta</span>
+<span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:oklch(0.21 0.012 250)"></span>Hoy</span>
+</div>
+</div>
+</div>
+<span style="font-size:13px;color:oklch(0.47 0.012 250)">Gestograma digital · arrastrá para girar</span>
+</div>
+
+<div data-screen-label="Interfaz tradicional" style="display:flex;flex-direction:column;gap:12px;align-items:center">
+<div style="width:375px;height:800px;border:10px solid oklch(0.18 0.01 250);border-radius:48px;background:oklch(0.975 0.003 250);overflow:hidden;display:flex;flex-direction:column;box-sizing:content-box">
+<div style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font:600 15px 'Atkinson Hyperlegible Next',sans-serif;flex:none"><span>9:41</span><span style="width:24px;height:11px;border:1.5px solid currentColor;border-radius:3px"></span></div>
+<div style="padding:4px 16px 12px;flex:none"><span style="font-size:19px;font-weight:700">Datos de la gestación</span></div>
+<div style="flex:1;overflow:auto;display:flex;flex-direction:column;gap:16px;padding:0 16px 32px">
+
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:14px;flex:none">
+<div style="display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:50%;background:oklch(0.95 0.004 250);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px">{{ patient.initials }}</div><div style="display:flex;flex-direction:column"><span style="font-size:17px;font-weight:700">{{ patient.name }}</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">{{ patient.age }}</span></div></div>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+<div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">Peso</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">{{ patient.weight }}</span></div>
+<div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">Altura</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">{{ patient.height }}</span></div>
+<div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">IMC</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">{{ patient.bmi }}</span></div>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:6px;flex:none">
+<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:14px;font-weight:600">FUM</span><button onClick="{{ toggleHelp }}" style="height:32px;padding:0 10px;border-radius:999px;border:1px solid oklch(0.89 0.006 250);background:oklch(1 0 0);font:600 13px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.38 0.012 250);cursor:pointer">{{ helpBtn }}</button></div>
+<sc-if value="{{ help }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;line-height:18px;color:oklch(0.38 0.012 250);background:oklch(0.95 0.004 250);border-radius:6px;padding:8px 10px">FUM: fecha de última menstruación. Primer día del último período. Se usa para calcular la edad gestacional si no hay ecografía cargada.</div></sc-if>
+<input type="date" value="{{ fum }}" onChange="{{ setFum }}" max="{{ todayIso }}" style="height:52px;box-sizing:border-box;width:100%;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:0 14px;font:500 17px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.21 0.012 250);background:oklch(1 0 0);outline:none" style-focus="border:2px solid oklch(0.50 0.10 215);padding:0 13px;box-shadow:0 0 0 3px oklch(0.92 0.04 215)">
+<sc-if value="{{ fumError }}" hint-placeholder-val="{{ false }}"><div style="display:flex;align-items:center;gap:6px;font-size:13px;color:oklch(0.42 0.11 30)"><span style="width:11px;height:10px;background:currentColor;clip-path:polygon(50% 0,100% 100%,0 100%)"></span>{{ fumError }}</div></sc-if>
+</div>
+
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:12px;flex:none">
+<button onClick="{{ toggleEco }}" style="display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;padding:0;border:none;background:none;cursor:pointer;text-align:left;font-family:inherit;color:oklch(0.21 0.012 250)">
+<span style="display:flex;flex-direction:column"><span style="font-size:15px;font-weight:600">Ecografía como referencia</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">Si se carga, reemplaza a la FUM</span></span>
+<span style="width:48px;height:28px;border-radius:999px;background:{{ ecoSwitch.bg }};position:relative;flex:none"><span style="position:absolute;top:3px;left:{{ ecoSwitch.x }};width:22px;height:22px;border-radius:50%;background:oklch(1 0 0);transition:left .15s"></span></span>
+</button>
+<sc-if value="{{ ecoOn }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600">Fecha de la ecografía</span><input type="date" value="{{ ecoDate }}" onChange="{{ setEcoDate }}" max="{{ todayIso }}" style="height:52px;box-sizing:border-box;width:100%;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:0 14px;font:500 17px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.21 0.012 250);background:oklch(1 0 0);outline:none" style-focus="border:2px solid oklch(0.50 0.10 215);padding:0 13px"></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:600">EG por ecografía</span>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<label style="height:52px;box-sizing:border-box;border:1px solid oklch(0.62 0.012 250);border-radius:10px;display:flex;align-items:center;padding:0 14px;gap:6px;background:oklch(1 0 0)"><input type="number" min="0" max="42" value="{{ ecoW }}" onChange="{{ setEcoW }}" inputmode="numeric" style="width:100%;border:none;outline:none;font:500 17px 'Atkinson Hyperlegible Mono',monospace;background:none;color:oklch(0.21 0.012 250)"><span style="font-size:14px;color:oklch(0.47 0.012 250)">s</span></label>
+<label style="height:52px;box-sizing:border-box;border:1px solid oklch(0.62 0.012 250);border-radius:10px;display:flex;align-items:center;padding:0 14px;gap:6px;background:oklch(1 0 0)"><input type="number" min="0" max="6" value="{{ ecoD }}" onChange="{{ setEcoD }}" inputmode="numeric" style="width:100%;border:none;outline:none;font:500 17px 'Atkinson Hyperlegible Mono',monospace;background:none;color:oklch(0.21 0.012 250)"><span style="font-size:14px;color:oklch(0.47 0.012 250)">d</span></label>
+</div></div>
+</sc-if>
+</div>
+
+<sc-if value="{{ hasRef }}" hint-placeholder-val="{{ true }}">
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;flex:none">
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px"><span style="font-size:14px;font-weight:600;color:oklch(0.38 0.012 250)">Edad gestacional hoy</span><sc-if value="{{ showMonths }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;color:oklch(0.47 0.012 250)">{{ todayMonth }}</span></sc-if></div>
+<span style="font:700 44px/48px 'Atkinson Hyperlegible Mono',monospace;letter-spacing:-0.03em">{{ todayGA }}</span>
+<div style="position:relative;height:28px">
+<div style="position:absolute;left:0;right:0;top:8px;height:10px;display:flex;gap:2px"><div style="flex:14;background:oklch(0.88 0.05 215);border-radius:5px 0 0 5px"></div><div style="flex:14;background:oklch(0.70 0.09 215)"></div><div style="flex:12;background:oklch(0.50 0.10 215);border-radius:0 5px 5px 0"></div></div>
+<div style="position:absolute;left:{{ barPos }};top:0;width:4px;height:26px;margin-left:-2px;background:oklch(0.21 0.012 250);border-radius:2px;box-shadow:0 0 0 2px oklch(1 0 0)"></div>
+</div>
+<div style="display:flex;justify-content:space-between;font:400 12px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)"><span>0</span><span>14 s</span><span>28 s</span><span>40 s</span></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><span style="display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 10px;border-radius:999px;background:oklch(0.96 0.02 215);border:1px solid oklch(0.80 0.05 215);color:oklch(0.38 0.09 215);font-size:13px;font-weight:600"><span style="display:flex;gap:2px"><sc-for list="{{ todayTri.bars }}" as="b" hint-placeholder-count="3"><span style="width:3px;height:10px;border-radius:1px;background:currentColor"></span></sc-for></span>{{ todayTri.label }}</span><span style="font-size:13px;color:oklch(0.38 0.012 250)">Ref.: {{ refLong }}</span></div>
+</div>
+
+<sc-if value="{{ disc.show }}" hint-placeholder-val="{{ true }}">
+<div style="border:1px solid {{ disc.border }};background:{{ disc.bg }};border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;flex:none">
+<div style="display:flex;align-items:center;gap:7px;font-size:15px;font-weight:700;color:{{ disc.tc }}"><sc-if value="{{ disc.over }}" hint-placeholder-val="{{ true }}"><span style="width:12px;height:11px;background:currentColor;clip-path:polygon(50% 0,100% 100%,0 100%)"></span></sc-if><sc-if value="{{ disc.ok }}" hint-placeholder-val="{{ false }}"><span style="width:10px;height:10px;border-radius:50%;border:2px solid currentColor;box-sizing:border-box"></span></sc-if>{{ disc.title }}</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div style="display:flex;flex-direction:column"><span style="font-size:13px;color:oklch(0.38 0.012 250)">Por FUM</span><span style="font:500 17px 'Atkinson Hyperlegible Mono',monospace">{{ disc.gaFum }}</span></div><div style="display:flex;flex-direction:column"><span style="font-size:13px;color:oklch(0.38 0.012 250)">Por ecografía · en uso</span><span style="font:700 17px 'Atkinson Hyperlegible Mono',monospace">{{ disc.gaEco }}</span></div></div>
+<div style="font-size:13px;line-height:18px;color:oklch(0.38 0.012 250)">{{ disc.rule }}</div>
+</div>
+</sc-if>
+
+<div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:4px 16px;display:flex;flex-direction:column;flex:none">
+<sc-for list="{{ keyDates }}" as="k" hint-placeholder-count="4">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;border-bottom:1px solid oklch(0.95 0.004 250)">
+<div style="display:flex;flex-direction:column"><span style="font-size:14px;font-weight:600">{{ k.label }}</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">{{ k.sub }}</span></div>
+<span style="font:500 17px 'Atkinson Hyperlegible Mono',monospace">{{ k.date }}</span>
+</div>
+</sc-for>
+</div>
+
+<div style="border:1px solid {{ todaySug.border }};background:{{ todaySug.bg }};border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px;flex:none">
+<div style="display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:{{ todaySug.tc }}">
+<sc-if value="{{ todaySug.isCtl }}" hint-placeholder-val="{{ true }}"><span style="width:9px;height:9px;border-radius:50%;background:currentColor"></span></sc-if>
+<sc-if value="{{ todaySug.isEco }}" hint-placeholder-val="{{ false }}"><span style="width:8px;height:8px;background:currentColor;transform:rotate(45deg)"></span></sc-if>
+<sc-if value="{{ todaySug.isLab }}" hint-placeholder-val="{{ false }}"><span style="width:9px;height:9px;background:currentColor"></span></sc-if>
+<sc-if value="{{ todaySug.isAlr }}" hint-placeholder-val="{{ false }}"><span style="width:11px;height:10px;background:currentColor;clip-path:polygon(50% 0,100% 100%,0 100%)"></span></sc-if>
+{{ todaySug.type }}</div>
+<div style="font-size:19px;line-height:25px;font-weight:700">{{ todaySug.title }}</div>
+<div style="font-size:14px;line-height:20px;color:oklch(0.38 0.012 250)">{{ todaySug.window }}</div>
+<div style="font-size:13px;line-height:18px;color:oklch(0.47 0.012 250);border-top:1px solid oklch(0.89 0.006 250);padding-top:8px">Coordiná el turno en el sistema de la institución.</div>
+</div>
+</sc-if>
+
+</div>
+</div>
+<span style="font-size:13px;color:oklch(0.47 0.012 250)">Interfaz tradicional · formulario y datos</span>
+</div>
+
+</div>
+</section>
+
+<footer style="font-size:13px;line-height:20px;color:oklch(0.47 0.012 250);max-width:760px;border-top:1px solid oklch(0.89 0.006 250);padding-top:20px">Supuestos de cálculo: FPP = FUM + 280 d (Naegele). Concepción ≈ FUM + 14 d. 2° trimestre desde 14 s 0 d; 3° trimestre desde 28 s 0 d. Meses = días ÷ 30,4 (aproximado). Esquema de controles y umbrales de discordancia orientativos y configurables; validar con la guía institucional.</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;guia&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;acog&quot;,&quot;fijo&quot;],&quot;default&quot;:&quot;acog&quot;,&quot;tsType&quot;:&quot;'acog'|'fijo'&quot;,&quot;section&quot;:&quot;Discordancia FUM / eco&quot;},&quot;umbralDias&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:7,&quot;min&quot;:1,&quot;max&quot;:30,&quot;unit&quot;:&quot;d&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Discordancia FUM / eco&quot;},&quot;mostrarMeses&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vista&quot;}}">
+const DAY = 864e5, TOT = 294, K = 360 / TOT, C = 160;
+const MES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const pad = n => String(n).padStart(2, '0');
+const dn = s => { if (!s) return null; const [y, m, d] = s.split('-').map(Number); if (!y || !m || !d) return null; return Math.round(Date.UTC(y, m - 1, d) / DAY); };
+const todayDn = () => { const t = new Date(); return Math.round(Date.UTC(t.getFullYear(), t.getMonth(), t.getDate()) / DAY); };
+const iso = n => { const d = new Date(n * DAY); return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()); };
+const fmt = n => { const d = new Date(n * DAY); return pad(d.getUTCDate()) + '/' + pad(d.getUTCMonth() + 1) + '/' + d.getUTCFullYear(); };
+const fmtL = n => { const d = new Date(n * DAY); return d.getUTCDate() + ' ' + MES[d.getUTCMonth()] + ' ' + d.getUTCFullYear(); };
+const sd = x => x < 0 ? '—' : Math.floor(x / 7) + ' s ' + (x % 7) + ' d';
+const P = (r, a) => { const t = a * Math.PI / 180; return [+(C + r * Math.sin(t)).toFixed(2), +(C - r * Math.cos(t)).toFixed(2)]; };
+const arc = (r, a0, a1) => { const p0 = P(r, a0), p1 = P(r, a1); return `M ${p0[0]} ${p0[1]} A ${r} ${r} 0 ${a1 - a0 > 180 ? 1 : 0} 1 ${p1[0]} ${p1[1]}`; };
+const tri = d => d < 98 ? 1 : d < 196 ? 2 : 3;
+const triInfo = d => { const t = tri(d); return { bars: Array.from({ length: t }, (_, i) => i), label: 'T' + t + ' · ' + t + '° trimestre' }; };
+const month = d => '≈ ' + (Math.floor(d / 30.4) + 1) + '° mes';
+const SCHED = [
+  { w0: 6, w1: 11, t: 'lab', name: 'laboratorio del 1° trimestre' },
+  { w0: 11, w1: 14, t: 'eco', name: 'ecografía 11–14 s' },
+  { w0: 16, w1: 18, t: 'ctl', name: 'control de 16 semanas' },
+  { w0: 20, w1: 24, t: 'eco', name: 'ecografía morfológica 20–24 s' },
+  { w0: 24, w1: 28, t: 'lab', name: 'PTOG 24–28 s' },
+  { w0: 28, w1: 30, t: 'ctl', name: 'control de 28 semanas' },
+  { w0: 32, w1: 34, t: 'eco', name: 'ecografía de 32 semanas' },
+  { w0: 35, w1: 38, t: 'lab', name: 'cultivo de EGB 35–37 s' },
+  { w0: 38, w1: 40, t: 'ctl', name: 'control de 38 semanas' },
+  { w0: 41, w1: 42, t: 'alr', name: 'evaluar finalización a las 41 s' }
+];
+const TYPES = {
+  ctl: { type: 'Control', tc: 'oklch(0.40 0.09 300)', bg: 'oklch(0.97 0.012 300)', border: 'oklch(0.80 0.05 300)', c: 'oklch(0.50 0.10 300)' },
+  eco: { type: 'Ecografía', tc: 'oklch(0.40 0.09 300)', bg: 'oklch(0.97 0.012 300)', border: 'oklch(0.80 0.05 300)', c: 'oklch(0.50 0.10 300)' },
+  lab: { type: 'Laboratorio', tc: 'oklch(0.40 0.09 300)', bg: 'oklch(0.97 0.012 300)', border: 'oklch(0.80 0.05 300)', c: 'oklch(0.50 0.10 300)' },
+  alr: { type: 'Alerta', tc: 'oklch(0.42 0.11 30)', bg: 'oklch(0.97 0.015 30)', border: 'oklch(0.80 0.06 30)', c: 'oklch(0.50 0.10 30)' }
+};
+const suggest = (ga, ref) => {
+  const it = SCHED.find(s => s.w1 * 7 > ga) || SCHED[SCHED.length - 1];
+  const T = TYPES[it.t], s0 = it.w0 * 7, s1 = it.w1 * 7 - 1;
+  const inWin = ga >= s0;
+  const window = inWin ? `Ventana ${sd(s0)} – ${sd(s1)} · hasta el ${fmt(ref + s1)}` : `Ventana desde ${sd(s0)} · a partir del ${fmt(ref + s0)}`;
+  const title = 'Sugerido: ' + it.name;
+  return { ...T, title, window, isCtl: it.t === 'ctl', isEco: it.t === 'eco', isLab: it.t === 'lab', isAlr: it.t === 'alr' };
+};
+const acog = g => g <= 62 ? [5, 'hasta 8 s 6 d'] : g <= 97 ? [7, '9 s 0 d – 13 s 6 d'] : g <= 111 ? [7, '14 s 0 d – 15 s 6 d'] : g <= 153 ? [10, '16 s 0 d – 21 s 6 d'] : g <= 195 ? [14, '22 s 0 d – 27 s 6 d'] : [21, '28 s 0 d o más'];
+const lum = (L, Cc, h) => {
+  const a = Cc * Math.cos(h * Math.PI / 180), b = Cc * Math.sin(h * Math.PI / 180);
+  const l = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3, m = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3, s = (L - 0.0894841775 * a - 1.2914855480 * b) ** 3;
+  const cl = v => Math.min(1, Math.max(0, v));
+  const r = cl(4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s), g = cl(-1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s), bb = cl(-0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * bb;
+};
+const ratio = (y1, y2) => ((Math.max(y1, y2) + 0.05) / (Math.min(y1, y2) + 0.05)).toFixed(1).replace('.', ',');
+const TOK = [
+  { title: 'Neutros', desc: 'Superficies, bordes y texto.', items: [
+    ['n-0', 1, 0, 250, 'Superficie de tarjeta'], ['n-25', 0.975, 0.003, 250, 'Fondo de app'], ['n-100', 0.95, 0.004, 250, 'Hundido, avatar, divisores'], ['n-200', 0.89, 0.006, 250, 'Borde sutil'], ['n-400', 0.62, 0.012, 250, 'Borde de campo (≥ 3:1)'], ['n-600', 0.47, 0.012, 250, 'Texto secundario'], ['n-700', 0.38, 0.012, 250, 'Texto de apoyo'], ['n-900', 0.21, 0.012, 250, 'Texto principal, botón primario']] },
+  { title: 'Trimestre · petróleo h215', desc: 'Tono creciente T1 → T3 + barras 1/2/3 + rótulo.', items: [
+    ['tri-50', 0.96, 0.02, 215, 'Fondo de chip'], ['tri-t1', 0.88, 0.05, 215, 'Banda T1'], ['tri-t2', 0.70, 0.09, 215, 'Banda T2'], ['tri-t3', 0.50, 0.10, 215, 'Banda T3, foco'], ['tri-ink', 0.38, 0.09, 215, 'Texto sobre tri-50']] },
+  { title: 'Tipo de control · violeta h300', desc: 'Control ●, ecografía ◆, laboratorio ■.', items: [
+    ['ctl-50', 0.97, 0.012, 300, 'Fondo de sugerencia'], ['ctl-500', 0.50, 0.10, 300, 'Marcadores del disco'], ['ctl-ink', 0.40, 0.09, 300, 'Texto de categoría']] },
+  { title: 'Alerta · ladrillo h30', desc: 'Discordancia, error, fuera de rango. Siempre con ▲ y texto.', items: [
+    ['alr-50', 0.97, 0.015, 30, 'Fondo de alerta'], ['alr-500', 0.50, 0.10, 30, 'Borde de error, marcador'], ['alr-ink', 0.42, 0.11, 30, 'Texto de alerta']] }
+];
+
+class Component extends DCLogic {
+  state = { fum: '2026-03-26', ecoOn: true, ecoDate: '2026-05-20', ecoW: 9, ecoD: 2, sel: null, help: false };
+  svgRef = React.createRef();
+  drag = null;
+
+  calc() {
+    const T = todayDn(), f = dn(this.state.fum), ed = dn(this.state.ecoDate);
+    const w = parseInt(this.state.ecoW) || 0, d = parseInt(this.state.ecoD) || 0, ecoGA = w * 7 + d;
+    const fumOk = f != null && f <= T && T - f <= 300;
+    const ecoValid = this.state.ecoOn && ed != null && ed <= T && ecoGA > 0;
+    const ref = ecoValid ? ed - ecoGA : fumOk ? f : null;
+    return { T, f, fumOk, ed, ecoGA, ecoValid, ref };
+  }
+  ang(e) {
+    const r = this.svgRef.current.getBoundingClientRect();
+    return Math.atan2(e.clientX - (r.left + r.width / 2), -(e.clientY - (r.top + r.height / 2))) * 180 / Math.PI;
+  }
+  curSel() { const c = this.calc(); return c.ref == null ? 0 : Math.max(0, Math.min(TOT, this.state.sel ?? (c.T - c.ref))); }
+
+  renderVals() {
+    const p = this.props, c = this.calc(), st = this.state;
+    const showMonths = p.mostrarMeses ?? true;
+    const sel = this.curSel(), ref = c.ref ?? c.T;
+    const rot = -sel * K, tr = (x, y) => `rotate(${-rot} ${x} ${y})`;
+    const ticks = [], weekLabels = [];
+    for (let w = 0; w < 42; w++) {
+      const a = w * 7 * K, long = w % 2 === 0, p1 = P(157, a), p2 = P(long ? 147 : 151, a);
+      ticks.push({ x1: p1[0], y1: p1[1], x2: p2[0], y2: p2[1], w: long ? 1.5 : 1 });
+      if (long) { const q = P(137, a); weekLabels.push({ x: q[0], y: q[1], t: String(w), tr: tr(q[0], q[1]) }); }
+    }
+    const triCols = ['oklch(0.88 0.05 215)', 'oklch(0.70 0.09 215)', 'oklch(0.50 0.10 215)'];
+    const bounds = [[0, 98], [98, 196], [196, 294]];
+    const triArcs = bounds.map((b, i) => ({ d: arc(119, b[0] * K + 0.6, b[1] * K - 0.6), c: triCols[i] }));
+    const triLabels = bounds.map((b, i) => { const q = P(119, (b[0] + 14) * K); return { x: q[0], y: q[1], t: 'T' + (i + 1), tr: tr(q[0], q[1]), c: i === 2 ? 'oklch(1 0 0)' : 'oklch(0.21 0.012 250)' }; });
+    const monthArcs = [], monthLabels = [];
+    if (showMonths) for (let m = 0; m < 10; m++) {
+      const d0 = m * 30.4, d1 = Math.min(TOT, (m + 1) * 30.4);
+      monthArcs.push({ d: arc(99, d0 * K + 0.4, d1 * K - 0.4), c: m % 2 ? 'oklch(0.89 0.006 250)' : 'oklch(0.95 0.004 250)' });
+      const q = P(99, ((d0 + d1) / 2) * K); monthLabels.push({ x: q[0], y: q[1], t: 'm' + (m + 1), tr: tr(q[0], q[1]) });
+    }
+    const markers = SCHED.map(s => {
+      const q = P(showMonths ? 80 : 96, s.w0 * 7 * K), [x, y] = q, r = 6;
+      let d;
+      if (s.t === 'ctl') d = `M ${x - r} ${y} a ${r} ${r} 0 1 0 ${2 * r} 0 a ${r} ${r} 0 1 0 ${-2 * r} 0`;
+      else if (s.t === 'eco') d = `M ${x} ${y - r - 1} L ${x + r + 1} ${y} L ${x} ${y + r + 1} L ${x - r - 1} ${y} Z`;
+      else if (s.t === 'lab') d = `M ${x - 5} ${y - 5} H ${x + 5} V ${y + 5} H ${x - 5} Z`;
+      else d = `M ${x} ${y - 7} L ${x + 7} ${y + 5} L ${x - 7} ${y + 5} Z`;
+      return { d, tr: tr(x, y), c: TYPES[s.t].c };
+    });
+    const tq = P(159, Math.max(0, Math.min(TOT, c.T - ref)) * K);
+    const todayGAd = c.T - ref;
+
+    let disc = { show: false };
+    if (c.ecoValid && c.fumOk) {
+      const gaFumAtEco = c.ed - c.f, diff = Math.abs(gaFumAtEco - c.ecoGA);
+      const fixed = (p.guia ?? 'acog') === 'fijo';
+      const [thr, range] = fixed ? [p.umbralDias ?? 7, ''] : acog(c.ecoGA);
+      const over = diff > thr;
+      disc = {
+        show: true, over, ok: !over,
+        title: over ? `Discordancia de ${diff} d` : `Concordante · diferencia ${diff} d`,
+        gaFum: sd(c.T - c.f), gaEco: sd(todayGAd),
+        rule: fixed ? `Umbral fijo configurado: más de ${thr} d.` : `Umbral ACOG para eco a ${range}: más de ${thr} d.`,
+        tc: over ? 'oklch(0.42 0.11 30)' : 'oklch(0.38 0.012 250)',
+        bg: over ? 'oklch(0.97 0.015 30)' : 'oklch(1 0 0)',
+        border: over ? 'oklch(0.80 0.06 30)' : 'oklch(0.89 0.006 250)'
+      };
+    }
+    const fumD = dn(st.fum);
+    const fumError = !st.fum ? '' : fumD > c.T ? 'La FUM no puede ser posterior a hoy.' : c.T - fumD > 300 ? 'La FUM supera las 42 semanas.' : '';
+    const tokenGroups = TOK.map(g => ({ title: g.title, desc: g.desc, items: g.items.map(([name, L, Cc, h, role]) => {
+      const y = lum(L, Cc, h); return { name, role, val: `oklch(${L} ${Cc} ${h})`, cW: '◻ ' + ratio(y, 1), cI: '◼ ' + ratio(y, lum(0.21, 0.012, 250)) };
+    }) }));
+    const spacing = [['sp-1', 4], ['sp-2', 8], ['sp-3', 12], ['sp-4', 16], ['sp-5', 20], ['sp-6', 24], ['sp-8', 32], ['sp-10', 40], ['sp-14', 56]].map(([name, v]) => ({ name, px: v + ' px', w: v * 4 + 'px' }));
+
+    return {
+      tokenGroups, spacing, showMonths,
+      patient: { name: 'Lucía Fernández', initials: 'LF', age: '31 años', weight: '64 kg', height: '1,63 m', bmi: (64 / 1.63 / 1.63).toFixed(1).replace('.', ',') },
+      refLabel: c.ecoValid ? 'Eco' : 'FUM',
+      refLong: c.ecoValid ? `ecografía ${fmt(c.ed)}` : c.fumOk ? `FUM ${fmt(c.f)}` : '—',
+      svgRef: this.svgRef, discRot: `rotate(${rot} ${C} ${C})`,
+      discLabels: React.createElement('g', null,
+        ...weekLabels.map((l, i) => React.createElement('text', { key: 'w' + i, x: l.x, y: l.y, transform: l.tr, style: { font: "500 10px 'Atkinson Hyperlegible Mono',monospace", textAnchor: 'middle', dominantBaseline: 'central', fill: 'oklch(0.30 0.012 250)' } }, l.t)),
+        ...triLabels.map((l, i) => React.createElement('text', { key: 't' + i, x: l.x, y: l.y, transform: l.tr, style: { font: "700 9px 'Atkinson Hyperlegible Next',sans-serif", textAnchor: 'middle', dominantBaseline: 'central', fill: l.c } }, l.t)),
+        ...monthLabels.map((l, i) => React.createElement('text', { key: 'm' + i, x: l.x, y: l.y, transform: l.tr, style: { font: "500 8.5px 'Atkinson Hyperlegible Mono',monospace", textAnchor: 'middle', dominantBaseline: 'central', fill: 'oklch(0.30 0.012 250)' } }, l.t))),
+      ticks, triArcs, monthArcs, markers, todayDot: { x: tq[0], y: tq[1] },
+      isToday: ref + sel === c.T, selGA: sd(sel), selDate: fmtL(ref + sel), selTri: triInfo(sel), selMonth: month(sel), selSug: suggest(sel, ref),
+      onDown: e => { if (c.ref == null) return; e.currentTarget.setPointerCapture(e.pointerId); const a = this.ang(e); this.drag = { last: a, acc: 0, s0: sel }; },
+      onMove: e => {
+        if (!this.drag) return; const a = this.ang(e); let da = a - this.drag.last;
+        if (da > 180) da -= 360; if (da < -180) da += 360;
+        this.drag.last = a; this.drag.acc += da;
+        const n = Math.max(0, Math.min(TOT, Math.round(this.drag.s0 - this.drag.acc / K)));
+        if (n !== this.state.sel) this.setState({ sel: n });
+      },
+      onUp: () => { this.drag = null; },
+      stepBack: () => this.setState({ sel: Math.max(0, sel - 7) }),
+      stepFwd: () => this.setState({ sel: Math.min(TOT, sel + 7) }),
+      goToday: () => this.setState({ sel: null }),
+      fum: st.fum, todayIso: iso(c.T), fumError,
+      setFum: e => this.setState({ fum: e.target.value, sel: null }),
+      help: st.help, helpBtn: st.help ? 'Cerrar ayuda' : '¿Qué es FUM?', toggleHelp: () => this.setState({ help: !st.help }),
+      ecoOn: st.ecoOn, toggleEco: () => this.setState({ ecoOn: !st.ecoOn, sel: null }),
+      ecoSwitch: { bg: st.ecoOn ? 'oklch(0.50 0.10 215)' : 'oklch(0.62 0.012 250)', x: st.ecoOn ? '23px' : '3px' },
+      ecoDate: st.ecoDate, ecoW: st.ecoW, ecoD: st.ecoD,
+      setEcoDate: e => this.setState({ ecoDate: e.target.value, sel: null }),
+      setEcoW: e => this.setState({ ecoW: e.target.value, sel: null }),
+      setEcoD: e => this.setState({ ecoD: e.target.value, sel: null }),
+      hasRef: c.ref != null,
+      todayGA: sd(todayGAd), todayMonth: month(Math.max(0, todayGAd)), todayTri: triInfo(Math.max(0, todayGAd)),
+      barPos: Math.max(0, Math.min(100, todayGAd / 280 * 100)).toFixed(1) + '%',
+      disc,
+      keyDates: [
+        { label: 'FPP', sub: 'Fecha probable de parto · 40 s 0 d', date: fmt(ref + 280) },
+        { label: 'Concepción probable', sub: '≈ 2 s 0 d', date: fmt(ref + 14) },
+        { label: 'Inicio 2° trimestre', sub: '14 s 0 d', date: fmt(ref + 98) },
+        { label: 'Inicio 3° trimestre', sub: '28 s 0 d', date: fmt(ref + 196) }
+      ],
+      todaySug: suggest(Math.max(0, todayGAd), ref)
+    };
+  }
+}
+</script>
+</body>
+</html>
