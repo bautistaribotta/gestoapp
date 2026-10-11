@@ -1,0 +1,168 @@
+import { useState, type PropsWithChildren } from 'react';
+import { StyleSheet, Text, TextInput, View, type TextInputProps } from 'react-native';
+
+import { AlertTriangle } from '@/components/alert-icons';
+import { colors, fonts } from '@/theme';
+
+type FieldLabelProps = {
+  label: string;
+  hint?: string;
+};
+
+export function FieldLabel({ label, hint }: FieldLabelProps) {
+  return (
+    <Text style={styles.label}>
+      {label}
+      {hint ? <Text style={styles.labelHint}> · {hint}</Text> : null}
+    </Text>
+  );
+}
+
+type FieldProps = PropsWithChildren<
+  Partial<FieldLabelProps> & {
+    help?: string;
+    /** Mensaje de error; se muestra en lugar de la ayuda. */
+    error?: string | null;
+  }
+>;
+
+export function Field({ label, hint, help, error, children }: FieldProps) {
+  return (
+    <View style={styles.field}>
+      {label ? <FieldLabel label={label} hint={hint} /> : null}
+      {children}
+      {error ? <FieldError message={error} /> : help ? <Text style={styles.help}>{help}</Text> : null}
+    </View>
+  );
+}
+
+export function FieldError({ message }: { message: string }) {
+  return (
+    <View style={styles.error} accessibilityRole="alert">
+      <AlertTriangle />
+      <Text style={styles.errorText}>{message}</Text>
+    </View>
+  );
+}
+
+type TextFieldProps = Omit<TextInputProps, 'style'> & {
+  /** Si se omite, pasar accessibilityLabel. */
+  label?: string;
+  hint?: string;
+  /** Unidad que se muestra a la derecha del valor (ej. "kg"). */
+  unit?: string;
+  mono?: boolean;
+};
+
+export function TextField({ label, hint, unit, mono, onFocus, onBlur, ...props }: TextFieldProps) {
+  const [focused, setFocused] = useState(false);
+
+  return (
+    <Field label={label} hint={hint}>
+      <View
+        style={[
+          styles.box,
+          unit ? styles.boxWithUnit : null,
+          focused && styles.boxFocused,
+          focused && unit ? styles.boxWithUnitFocused : null,
+        ]}>
+        <TextInput
+          placeholderTextColor={colors.textMuted}
+          autoComplete="off"
+          accessibilityLabel={label}
+          style={[styles.input, mono && styles.inputMono]}
+          onFocus={(event) => {
+            setFocused(true);
+            onFocus?.(event);
+          }}
+          onBlur={(event) => {
+            setFocused(false);
+            onBlur?.(event);
+          }}
+          {...props}
+        />
+        {unit ? <Text style={styles.unit}>{unit}</Text> : null}
+      </View>
+    </Field>
+  );
+}
+
+export const fieldStyles = StyleSheet.create({
+  box: {
+    height: 52,
+    borderWidth: 1,
+    borderColor: colors.borderStrong,
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    backgroundColor: colors.surface,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  boxFocused: {
+    borderWidth: 2,
+    borderColor: colors.focus,
+    paddingHorizontal: 13,
+  },
+  boxError: {
+    borderColor: colors.alertStrong,
+  },
+});
+
+const styles = StyleSheet.create({
+  field: {
+    gap: 6,
+  },
+  label: {
+    fontFamily: fonts.semibold,
+    fontSize: 14,
+    color: colors.ink,
+  },
+  labelHint: {
+    fontFamily: fonts.regular,
+    color: colors.textMuted,
+  },
+  help: {
+    fontFamily: fonts.regular,
+    fontSize: 13,
+    lineHeight: 18,
+    color: colors.textMuted,
+  },
+  error: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  errorText: {
+    flex: 1,
+    fontFamily: fonts.regular,
+    fontSize: 13,
+    lineHeight: 18,
+    color: colors.alertText,
+  },
+  box: fieldStyles.box,
+  boxWithUnit: {
+    paddingHorizontal: 10,
+  },
+  boxFocused: fieldStyles.boxFocused,
+  boxWithUnitFocused: {
+    paddingHorizontal: 9,
+  },
+  input: {
+    flex: 1,
+    minWidth: 0,
+    height: '100%',
+    padding: 0,
+    fontFamily: fonts.medium,
+    fontSize: 17,
+    color: colors.ink,
+  },
+  inputMono: {
+    fontFamily: fonts.monoMedium,
+  },
+  unit: {
+    fontFamily: fonts.regular,
+    fontSize: 13,
+    color: colors.textMuted,
+  },
+});
