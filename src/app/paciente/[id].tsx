@@ -102,7 +102,6 @@ function PatientDetail({ patient, onSaveNote, onDelete }: PatientDetailProps) {
   const gestation = reference ? gestationFromReference(reference.day, today) : null;
   const comparison = discordance(patient, today);
   const { weight, heightCm } = patient;
-  const bmi = weight && heightCm ? weight / (heightCm / 100) ** 2 : null;
 
   return (
     <KeyboardAvoidingView
@@ -117,15 +116,14 @@ function PatientDetail({ patient, onSaveNote, onDelete }: PatientDetailProps) {
                 {patient.name}
               </Text>
               <Text style={styles.meta}>
-                {patient.age} años · vista{' '}
-                {seenLabel(dayFromIso(patient.lastSeen) ?? today, today).toLowerCase()}
+                Vista {seenLabel(dayFromIso(patient.lastSeen) ?? today, today).toLowerCase()}
               </Text>
             </View>
           </View>
           <View style={styles.stats}>
             <Stat label="Peso" value={weight ? `${formatDecimal(weight)} kg` : '—'} />
             <Stat label="Altura" value={heightCm ? `${Math.round(heightCm)} cm` : '—'} />
-            <Stat label="IMC" value={bmi ? formatDecimal(bmi, 1) : '—'} />
+            <Stat label="Edad" value={`${patient.age} años`} />
           </View>
         </View>
 
