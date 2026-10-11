@@ -49,20 +49,23 @@ type TextFieldProps = Omit<TextInputProps, 'style'> & {
   /** Si se omite, pasar accessibilityLabel. */
   label?: string;
   hint?: string;
+  /** Mensaje de error debajo del campo. */
+  error?: string | null;
   /** Unidad que se muestra a la derecha del valor (ej. "kg"). */
   unit?: string;
   mono?: boolean;
 };
 
-export function TextField({ label, hint, unit, mono, onFocus, onBlur, ...props }: TextFieldProps) {
+export function TextField({ label, hint, error, unit, mono, onFocus, onBlur, ...props }: TextFieldProps) {
   const [focused, setFocused] = useState(false);
 
   return (
-    <Field label={label} hint={hint}>
+    <Field label={label} hint={hint} error={error}>
       <View
         style={[
           styles.box,
           unit ? styles.boxWithUnit : null,
+          error ? fieldStyles.boxError : null,
           focused && styles.boxFocused,
           focused && unit ? styles.boxWithUnitFocused : null,
         ]}>

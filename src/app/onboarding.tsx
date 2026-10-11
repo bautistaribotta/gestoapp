@@ -1,18 +1,11 @@
 import { useState } from 'react';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Button } from '@/components/button';
-import { FieldLabel, TextField } from '@/components/field';
-import { greeting, PROFILE_TITLES, type ProfileTitle } from '@/db/profile';
+import { TextField } from '@/components/field';
+import { TitlePicker } from '@/components/title-picker';
+import { greeting, type ProfileTitle } from '@/db/profile';
 import { useProfile } from '@/providers/profile-provider';
 import { colors, fonts } from '@/theme';
 
@@ -58,24 +51,7 @@ export default function OnboardingScreen() {
           </View>
 
           <View style={styles.form}>
-            <View style={styles.titleField}>
-              <FieldLabel label="Tratamiento" />
-              <View style={styles.segmented} accessibilityRole="radiogroup">
-                {PROFILE_TITLES.map((option) => {
-                  const selected = option === title;
-                  return (
-                    <Pressable
-                      key={option}
-                      accessibilityRole="radio"
-                      accessibilityState={{ selected }}
-                      onPress={() => setTitle(option)}
-                      style={[styles.segment, selected && styles.segmentSelected]}>
-                      <Text style={styles.segmentLabel}>{option}</Text>
-                    </Pressable>
-                  );
-                })}
-              </View>
-            </View>
+            <TitlePicker value={title} onChange={setTitle} />
 
             <TextField
               label="Apellido o nombre"
@@ -157,32 +133,6 @@ const styles = StyleSheet.create({
   },
   form: {
     gap: 16,
-  },
-  titleField: {
-    gap: 6,
-  },
-  segmented: {
-    flexDirection: 'row',
-    gap: 4,
-    padding: 4,
-    backgroundColor: colors.sunken,
-    borderRadius: 12,
-  },
-  segment: {
-    flex: 1,
-    height: 44,
-    borderRadius: 9,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  segmentSelected: {
-    backgroundColor: colors.surface,
-    boxShadow: [{ offsetX: 0, offsetY: 1, blurRadius: 2, color: colors.shadow }],
-  },
-  segmentLabel: {
-    fontFamily: fonts.semibold,
-    fontSize: 15,
-    color: colors.ink,
   },
   preview: {
     minHeight: 20,

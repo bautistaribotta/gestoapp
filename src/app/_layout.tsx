@@ -76,6 +76,7 @@ function RootStack() {
         <Stack.Screen name="paciente/nueva" />
         <Stack.Screen name="paciente/[id]" />
         <Stack.Screen name="paciente/editar/[id]" />
+        <Stack.Screen name="perfil" />
       </Stack.Protected>
       <Stack.Protected guard={profile === null}>
         <Stack.Screen name="onboarding" />

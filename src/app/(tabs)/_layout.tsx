@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { TabList, Tabs, TabSlot, TabTrigger, type TabTriggerSlotProps } from 'expo-router/ui';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -15,9 +16,16 @@ export default function HomeTabsLayout() {
     <Tabs style={styles.root}>
       <SafeAreaView edges={['top']} style={styles.header}>
         <Text style={styles.date}>{formatLongDay(todayDay())}</Text>
-        <Text style={styles.greeting} accessibilityRole="header">
-          {greeting(profile)}
-        </Text>
+        {/* Tocar el saludo abre «Tus datos» (opción 4a del diseño). */}
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={greeting(profile)}
+          accessibilityHint="Editar tus datos"
+          onPress={() => router.push('/perfil')}
+          style={({ pressed }) => [styles.greetingButton, pressed && styles.greetingPressed]}>
+          <Text style={styles.greeting}>{greeting(profile)}</Text>
+          <Text style={styles.greetingChevron}>›</Text>
+        </Pressable>
       </SafeAreaView>
       <View style={styles.slot}>
         <TabSlot />
@@ -69,12 +77,33 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: colors.textMuted,
   },
+  greetingButton: {
+    alignSelf: 'flex-start',
+    minHeight: 44,
+    marginVertical: -7,
+    marginHorizontal: -8,
+    paddingHorizontal: 8,
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  greetingPressed: {
+    backgroundColor: colors.sunken,
+  },
   greeting: {
+    flexShrink: 1,
     fontFamily: fonts.bold,
     fontSize: 24,
     lineHeight: 30,
     letterSpacing: -0.24,
     color: colors.ink,
+  },
+  greetingChevron: {
+    fontFamily: fonts.regular,
+    fontSize: 24,
+    lineHeight: 30,
+    color: colors.textMuted,
   },
   slot: {
     flex: 1,
