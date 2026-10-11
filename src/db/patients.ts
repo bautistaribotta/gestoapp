@@ -5,7 +5,8 @@ import { isoFromDay, todayDay } from '@/lib/dates';
 export type Patient = {
   id: number;
   name: string;
-  age: number;
+  /** Edad en años; opcional. */
+  age: number | null;
   /** Peso en kg. */
   weight: number | null;
   /** Altura en centímetros. */

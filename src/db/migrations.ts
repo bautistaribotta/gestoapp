@@ -1,6 +1,6 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
-const DATABASE_VERSION = 4;
+const DATABASE_VERSION = 5;
 
 /** Migraciones versionadas con PRAGMA user_version. Se ejecuta en el onInit del SQLiteProvider. */
 export async function migrateDbIfNeeded(db: SQLiteDatabase) {
@@ -66,6 +66,34 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
       );
     `);
     currentVersion = 4;
+  }
+
+  if (currentVersion < 5) {
+    // La edad pasa a ser opcional: SQLite no permite quitar un NOT NULL, así que se rehace la tabla.
+    await db.execAsync(`
+      CREATE TABLE patients_new (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        age INTEGER,
+        weight REAL,
+        height_cm REAL,
+        fum TEXT,
+        last_seen TEXT NOT NULL,
+        created_at TEXT NOT NULL DEFAULT (datetime('now')),
+        eco_date TEXT,
+        eco_ga_days INTEGER,
+        note TEXT,
+        note_updated_at TEXT
+      );
+      INSERT INTO patients_new
+        (id, name, age, weight, height_cm, fum, last_seen, created_at, eco_date, eco_ga_days, note, note_updated_at)
+      SELECT id, name, age, weight, height_cm, fum, last_seen, created_at, eco_date, eco_ga_days, note, note_updated_at
+      FROM patients;
+      DROP TABLE patients;
+      ALTER TABLE patients_new RENAME TO patients;
+      CREATE INDEX idx_patients_last_seen ON patients (last_seen);
+    `);
+    currentVersion = 5;
   }
 
   await db.execAsync(`PRAGMA user_version = ${currentVersion}`);

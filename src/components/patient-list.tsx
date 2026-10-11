@@ -66,7 +66,7 @@ function PatientRow({ patient, seen, first, onPress }: PatientRowProps) {
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={`${patient.name}, ${patient.age} años, vista ${seen.toLowerCase()}`}
+      accessibilityLabel={`${patient.name}, ${patient.age ? `${patient.age} años, ` : ''}vista ${seen.toLowerCase()}`}
       onPress={onPress}
       style={({ pressed }) => [styles.row, !first && styles.rowDivider, pressed && styles.rowPressed]}>
       <Avatar name={patient.name} />
@@ -74,7 +74,7 @@ function PatientRow({ patient, seen, first, onPress }: PatientRowProps) {
         <Text style={styles.name} numberOfLines={1}>
           {patient.name}
         </Text>
-        <Text style={styles.age}>{patient.age} años</Text>
+        {patient.age ? <Text style={styles.age}>{patient.age} años</Text> : null}
       </View>
       <Text style={styles.seen}>{seen}</Text>
     </Pressable>

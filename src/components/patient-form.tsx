@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Button } from '@/components/button';
@@ -12,7 +12,7 @@ import type { NewPatient } from '@/db/patients';
 import { todayDay } from '@/lib/dates';
 import { datingReference, ecoGaDaysFrom, fumError, keyDates } from '@/lib/gestation';
 import { parseDecimal } from '@/lib/text';
-import { colors } from '@/theme';
+import { colors, fonts } from '@/theme';
 
 export type PatientFormValues = {
   name: string;
@@ -51,7 +51,8 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
     (value: PatientFormValues[K]) => setValues((current) => ({ ...current, [key]: value }));
 
   const today = todayDay();
-  const parsedAge = parseInt(values.age, 10);
+  // La edad es opcional; si se escribe, tiene que ser mayor a 0.
+  const parsedAge = values.age.trim() ? parseInt(values.age, 10) : null;
   const fumMessage = fumError(values.fum, today);
   const eco = values.eco.on
     ? ecoGaDaysFrom(values.eco.date, values.eco.weeks, values.eco.days, today)
@@ -61,7 +62,13 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
     { fum: values.fum, ecoDate, ecoGaDays: eco?.gaDays ?? null },
     today,
   );
-  const valid = values.name.trim().length > 1 && parsedAge > 0 && !fumMessage && !eco?.message;
+  // Para guardar alcanza con el nombre y una referencia para datar: la FUM o la ecografía.
+  const valid =
+    values.name.trim().length > 1 &&
+    (parsedAge === null || parsedAge > 0) &&
+    reference !== null &&
+    !fumMessage &&
+    !eco?.message;
   const canSave = valid && !saving;
 
   const save = async () => {
@@ -143,7 +150,6 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
 
           <DateField
             label="FUM"
-            hint="opcional"
             help="Fecha de última menstruación. Se usa para calcular la edad gestacional si no hay ecografía cargada."
             error={fumMessage}
             value={values.fum}
@@ -172,6 +178,9 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
         </ScrollView>
 
         <SafeAreaView edges={['bottom']} style={styles.footer}>
+          {reference ? null : (
+            <Text style={styles.requirement}>Cargá la FUM o una ecografía para guardar.</Text>
+          )}
           <Button
             label={isNew ? 'Guardar paciente' : 'Guardar cambios'}
             size="lg"
@@ -214,5 +223,13 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: colors.border,
     backgroundColor: colors.surface,
+    gap: 10,
+  },
+  requirement: {
+    textAlign: 'center',
+    fontFamily: fonts.regular,
+    fontSize: 13,
+    lineHeight: 18,
+    color: colors.textSecondary,
   },
 });

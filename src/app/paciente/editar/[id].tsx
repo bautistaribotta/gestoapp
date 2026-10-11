@@ -13,7 +13,7 @@ function formValuesFrom(patient: Patient): PatientFormValues {
   return {
     ...EMPTY_PATIENT_FORM,
     name: patient.name,
-    age: String(patient.age),
+    age: patient.age ? String(patient.age) : '',
     weight: patient.weight ? formatDecimal(patient.weight) : '',
     heightCm: patient.heightCm ? String(Math.round(patient.heightCm)) : '',
     fum: patient.fum,

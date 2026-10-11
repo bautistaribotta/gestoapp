@@ -142,7 +142,7 @@ function PatientDetail({ patient, onSaveNote, onDelete }: PatientDetailProps) {
           <View style={styles.stats}>
             <Stat label="Peso" value={weight ? `${formatDecimal(weight)} kg` : '—'} />
             <Stat label="Altura" value={heightCm ? `${Math.round(heightCm)} cm` : '—'} />
-            <Stat label="Edad" value={`${patient.age} años`} />
+            <Stat label="Edad" value={patient.age ? `${patient.age} años` : '—'} />
           </View>
         </View>
 
