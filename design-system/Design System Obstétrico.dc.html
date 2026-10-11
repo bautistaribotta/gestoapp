@@ -138,7 +138,7 @@
 <div style="display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:50%;background:oklch(0.95 0.004 250);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px">LF</div><div style="display:flex;flex-direction:column"><span style="font-size:17px;font-weight:700">Lucía Fernández</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">31 años</span></div></div>
 <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
 <div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">Peso</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">64 kg</span></div>
-<div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">Altura</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">1,63 m</span></div>
+<div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">Altura</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">163 cm</span></div>
 <div style="background:oklch(0.975 0.003 250);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:oklch(0.47 0.012 250)">IMC</span><span style="font:500 16px 'Atkinson Hyperlegible Mono',monospace">24,1</span></div>
 </div>
 </div>
@@ -474,7 +474,7 @@ class Component extends DCLogic {
 
     return {
       tokenGroups, spacing, showMonths,
-      patient: { name: 'Lucía Fernández', initials: 'LF', age: '31 años', weight: '64 kg', height: '1,63 m', bmi: (64 / 1.63 / 1.63).toFixed(1).replace('.', ',') },
+      patient: { name: 'Lucía Fernández', initials: 'LF', age: '31 años', weight: '64 kg', height: '163 cm', bmi: (64 / 1.63 / 1.63).toFixed(1).replace('.', ',') },
       refLabel: c.ecoValid ? 'Eco' : 'FUM',
       refLong: c.ecoValid ? `ecografía ${fmt(c.ed)}` : c.fumOk ? `FUM ${fmt(c.f)}` : '—',
       svgRef: this.svgRef, discRot: `rotate(${rot} ${C} ${C})`,
