@@ -7,7 +7,7 @@ import { formatLongDay, todayDay } from '@/lib/dates';
 import { useProfile } from '@/providers/profile-provider';
 import { colors, fonts } from '@/theme';
 
-/** Inicio con barra de 2 pestañas y acento petróleo suave (variante 2b del diseño). */
+/** Inicio con barra de 2 pestañas (variante 2b del diseño, con acciones en oscuro sólido). */
 export default function HomeTabsLayout() {
   const { profile } = useProfile();
 
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   tabIndicatorActive: {
-    backgroundColor: colors.focus,
+    backgroundColor: colors.ink,
   },
   tabLabel: {
     fontFamily: fonts.medium,

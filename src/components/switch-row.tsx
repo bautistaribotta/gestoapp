@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.borderStrong,
   },
   trackOn: {
-    backgroundColor: colors.focus,
+    backgroundColor: colors.ink,
   },
   thumb: {
     position: 'absolute',

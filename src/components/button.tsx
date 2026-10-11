@@ -4,7 +4,7 @@ import { colors, fonts } from '@/theme';
 
 type ButtonProps = Omit<PressableProps, 'children' | 'style'> & {
   label: string;
-  variant?: 'primary' | 'outline' | 'accent' | 'link' | 'danger' | 'dangerSolid';
+  variant?: 'primary' | 'outline' | 'link' | 'danger' | 'dangerSolid';
   size?: 'sm' | 'md' | 'lg';
 };
 
@@ -48,11 +48,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.borderStrong,
-  },
-  accent: {
-    backgroundColor: colors.accentSoft,
-    borderWidth: 1,
-    borderColor: colors.accentBorder,
   },
   link: {
     alignSelf: 'center',
@@ -110,9 +105,6 @@ const pressedStyles = StyleSheet.create({
   outline: {
     backgroundColor: colors.sunken,
   },
-  accent: {
-    borderColor: colors.accentText,
-  },
   link: {
     opacity: 0.6,
   },
@@ -132,11 +124,9 @@ const labelStyles = StyleSheet.create({
     color: colors.ink,
     fontFamily: fonts.semibold,
   },
-  accent: {
-    color: colors.accentText,
-  },
   link: {
-    color: colors.accentText,
+    color: colors.ink,
+    textDecorationLine: 'underline',
     fontFamily: fonts.semibold,
     fontSize: 14,
   },

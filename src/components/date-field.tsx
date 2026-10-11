@@ -79,7 +79,7 @@ export function DateField({ label, hint, help, error, value, onChange, clearable
             display="inline"
             locale="es-AR"
             maximumDate={maximumDate}
-            accentColor={colors.focus}
+            accentColor={colors.ink}
             themeVariant="light"
             onValueChange={(_event, date) => {
               select(date);
@@ -117,7 +117,8 @@ const styles = StyleSheet.create({
   clearLabel: {
     fontFamily: fonts.semibold,
     fontSize: 15,
-    color: colors.accentText,
+    color: colors.ink,
+    textDecorationLine: 'underline',
   },
   inlinePicker: {
     backgroundColor: colors.surface,

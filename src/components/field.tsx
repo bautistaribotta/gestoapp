@@ -134,7 +134,7 @@ export const fieldStyles = StyleSheet.create({
   },
   boxFocused: {
     borderWidth: 2,
-    borderColor: colors.focus,
+    borderColor: colors.ink,
     paddingHorizontal: 13,
   },
   boxError: {
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   },
   areaFocused: {
     borderWidth: 2,
-    borderColor: colors.focus,
+    borderColor: colors.ink,
     paddingVertical: 11,
     paddingHorizontal: 13,
   },

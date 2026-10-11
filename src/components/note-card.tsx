@@ -71,7 +71,6 @@ export function NoteCard({ note, updatedAt, onSave }: NoteCardProps) {
             <View style={styles.action}>
               <Button
                 label={note ? 'Guardar nota' : 'Agregar nota'}
-                variant="accent"
                 disabled={!canSave}
                 onPress={save}
               />
@@ -83,7 +82,6 @@ export function NoteCard({ note, updatedAt, onSave }: NoteCardProps) {
           <Text style={styles.text}>{note}</Text>
           <Button
             label="Editar nota"
-            variant="accent"
             onPress={() => {
               setDraft(note ?? '');
               setEditing(true);
