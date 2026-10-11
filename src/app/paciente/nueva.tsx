@@ -125,7 +125,6 @@ export default function NewPatientScreen() {
                 value={heightCm}
                 onChangeText={setHeightCm}
                 keyboardType="number-pad"
-                placeholder="163"
                 maxLength={3}
               />
             </View>
