@@ -1,6 +1,6 @@
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { useState } from 'react';
-import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Keyboard, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { Field, fieldStyles } from '@/components/field';
 import { dayFromDate, dayFromIso, formatDay, isoFromDay, localDateFromDay, todayDay } from '@/lib/dates';
@@ -29,6 +29,8 @@ export function DateField({ label, hint, help, error, value, onChange, clearable
   const select = (date: Date) => onChange(isoFromDay(dayFromDate(date)));
 
   const open = () => {
+    // El selector tapa la pantalla: si quedó un campo de texto activo, se cierra el teclado.
+    Keyboard.dismiss();
     if (Platform.OS === 'android') {
       DateTimePickerAndroid.open({
         value: pickerValue,
