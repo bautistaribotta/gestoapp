@@ -331,7 +331,7 @@ class Component extends DCLogic {
     super(p);
     const T = todayDn();
     this.state = {
-      scr: p.start === 'onboarding' ? 'onb' : p.start === 'perfil' ? 'perfil' : 'home', pTitle: 'Dra.', pName: 'Martínez', title: 'Dra.', name: p.start === 'onboarding' ? '' : 'Martínez', q: '', tab: 'pac',
+      scr: p.start === 'onboarding' ? 'onb' : p.start === 'perfil' ? 'perfil' : 'home', pTitle: 'Dra.', pName: 'Martínez', title: 'Dra.', name: p.start === 'onboarding' ? '' : 'Martínez', q: '', tab: 'calc',
       patients: SEED.map((s, i) => ({ id: i + 1, name: s[0], age: s[1], seen: T - s[2], fum: iso(T - s[3]), weight: s[4], height: s[5], note: i === 0 ? { d: T - 28, text: 'Hipotiroidismo en tratamiento con levotiroxina 50 mcg. Pedir TSH en el próximo control.' } : null })),
       noteDraft: '', noteEditing: false, editId: null, confirmDel: false,
       form: EMPTY, calcFum: '', selId: null
@@ -420,7 +420,7 @@ class Component extends DCLogic {
       q: st.q, setQ: e => set({ q: e.target.value }), groups, noResults: !!q && !list.length,
       newFromQuery: () => set({ scr: 'alta', form: { ...EMPTY, name: st.q.trim() } }),
       openNew: () => set({ scr: 'alta', form: EMPTY }), openCalc: () => isB ? set({ tab: 'calc' }) : set({ scr: 'calc' }), goHome: () => set({ scr: 'home' }),
-      tabs: [['pac', 'Pacientes'], ['calc', 'Cálculo rápido']].map(([k, l]) => ({ label: l, pick: () => set({ tab: k }), fg: st.tab === k ? 'oklch(0.21 0.012 250)' : 'oklch(0.47 0.012 250)', bar: st.tab === k ? ac.bar : 'transparent', font: (st.tab === k ? '700' : '500') + " 14px 'Atkinson Hyperlegible Next',sans-serif" })),
+      tabs: [['calc', 'Cálculo rápido'], ['pac', 'Pacientes']].map(([k, l]) => ({ label: l, pick: () => set({ tab: k }), fg: st.tab === k ? 'oklch(0.21 0.012 250)' : 'oklch(0.47 0.012 250)', bar: st.tab === k ? ac.bar : 'transparent', font: (st.tab === k ? '700' : '500') + " 14px 'Atkinson Hyperlegible Next',sans-serif" })),
       calcFum: st.calcFum, setCalcFum: e => set({ calcFum: e.target.value }),
       calcDirty: !!(st.calcFum || st.calcEco || st.calcEcoDate || st.calcEcoW || st.calcEcoD),
       calcReset: () => { const prev = { calcFum: st.calcFum, calcEco: st.calcEco, calcEcoDate: st.calcEcoDate, calcEcoW: st.calcEcoW, calcEcoD: st.calcEcoD }; set({ calcFum: '', calcEco: false, calcEcoDate: '', calcEcoW: '', calcEcoD: '' }); this.toastMsg('Datos borrados', () => { clearTimeout(this.tt); this.setState({ ...prev, toast: null }); }); },
