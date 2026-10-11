@@ -16,7 +16,7 @@ export default function HomeTabsLayout() {
     <Tabs style={styles.root}>
       <SafeAreaView edges={['top']} style={styles.header}>
         <Text style={styles.date}>{formatLongDay(todayDay())}</Text>
-        {/* Tocar el saludo abre «Tus datos» (opción 4a del diseño). */}
+        {/* Tocar el saludo abre el perfil (opción 4a del diseño). */}
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={greeting(profile)}
