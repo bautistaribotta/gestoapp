@@ -22,27 +22,21 @@ export default function OnboardingLegalScreen() {
   const { completeOnboarding } = useProfile();
   const showError = useErrorDialog();
   const [read, setRead] = useState<DocFlags>(NONE);
-  const [accepted, setAccepted] = useState<DocFlags>(NONE);
   const [saving, setSaving] = useState(false);
 
   const title = isProfileTitle(params.title) ? params.title : null;
   const name = params.name?.trim() ?? '';
   const valid = title !== null && name.length > 0;
-  const allAccepted = LEGAL_DOC_IDS.every((id) => accepted[id]);
+  const allRead = LEGAL_DOC_IDS.every((id) => read[id]);
 
-  // Abrir un documento lo marca como leído y aceptado; la casilla se puede desmarcar después.
+  // Abrir un documento solo lo marca como leído: la aceptación es el botón «Aceptar y continuar».
   const open = (id: LegalDocId) => {
     setRead((current) => ({ ...current, [id]: true }));
-    setAccepted((current) => ({ ...current, [id]: true }));
     router.push({ pathname: '/legal/[doc]', params: { doc: id, desde: 'onboarding' } });
   };
 
-  const toggle = (id: LegalDocId) => {
-    setAccepted((current) => ({ ...current, [id]: !current[id] }));
-  };
-
   const finish = async () => {
-    if (!valid || !allAccepted || saving) return;
+    if (!valid || !allRead || saving) return;
     setSaving(true);
     try {
       // Al guardar, el layout raíz habilita Inicio y redirige solo.
@@ -67,8 +61,8 @@ export default function OnboardingLegalScreen() {
             Antes de empezar
           </Text>
           <Text style={styles.lead}>
-            Abrí cada documento para poder aceptarlo. Podés volver a leerlos cuando quieras desde
-            Configuración.
+            Abrí los dos documentos y, cuando los hayas leído, aceptalos con el botón de abajo.
+            Podés volver a leerlos cuando quieras desde Configuración.
           </Text>
         </View>
 
@@ -77,21 +71,21 @@ export default function OnboardingLegalScreen() {
             key={id}
             doc={LEGAL_DOCS[id]}
             read={read[id]}
-            accepted={accepted[id]}
             onOpen={() => open(id)}
-            onToggle={() => toggle(id)}
           />
         ))}
       </ScrollView>
 
       <SafeAreaView edges={['bottom']} style={styles.footer}>
         <Text style={styles.consent}>
-          Al continuar, aceptás los Términos y Condiciones y la Política de Privacidad.
+          {allRead
+            ? 'Al tocar «Aceptar y continuar», aceptás los Términos y Condiciones y la Política de Privacidad.'
+            : 'Abrí los dos documentos para poder aceptarlos.'}
         </Text>
         <Button
           label="Aceptar y continuar"
           size="lg"
-          disabled={!allAccepted}
+          disabled={!allRead}
           loading={saving}
           onPress={finish}
         />

@@ -6,16 +6,14 @@ import { colors, fonts } from '@/theme';
 type LegalConsentCardProps = {
   doc: LegalDoc;
   read: boolean;
-  accepted: boolean;
   onOpen: () => void;
-  onToggle: () => void;
 };
 
 /**
- * Tarjeta del paso 2 del onboarding: arriba se abre el documento y abajo se acepta.
- * La casilla queda bloqueada hasta que el documento se abre.
+ * Tarjeta del paso 2 del onboarding: abre el documento y muestra si ya se leyó.
+ * La aceptación no está acá: es el botón «Aceptar y continuar», para los dos documentos juntos.
  */
-export function LegalConsentCard({ doc, read, accepted, onOpen, onToggle }: LegalConsentCardProps) {
+export function LegalConsentCard({ doc, read, onOpen }: LegalConsentCardProps) {
   const status = read ? 'Leído' : 'Sin abrir';
 
   return (
@@ -42,25 +40,6 @@ export function LegalConsentCard({ doc, read, accepted, onOpen, onToggle }: Lega
           </View>
         )}
         <Text style={styles.chevron}>›</Text>
-      </Pressable>
-
-      <Pressable
-        accessibilityRole="checkbox"
-        accessibilityLabel={doc.acceptLabel}
-        accessibilityHint={read ? undefined : 'Abrí el documento para poder aceptarlo'}
-        accessibilityState={{ checked: accepted, disabled: !read }}
-        disabled={!read}
-        onPress={onToggle}
-        style={[styles.accept, !read && styles.acceptLocked]}>
-        <View style={[styles.box, read && styles.boxReady, accepted && styles.boxChecked]}>
-          {accepted ? <View style={styles.check} /> : null}
-        </View>
-        <View style={styles.acceptText}>
-          <Text style={[styles.acceptLabel, !read && styles.acceptLabelLocked]}>
-            {doc.acceptLabel}
-          </Text>
-          {read ? null : <Text style={styles.sub}>Abrilo para poder aceptarlo</Text>}
-        </View>
       </Pressable>
     </View>
   );
@@ -129,58 +108,6 @@ const styles = StyleSheet.create({
   chevron: {
     fontFamily: fonts.regular,
     fontSize: 20,
-    color: colors.textMuted,
-  },
-  accept: {
-    minHeight: 56,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderTopWidth: 1,
-    borderTopColor: colors.sunken,
-    backgroundColor: colors.surface,
-  },
-  acceptLocked: {
-    backgroundColor: colors.background,
-  },
-  box: {
-    width: 24,
-    height: 24,
-    borderRadius: 6,
-    borderWidth: 2,
-    borderColor: colors.border,
-    backgroundColor: colors.surface,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  boxReady: {
-    borderColor: colors.borderStrong,
-  },
-  boxChecked: {
-    borderColor: colors.ink,
-    backgroundColor: colors.ink,
-  },
-  // Tilde dibujado con dos bordes rotados, como en el diseño.
-  check: {
-    width: 10,
-    height: 5,
-    borderLeftWidth: 2.5,
-    borderBottomWidth: 2.5,
-    borderColor: colors.surface,
-    transform: [{ rotate: '-45deg' }, { translateX: 1 }, { translateY: -1 }],
-  },
-  acceptText: {
-    flex: 1,
-    gap: 2,
-  },
-  acceptLabel: {
-    fontFamily: fonts.semibold,
-    fontSize: 15,
-    color: colors.ink,
-  },
-  acceptLabelLocked: {
     color: colors.textMuted,
   },
 });

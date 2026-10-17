@@ -43,7 +43,7 @@
 <div style="display:flex;flex-direction:column;gap:10px">
 <div style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">GESTOGRAMA · PASO 2 DE 2</div>
 <h1 style="margin:0;font-size:28px;line-height:34px;font-weight:700;letter-spacing:-0.02em">Antes de empezar</h1>
-<p style="margin:0;font-size:15px;line-height:22px;color:oklch(0.38 0.012 250);text-wrap:pretty">Abrí cada documento para poder aceptarlo. Podés volver a leerlos cuando quieras desde Configuración.</p>
+<p style="margin:0;font-size:15px;line-height:22px;color:oklch(0.38 0.012 250);text-wrap:pretty">Abrí los dos documentos y, cuando los hayas leído, aceptalos con el botón de abajo. Podés volver a leerlos cuando quieras desde Configuración.</p>
 </div>
 <sc-for list="{{ legalItems }}" as="d" hint-placeholder-count="2">
 <div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;display:flex;flex-direction:column;overflow:hidden">
@@ -53,14 +53,10 @@
 <sc-if value="{{ d.unread }}" hint-placeholder-val="{{ true }}"><span style="display:inline-flex;align-items:center;height:32px;padding:0 12px;border-radius:999px;border:1px solid oklch(0.62 0.012 250);font-size:14px;font-weight:600">Leer</span></sc-if>
 <span style="font-size:20px;color:oklch(0.47 0.012 250)">›</span>
 </button>
-<button onClick="{{ d.toggle }}" disabled="{{ d.unread }}" aria-pressed="{{ d.acc }}" style="display:flex;align-items:center;gap:12px;min-height:56px;padding:8px 16px;border:none;border-top:1px solid oklch(0.95 0.004 250);background:{{ d.rowBg }};cursor:{{ d.cursor }};font-family:inherit;text-align:left">
-<span style="width:24px;height:24px;flex:none;box-sizing:border-box;border-radius:6px;border:2px solid {{ d.boxBd }};background:{{ d.boxBg }};display:flex;align-items:center;justify-content:center"><sc-if value="{{ d.acc }}" hint-placeholder-val="{{ false }}"><span style="width:10px;height:5px;border-left:2.5px solid oklch(1 0 0);border-bottom:2.5px solid oklch(1 0 0);transform:rotate(-45deg) translate(1px,-1px)"></span></sc-if></span>
-<span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600;color:{{ d.fg }}">{{ d.accept }}</span><sc-if value="{{ d.unread }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;color:oklch(0.47 0.012 250)">Abrilo para poder aceptarlo</span></sc-if></span>
-</button>
 </div>
 </sc-for>
 </div>
-<div style="padding:12px 20px 28px;flex:none"><button onClick="{{ finishLegal }}" disabled="{{ cantStart }}" style="width:100%;height:56px;border-radius:12px;border:none;font:700 17px 'Atkinson Hyperlegible Next',sans-serif;cursor:pointer;background:{{ startBg }};color:{{ startFg }}">Aceptar y continuar</button></div>
+<div style="padding:12px 20px 28px;flex:none;display:flex;flex-direction:column;gap:12px"><span style="font-size:13px;line-height:18px;text-align:center;color:oklch(0.47 0.012 250)">{{ consentText }}</span><button onClick="{{ finishLegal }}" disabled="{{ cantStart }}" style="width:100%;height:56px;border-radius:12px;border:none;font:700 17px 'Atkinson Hyperlegible Next',sans-serif;cursor:pointer;background:{{ startBg }};color:{{ startFg }}">Aceptar y continuar</button></div>
 </div>
 </sc-if>
 
@@ -427,22 +423,19 @@ class Component extends DCLogic {
     load('tyc', './uploads/terminos-y-condiciones.md'); load('pp', './uploads/politica-de-privacidad.md');
   }
   legalVals(st, set, T) {
-    const D = { tyc: ['Términos y Condiciones', 'Acepto los Términos y Condiciones'], pp: ['Política de Privacidad', 'Acepto la Política de Privacidad'] };
-    const docs = st.docs || {}, read = st.read || {}, acc = st.acc || {};
+    const D = { tyc: ['Términos y Condiciones'], pp: ['Política de Privacidad'] };
+    const docs = st.docs || {}, read = st.read || {};
     const open = (k, from) => set({ legalOpen: k, legalFrom: from, read: { ...read, [k]: true } });
     const legalItems = ['tyc', 'pp'].map((k, i) => {
-      const d = docs[k], r = !!read[k], a = !!acc[k];
-      return { title: D[k][0], accept: D[k][1], updated: d ? d.updated : '…', read: r, unread: !r, acc: a, bt: i ? '1px solid oklch(0.95 0.004 250)' : 'none',
+      const d = docs[k], r = !!read[k];
+      return { title: D[k][0], updated: d ? d.updated : '…', read: r, unread: !r, bt: i ? '1px solid oklch(0.95 0.004 250)' : 'none',
         sub: (r ? 'Leído' : 'Sin abrir') + (d ? ' · ≈ ' + d.mins + ' min de lectura' : ''),
-        open: () => open(k, 'onb'), openFromConfig: () => open(k, 'config'),
-        toggle: () => r && set({ acc: { ...acc, [k]: !a } }),
-        rowBg: r ? 'oklch(1 0 0)' : 'oklch(0.975 0.003 250)', cursor: r ? 'pointer' : 'not-allowed',
-        boxBd: a ? 'oklch(0.21 0.012 250)' : r ? 'oklch(0.62 0.012 250)' : 'oklch(0.89 0.006 250)', boxBg: a ? 'oklch(0.21 0.012 250)' : 'oklch(1 0 0)',
-        fg: r ? 'oklch(0.21 0.012 250)' : 'oklch(0.47 0.012 250)' };
+        open: () => open(k, 'onb'), openFromConfig: () => open(k, 'config') };
     });
-    const ok = !!(acc.tyc && acc.pp), k = st.legalOpen, doc = k && docs[k];
+    // Abrir solo marca como leído: se aceptan los dos juntos con «Aceptar y continuar».
+    const ok = !!(read.tyc && read.pp), k = st.legalOpen, doc = k && docs[k];
     return {
-      legalItems, cantStart: !ok, startBg: ok ? 'oklch(0.21 0.012 250)' : 'oklch(0.89 0.006 250)', startFg: ok ? 'oklch(1 0 0)' : 'oklch(0.47 0.012 250)',
+      legalItems, cantStart: !ok, consentText: ok ? 'Al tocar «Aceptar y continuar», aceptás los Términos y Condiciones y la Política de Privacidad.' : 'Abrí los dos documentos para poder aceptarlos.', startBg: ok ? 'oklch(0.21 0.012 250)' : 'oklch(0.89 0.006 250)', startFg: ok ? 'oklch(1 0 0)' : 'oklch(0.47 0.012 250)',
       finishLegal: () => ok && set({ scr: 'home', acceptedOn: T }), onbBack: () => set({ scr: 'onb' }),
       acceptedLabel: 'Aceptaste ambos documentos el ' + fmt(st.acceptedOn ?? T) + '.',
       reader: k ? { show: true, title: doc ? doc.title : D[k][0], updated: doc ? doc.updated : '…', blocks: doc ? doc.blocks : [], loading: !doc, footer: st.legalFrom === 'onb', back: st.legalFrom === 'onb' ? 'Atrás' : 'Configuración', close: () => set({ legalOpen: null }) } : { show: false, blocks: [] }

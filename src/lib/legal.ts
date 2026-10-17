@@ -10,7 +10,6 @@ export type LegalDoc = MarkdownDocument & {
   id: LegalDocId;
   /** Nombre corto para tarjetas y listas. */
   name: string;
-  acceptLabel: string;
 };
 
 /** Los textos salen de los .md de legal/: si se editan, la app muestra la versión nueva. */
@@ -19,13 +18,11 @@ export const LEGAL_DOCS: Record<LegalDocId, LegalDoc> = {
     ...parseMarkdown(termsSource),
     id: 'terminos',
     name: 'Términos y Condiciones',
-    acceptLabel: 'Acepto los Términos y Condiciones',
   },
   privacidad: {
     ...parseMarkdown(privacySource),
     id: 'privacidad',
     name: 'Política de Privacidad',
-    acceptLabel: 'Acepto la Política de Privacidad',
   },
 };
 
