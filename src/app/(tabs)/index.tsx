@@ -73,7 +73,7 @@ export default function QuickCalcScreen() {
       <DateField
         label="FUM"
         hint="fecha de última menstruación"
-        error={fumError(fum, today)}
+        error={reference?.source === 'eco' ? null : fumError(fum, today)}
         value={fum}
         onChange={setFum}
       />

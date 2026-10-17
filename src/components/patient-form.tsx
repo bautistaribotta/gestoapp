@@ -53,7 +53,6 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
   const today = todayDay();
   // La edad es opcional; si se escribe, tiene que ser mayor a 0.
   const parsedAge = values.age.trim() ? parseInt(values.age, 10) : null;
-  const fumMessage = fumError(values.fum, today);
   const eco = values.eco.on
     ? ecoGaDaysFrom(values.eco.date, values.eco.weeks, values.eco.days, today)
     : null;
@@ -62,6 +61,8 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
     { fum: values.fum, ecoDate, ecoGaDays: eco?.gaDays ?? null },
     today,
   );
+  // Con ecografía la FUM no se usa para datar: se guarda, pero no se valida ni bloquea el guardado.
+  const fumMessage = reference?.source === 'eco' ? null : fumError(values.fum, today);
   // Para guardar alcanza con el nombre y una referencia para datar: la FUM o la ecografía.
   const valid =
     values.name.trim().length > 1 &&

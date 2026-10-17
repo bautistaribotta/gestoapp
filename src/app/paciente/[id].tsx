@@ -154,8 +154,10 @@ function PatientDetail({ patient, onSaveNote, onDelete }: PatientDetailProps) {
           </>
         ) : (
           <Text style={styles.empty}>
-            {fumError(patient.fum, today) ??
-              'Sin FUM ni ecografía cargadas. Podés cargarlas desde «Editar datos».'}
+            {reference?.source === 'eco'
+              ? 'La edad gestacional por ecografía supera las 42 semanas.'
+              : (fumError(patient.fum, today) ??
+                'Sin FUM ni ecografía cargadas. Podés cargarlas desde «Editar datos».')}
           </Text>
         )}
 
