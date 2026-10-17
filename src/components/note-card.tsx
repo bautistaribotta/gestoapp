@@ -10,7 +10,8 @@ type NoteCardProps = {
   note: string | null;
   /** Última edición de la nota (YYYY-MM-DD). */
   updatedAt: string | null;
-  onSave: (note: string) => Promise<void>;
+  /** Devuelve si se guardó; si no, el editor queda abierto con el texto. */
+  onSave: (note: string) => Promise<boolean>;
 };
 
 /** Nota única de la paciente: se ve, se edita y se reemplaza entera. */
@@ -29,12 +30,11 @@ export function NoteCard({ note, updatedAt, onSave }: NoteCardProps) {
   const save = async () => {
     if (!canSave) return;
     setSaving(true);
-    try {
-      await onSave(draft.trim());
+    const saved = await onSave(draft.trim());
+    setSaving(false);
+    if (saved) {
       setEditing(false);
       setDraft('');
-    } finally {
-      setSaving(false);
     }
   };
 

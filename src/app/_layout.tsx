@@ -21,6 +21,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ErrorScreen } from '@/components/error-screen';
 import { rethrowAsDatabaseError } from '@/db/database-error';
 import { migrateDbIfNeeded } from '@/db/migrations';
+import { ErrorDialogProvider } from '@/providers/error-dialog-provider';
 import { ProfileProvider, useProfile } from '@/providers/profile-provider';
 import { ToastProvider } from '@/providers/toast-provider';
 import { colors } from '@/theme';
@@ -53,10 +54,12 @@ export default function RootLayout() {
       <SQLiteProvider databaseName="gestoapp.db" onInit={migrateDbIfNeeded}
         onError={rethrowAsDatabaseError}>
         <ProfileProvider>
-          <ToastProvider>
-            <StatusBar style="dark" />
-            <RootStack />
-          </ToastProvider>
+          <ErrorDialogProvider>
+            <ToastProvider>
+              <StatusBar style="dark" />
+              <RootStack />
+            </ToastProvider>
+          </ErrorDialogProvider>
         </ProfileProvider>
       </SQLiteProvider>
     </SafeAreaProvider>

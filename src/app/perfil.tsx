@@ -10,6 +10,7 @@ import { TitlePicker } from '@/components/title-picker';
 import { greeting, type ProfileTitle } from '@/db/profile';
 import { dayFromIso, formatDay } from '@/lib/dates';
 import { LEGAL_DOC_IDS, LEGAL_DOCS } from '@/lib/legal';
+import { useErrorDialog } from '@/providers/error-dialog-provider';
 import { useProfile } from '@/providers/profile-provider';
 import { useToast } from '@/providers/toast-provider';
 import { colors, fonts } from '@/theme';
@@ -18,6 +19,7 @@ import { colors, fonts } from '@/theme';
 export default function ProfileScreen() {
   const { profile, legal, save } = useProfile();
   const showToast = useToast();
+  const showError = useErrorDialog();
   const [title, setTitle] = useState<ProfileTitle>(profile?.title ?? 'Dra.');
   const [name, setName] = useState(profile?.name ?? '');
   const [saving, setSaving] = useState(false);
@@ -36,8 +38,9 @@ export default function ProfileScreen() {
       await save({ title, name: trimmedName });
       router.back();
       showToast({ message: 'Tus datos se actualizaron', placement: 'tabBar' });
-    } catch {
+    } catch (error) {
       setSaving(false);
+      showError({ title: 'No pudimos guardar tus datos', error });
     }
   };
 

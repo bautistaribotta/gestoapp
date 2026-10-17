@@ -12,6 +12,7 @@ import type { NewPatient } from '@/db/patients';
 import { todayDay } from '@/lib/dates';
 import { datingReference, ecoGaDaysFrom, fumError, keyDates } from '@/lib/gestation';
 import { parseDecimal } from '@/lib/text';
+import { useErrorDialog } from '@/providers/error-dialog-provider';
 import { colors, fonts } from '@/theme';
 
 export type PatientFormValues = {
@@ -45,6 +46,7 @@ type PatientFormProps = {
 export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps) {
   const [values, setValues] = useState(initialValues);
   const [saving, setSaving] = useState(false);
+  const showError = useErrorDialog();
   const isNew = mode === 'new';
 
   const set = <K extends keyof PatientFormValues>(key: K) =>
@@ -86,8 +88,13 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
         ecoGaDays: eco?.gaDays ?? null,
         note: isNew ? values.note.trim() || null : null,
       });
-    } catch {
+    } catch (error) {
       setSaving(false);
+      showError({
+        title: isNew ? 'No pudimos guardar la paciente' : 'No pudimos guardar los cambios',
+        message: 'Lo que cargaste sigue en el formulario. Probá de nuevo.',
+        error,
+      });
     }
   };
 

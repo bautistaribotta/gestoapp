@@ -10,6 +10,7 @@ import { DiscordanceCard } from '@/components/discordance-card';
 import { GestationCard } from '@/components/gestation-card';
 import { LoadingState } from '@/components/heartbeat';
 import { KeyDatesCard } from '@/components/key-dates-card';
+import { LoadError } from '@/components/load-error';
 import { NoteCard } from '@/components/note-card';
 import { ScreenHeader } from '@/components/screen-header';
 import {
@@ -28,7 +29,9 @@ import {
   gestationFromReference,
   keyDates,
 } from '@/lib/gestation';
+import { logError } from '@/lib/log';
 import { formatDecimal } from '@/lib/text';
+import { useErrorDialog } from '@/providers/error-dialog-provider';
 import { useToast } from '@/providers/toast-provider';
 import { colors, fonts } from '@/theme';
 
@@ -36,33 +39,80 @@ export default function PatientScreen() {
   const db = useSQLiteContext();
   const { id } = useLocalSearchParams<{ id: string }>();
   const [patient, setPatient] = useState<Patient | null | undefined>(undefined);
+  const [loadFailed, setLoadFailed] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const showLoading = useDelayedFlag(patient === undefined);
+  const showLoading = useDelayedFlag(patient === undefined && !loadFailed);
   const showToast = useToast();
+  const showError = useErrorDialog();
 
+  // Si una recarga falla con la ficha ya en pantalla, se deja la que estaba.
   const load = useCallback(() => {
-    getPatient(db, Number(id)).then(setPatient);
+    getPatient(db, Number(id)).then(
+      (loaded) => {
+        setPatient(loaded);
+        setLoadFailed(false);
+      },
+      (error: unknown) => {
+        logError('Cargar paciente', error);
+        setLoadFailed(true);
+      },
+    );
   }, [db, id]);
 
   // Recarga al volver de «Editar datos».
   useFocusEffect(load);
 
+  const retryLoad = () => {
+    setLoadFailed(false);
+    load();
+  };
+
+  /** Devuelve si se guardó: si falla, la nota sigue en el editor. */
   const saveNote = async (note: string) => {
-    if (!patient) return;
-    await updatePatientNote(db, patient.id, note);
+    if (!patient) return false;
+    try {
+      await updatePatientNote(db, patient.id, note);
+    } catch (error) {
+      showError({
+        title: 'No pudimos guardar la nota',
+        message: 'Tu texto sigue en el editor. Probá de nuevo.',
+        error,
+      });
+      return false;
+    }
     load();
     showToast({ message: patient.note ? 'Nota actualizada' : 'Nota guardada' });
+    return true;
+  };
+
+  const restore = (deleted: Patient) => {
+    restorePatient(db, deleted).catch((error: unknown) => {
+      showError({
+        title: `No pudimos restaurar a ${deleted.name}`,
+        message: 'La ficha quedó eliminada. Si la necesitás, cargala de nuevo desde «Nueva paciente».',
+        error,
+      });
+    });
   };
 
   const remove = async () => {
     if (!patient) return;
     setConfirmDelete(false);
-    await deletePatient(db, patient.id);
+    try {
+      await deletePatient(db, patient.id);
+    } catch (error) {
+      showError({
+        title: `No pudimos eliminar a ${patient.name}`,
+        message: 'La ficha sigue guardada. Probá de nuevo.',
+        error,
+      });
+      return;
+    }
     router.back();
     showToast({
       message: `${patient.name} eliminada`,
       placement: 'tabBar',
-      onUndo: () => restorePatient(db, patient),
+      onUndo: () => restore(patient),
     });
   };
 
@@ -102,6 +152,8 @@ export default function PatientScreen() {
             onCancel={() => setConfirmDelete(false)}
           />
         </>
+      ) : loadFailed ? (
+        <LoadError title="No pudimos cargar la paciente" onRetry={retryLoad} />
       ) : showLoading ? (
         <LoadingState label="Cargando paciente…" />
       ) : null}
@@ -111,7 +163,7 @@ export default function PatientScreen() {
 
 type PatientDetailProps = {
   patient: Patient;
-  onSaveNote: (note: string) => Promise<void>;
+  onSaveNote: (note: string) => Promise<boolean>;
   onDelete: () => void;
 };
 

@@ -6,12 +6,15 @@ import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native
 import { Button } from '@/components/button';
 import { EmptyPatients } from '@/components/empty-patients';
 import { LoadingState } from '@/components/heartbeat';
+import { LoadError } from '@/components/load-error';
 import { PatientList } from '@/components/patient-list';
 import { SearchField } from '@/components/search-field';
 import { listPatients, onPatientsChanged, type Patient } from '@/db/patients';
 import { useDelayedFlag } from '@/hooks/use-delayed-flag';
 import { todayDay } from '@/lib/dates';
+import { logError } from '@/lib/log';
 import { normalizeForSearch } from '@/lib/text';
+import { useErrorDialog } from '@/providers/error-dialog-provider';
 import { colors, fonts } from '@/theme';
 
 export default function PatientsScreen() {
@@ -19,17 +22,37 @@ export default function PatientsScreen() {
   const [patients, setPatients] = useState<Patient[] | null>(null);
   const [query, setQuery] = useState('');
   const [refreshing, setRefreshing] = useState(false);
-  const showLoading = useDelayedFlag(patients === null);
+  const [loadFailed, setLoadFailed] = useState(false);
+  const showLoading = useDelayedFlag(patients === null && !loadFailed);
+  const showError = useErrorDialog();
 
+  /** Devuelve si se cargó. Si falla con el listado ya en pantalla, se deja el que estaba. */
   const load = useCallback(async () => {
-    setPatients(await listPatients(db));
+    try {
+      setPatients(await listPatients(db));
+      setLoadFailed(false);
+      return true;
+    } catch (error) {
+      logError('Cargar pacientes', error);
+      setLoadFailed(true);
+      return false;
+    }
   }, [db]);
+
+  const retryLoad = () => {
+    setLoadFailed(false);
+    load();
+  };
 
   // La base es local y responde al instante: se deja el indicador un momento para que el gesto tenga respuesta.
   const refresh = async () => {
     setRefreshing(true);
-    await Promise.all([load(), new Promise((resolve) => setTimeout(resolve, MIN_REFRESH_MS))]);
+    const [loaded] = await Promise.all([
+      load(),
+      new Promise((resolve) => setTimeout(resolve, MIN_REFRESH_MS)),
+    ]);
     setRefreshing(false);
+    if (!loaded) showError({ title: 'No pudimos actualizar las pacientes' });
   };
 
   useFocusEffect(
@@ -67,7 +90,9 @@ export default function PatientsScreen() {
         <Button label="+ Nueva paciente" onPress={() => openNew()} />
       </View>
 
-      {showLoading ? (
+      {patients === null && loadFailed ? (
+        <LoadError title="No pudimos cargar las pacientes" onRetry={retryLoad} />
+      ) : showLoading ? (
         <LoadingState label="Cargando pacientes…" />
       ) : (
         <ScrollView

@@ -8,6 +8,7 @@ import { LegalConsentCard } from '@/components/legal-consent-card';
 import { ScreenHeader } from '@/components/screen-header';
 import { isProfileTitle } from '@/db/profile';
 import { LEGAL_DOC_IDS, LEGAL_DOCS, type LegalDocId } from '@/lib/legal';
+import { useErrorDialog } from '@/providers/error-dialog-provider';
 import { useProfile } from '@/providers/profile-provider';
 import { colors, fonts } from '@/theme';
 
@@ -19,6 +20,7 @@ const NONE: DocFlags = { terminos: false, privacidad: false };
 export default function OnboardingLegalScreen() {
   const params = useLocalSearchParams<{ title?: string; name?: string }>();
   const { completeOnboarding } = useProfile();
+  const showError = useErrorDialog();
   const [read, setRead] = useState<DocFlags>(NONE);
   const [accepted, setAccepted] = useState<DocFlags>(NONE);
   const [saving, setSaving] = useState(false);
@@ -45,8 +47,9 @@ export default function OnboardingLegalScreen() {
     try {
       // Al guardar, el layout raíz habilita Inicio y redirige solo.
       await completeOnboarding({ title, name });
-    } catch {
+    } catch (error) {
       setSaving(false);
+      showError({ title: 'No pudimos terminar la configuración', error });
     }
   };
 
