@@ -1,6 +1,6 @@
 # Política de Privacidad de Gestograma
 
-**Última actualización:** 16 de octubre de 2026
+**Última actualización:** 17 de octubre de 2026
 
 ## 1. Resumen
 
@@ -28,10 +28,11 @@ La Aplicación almacena la siguiente información **en una base de datos local d
 | Título profesional (Dra., Dr. o ninguno) y nombre o apellido del Usuario | Saludar al Usuario en la pantalla de inicio |
 | Nombre y edad de cada paciente | Identificar la ficha |
 | Peso y talla | Registro de control |
-| Fecha de última menstruación (FUM) | Calcular la edad gestacional y las fechas clave |
-| Fecha y edad gestacional de una ecografía | Corregir la datación y detectar discordancias con la FUM |
-| Notas libres | Anotaciones del profesional |
-| Fecha de la última consulta y de creación de la ficha | Ordenar el listado de pacientes |
+| Fecha de última menstruación (FUM) | Calcular la edad gestacional y las fechas clave cuando no hay ecografía |
+| Fecha y edad gestacional de una ecografía | Calcular la edad gestacional y las fechas clave (si está cargada, reemplaza a la FUM) y señalar discordancias con la FUM |
+| Notas libres y fecha de su última edición | Anotaciones del profesional |
+| Fecha de creación de la ficha | Ordenar el listado de pacientes |
+| Versión de los Términos y de esta Política que el Usuario aceptó, y fecha de aceptación | Dejar constancia de la aceptación y volver a pedirla si los documentos cambian |
 
 El Usuario decide qué información carga. Salvo el nombre que elige para el saludo, ningún dato es obligatorio para usar la calculadora.
 

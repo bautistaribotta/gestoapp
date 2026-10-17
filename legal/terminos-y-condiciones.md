@@ -1,6 +1,6 @@
 # Términos y Condiciones de Uso de Gestograma
 
-**Última actualización:** 11 de octubre de 2026
+**Última actualización:** 17 de octubre de 2026
 
 ## 1. Partes y aceptación
 
@@ -8,7 +8,9 @@
 
 1.2. Quien descarga, instala o usa la Aplicación (el «Usuario») declara haber leído, entendido y aceptado estos Términos y la Política de Privacidad, que forma parte de ellos. Si no está de acuerdo, debe abstenerse de usar la Aplicación y desinstalarla.
 
-1.3. La Aplicación es gratuita. No requiere registro, no exige pagos y no contiene publicidad.
+1.3. Para empezar a usar la Aplicación, el Usuario debe abrir estos Términos y la Política de Privacidad y aceptarlos expresamente tocando «Aceptar y continuar». La Aplicación guarda en el dispositivo la versión aceptada y la fecha, y vuelve a pedir la aceptación cuando alguno de los documentos cambia.
+
+1.4. La Aplicación es gratuita. No requiere registro, no exige pagos y no contiene publicidad.
 
 ## 2. Destinatarios
 
@@ -59,15 +61,11 @@
 
 ## 6. Conservación y pérdida de datos
 
-6.1. La Aplicación no guarda copias de los datos en servidores del Titular ni ofrece un servicio de respaldo. Si el Usuario desinstala la Aplicación, borra sus datos, restablece el dispositivo o lo pierde, la información registrada puede perderse de forma definitiva.
+6.1. La Aplicación no guarda copias de los datos en servidores del Titular ni ofrece un servicio de respaldo propio. Si el Usuario desinstala la Aplicación, borra sus datos, restablece el dispositivo o lo pierde, la información registrada puede perderse de forma definitiva, salvo que pueda recuperarla desde una copia de seguridad del sistema operativo, según se explica en la Política de Privacidad.
 
 6.2. El resguardo de la información es responsabilidad del Usuario. El Titular no responde por la pérdida de datos almacenados en el dispositivo.
 
-## 7. Datos de ejemplo
-
-Al instalarse por primera vez, la Aplicación puede incluir fichas de pacientes de ejemplo. Son **ficticias**, tienen fines demostrativos y cualquier parecido con personas reales es casual. El Usuario puede eliminarlas en cualquier momento.
-
-## 8. Uso permitido
+## 7. Uso permitido
 
 El Usuario se compromete a usar la Aplicación conforme a la ley, a estos Términos y a la buena fe, y a no:
 
@@ -75,19 +73,19 @@ El Usuario se compromete a usar la Aplicación conforme a la ley, a estos Térmi
 - distribuirla, sublicenciarla, venderla o explotarla comercialmente;
 - usarla para fines distintos de los descritos en la cláusula 3.
 
-## 9. Propiedad intelectual
+## 8. Propiedad intelectual
 
-9.1. La Aplicación, su código fuente, su diseño, sus textos, su logotipo y su nombre son propiedad del Titular y están protegidos por la Ley 11.723 de Propiedad Intelectual y demás normas aplicables. Todos los derechos están reservados.
+8.1. La Aplicación, su código fuente, su diseño, sus textos, su logotipo y su nombre son propiedad del Titular y están protegidos por la Ley 11.723 de Propiedad Intelectual y demás normas aplicables. Todos los derechos están reservados.
 
-9.2. El Titular otorga al Usuario una licencia de uso personal, gratuita, no exclusiva, intransferible y revocable para instalar y usar la Aplicación en sus dispositivos, conforme a estos Términos. Esta licencia no implica la cesión de ningún derecho de propiedad intelectual.
+8.2. El Titular otorga al Usuario una licencia de uso personal, gratuita, no exclusiva, intransferible y revocable para instalar y usar la Aplicación en sus dispositivos, conforme a estos Términos. Esta licencia no implica la cesión de ningún derecho de propiedad intelectual.
 
-9.3. Las tipografías y bibliotecas de terceros incluidas en la Aplicación se rigen por sus propias licencias.
+8.3. Las tipografías y bibliotecas de terceros incluidas en la Aplicación se rigen por sus propias licencias.
 
-## 10. Limitación de responsabilidad
+## 9. Limitación de responsabilidad
 
-10.1. La Aplicación se ofrece gratuitamente, «tal como está» y «según disponibilidad». El Titular procura que los cálculos sean correctos y que la Aplicación funcione adecuadamente, pero no garantiza que esté libre de errores ni que funcione sin interrupciones en todos los dispositivos.
+9.1. La Aplicación se ofrece gratuitamente, «tal como está» y «según disponibilidad». El Titular procura que los cálculos sean correctos y que la Aplicación funcione adecuadamente, pero no garantiza que esté libre de errores ni que funcione sin interrupciones en todos los dispositivos.
 
-10.2. En la máxima medida permitida por la ley, el Titular no será responsable por:
+9.2. En la máxima medida permitida por la ley, el Titular no será responsable por:
 
 - decisiones clínicas tomadas a partir de los resultados de la Aplicación;
 - errores derivados de datos mal ingresados;
@@ -95,34 +93,34 @@ El Usuario se compromete a usar la Aplicación conforme a la ley, a estos Térmi
 - accesos no autorizados al dispositivo del Usuario;
 - el incumplimiento, por parte del Usuario, de sus obligaciones profesionales o legales respecto de los datos de sus pacientes.
 
-10.3. Nada de lo dispuesto en estos Términos limita los derechos que la Ley 24.240 de Defensa del Consumidor y el Código Civil y Comercial de la Nación reconozcan al Usuario de forma irrenunciable, ni excluye la responsabilidad del Titular por dolo o culpa grave.
+9.3. Nada de lo dispuesto en estos Términos limita los derechos que la Ley 24.240 de Defensa del Consumidor y el Código Civil y Comercial de la Nación reconozcan al Usuario de forma irrenunciable, ni excluye la responsabilidad del Titular por dolo o culpa grave.
 
-## 11. Servicios de terceros
+## 10. Servicios de terceros
 
 La Aplicación se descarga a través de tiendas de terceros (App Store de Apple y Google Play de Google), que tienen sus propios términos y políticas de privacidad. El Titular no es responsable por el funcionamiento de esas tiendas ni por el tratamiento de datos que realicen.
 
-## 12. Cambios en la Aplicación y en los Términos
+## 11. Cambios en la Aplicación y en los Términos
 
-12.1. El Titular puede modificar, actualizar o discontinuar la Aplicación o cualquiera de sus funciones en cualquier momento.
+11.1. El Titular puede modificar, actualizar o discontinuar la Aplicación o cualquiera de sus funciones en cualquier momento.
 
-12.2. El Titular puede modificar estos Términos. La nueva versión se publicará en la Aplicación con su fecha de actualización. Si los cambios son relevantes, se avisará al Usuario dentro de la Aplicación y se le pedirá que los acepte nuevamente. Si el Usuario no está de acuerdo, puede dejar de usar la Aplicación y desinstalarla.
+11.2. El Titular puede modificar estos Términos. La nueva versión se publicará en la Aplicación con su fecha de actualización. Si los cambios son relevantes, se avisará al Usuario dentro de la Aplicación y se le pedirá que los acepte nuevamente. Si el Usuario no está de acuerdo, puede dejar de usar la Aplicación y desinstalarla.
 
-## 13. Vigencia y terminación
+## 12. Vigencia y terminación
 
 Estos Términos rigen mientras el Usuario tenga instalada o use la Aplicación. El Usuario puede ponerles fin en cualquier momento desinstalándola. El Titular puede revocar la licencia si el Usuario incumple estos Términos.
 
-## 14. Disposiciones generales
+## 13. Disposiciones generales
 
-14.1. Si alguna cláusula de estos Términos fuera declarada inválida, las demás seguirán vigentes.
+13.1. Si alguna cláusula de estos Términos fuera declarada inválida, las demás seguirán vigentes.
 
-14.2. Que el Titular no ejerza un derecho previsto en estos Términos no implica que renuncie a él.
+13.2. Que el Titular no ejerza un derecho previsto en estos Términos no implica que renuncie a él.
 
-## 15. Ley aplicable y jurisdicción
+## 14. Ley aplicable y jurisdicción
 
-15.1. Estos Términos se rigen por las leyes de la República Argentina.
+14.1. Estos Términos se rigen por las leyes de la República Argentina.
 
-15.2. Cualquier controversia se someterá a los tribunales ordinarios competentes según la normativa aplicable. Cuando el Usuario revista el carácter de consumidor, será competente el tribunal correspondiente a su domicilio, conforme al artículo 36 de la Ley 24.240.
+14.2. Cualquier controversia se someterá a los tribunales ordinarios competentes según la normativa aplicable. Cuando el Usuario revista el carácter de consumidor, será competente el tribunal correspondiente a su domicilio, conforme al artículo 36 de la Ley 24.240.
 
-## 16. Contacto
+## 15. Contacto
 
 Para consultas sobre estos Términos, el Usuario puede escribir a **bautistaribotta@hotmail.com**.
