@@ -56,7 +56,7 @@ export default function OnboardingLegalScreen() {
 
       <ScrollView style={styles.flex} contentContainerStyle={styles.content}>
         <View style={styles.intro}>
-          <Text style={styles.brand}>GESTOGRAMA · PASO 2 DE 2</Text>
+          <Text style={styles.brand}>GESTOAPP · PASO 2 DE 2</Text>
           <Text style={styles.heading} accessibilityRole="header">
             Antes de empezar
           </Text>

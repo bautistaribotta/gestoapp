@@ -17,7 +17,7 @@ import { useToast } from '@/providers/toast-provider';
 import { colors, fonts } from '@/theme';
 
 /** Prefijo de los archivos de copia que se generan en la caché antes de compartirlos. */
-const FILE_PREFIX = 'gestograma-copia-';
+const FILE_PREFIX = 'gestoapp-copia-';
 
 /** Borra copias de exportaciones anteriores que hayan quedado en la caché. */
 function clearOldExports() {
@@ -58,7 +58,7 @@ export default function ExportBackupScreen() {
       await Sharing.shareAsync(file.uri, {
         mimeType: 'application/json',
         UTI: 'public.json',
-        dialogTitle: 'Guardar copia de Gestograma',
+        dialogTitle: 'Guardar copia de GestoApp',
       });
       router.back();
       showToast({ message: 'Copia creada' });

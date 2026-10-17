@@ -5,7 +5,7 @@ import { AESEncryptionKey, AESSealedData, aesDecryptAsync, aesEncryptAsync, getR
  * Formato del archivo de copia: un JSON con los parámetros para derivar la clave y los datos
  * cifrados con AES-256-GCM. La clave sale de la contraseña con scrypt (la contraseña nunca se guarda).
  */
-const FORMAT = 'gestograma-copia';
+const FORMAT = 'gestoapp-copia';
 const VERSION = 1;
 
 /**
@@ -28,7 +28,7 @@ type Envelope = {
   data: string;
 };
 
-/** El archivo no es una copia de Gestograma o está dañado. */
+/** El archivo no es una copia de GestoApp o está dañado. */
 export class InvalidBackupFileError extends Error {
   constructor(detail: string) {
     super(`Archivo de copia inválido: ${detail}`);

@@ -15,7 +15,7 @@ export function EmptyPatients({ onNew, onQuickCalc }: EmptyPatientsProps) {
     <View style={styles.screen}>
       <View style={styles.brand}>
         <Logo size={96} />
-        <Text style={styles.wordmark}>Gestograma</Text>
+        <Text style={styles.wordmark}>GestoApp</Text>
       </View>
 
       <View style={styles.copy}>

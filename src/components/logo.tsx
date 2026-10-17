@@ -19,7 +19,7 @@ export function Logo({ size = 56 }: LogoProps) {
       style={{ width: size, height: size }}
       accessible
       accessibilityRole="image"
-      accessibilityLabel="Gestograma">
+      accessibilityLabel="GestoApp">
       <View
         style={[
           styles.cradle,

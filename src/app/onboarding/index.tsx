@@ -38,7 +38,7 @@ export default function OnboardingNameScreen() {
             <View style={styles.logo}>
               <Logo />
             </View>
-            <Text style={styles.brand}>GESTOGRAMA · PASO 1 DE 2</Text>
+            <Text style={styles.brand}>GESTOAPP · PASO 1 DE 2</Text>
             <Text style={styles.heading} accessibilityRole="header">
               ¿Cómo querés que te llamemos?
             </Text>

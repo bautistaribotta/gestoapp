@@ -33,7 +33,7 @@ type PickedFile = { name: string; content: string };
 type PendingImport = { data: BackupData; currentCount: number };
 
 const INVALID_FILE = {
-  title: 'Este archivo no es una copia de Gestograma',
+  title: 'Este archivo no es una copia de GestoApp',
   message: 'Elegí el archivo que creaste con «Exportar copia». Si es ese, puede estar dañado.',
 };
 
