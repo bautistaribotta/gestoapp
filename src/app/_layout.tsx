@@ -91,12 +91,13 @@ function RootStack() {
         <Stack.Screen name="paciente/[id]" />
         <Stack.Screen name="paciente/editar/[id]" />
         <Stack.Screen name="perfil" />
+        <Stack.Screen name="configuracion" />
       </Stack.Protected>
       <Stack.Protected guard={!ready}>
         <Stack.Screen name="onboarding/index" />
         <Stack.Screen name="onboarding/legal" />
       </Stack.Protected>
-      {/* Los documentos legales se leen tanto en el onboarding como desde el perfil. */}
+      {/* Los documentos legales se leen tanto en el onboarding como desde Configuración. */}
       <Stack.Screen name="legal/[doc]" />
     </Stack>
   );

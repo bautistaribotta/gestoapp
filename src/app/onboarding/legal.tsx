@@ -68,7 +68,7 @@ export default function OnboardingLegalScreen() {
           </Text>
           <Text style={styles.lead}>
             Abrí cada documento para poder aceptarlo. Podés volver a leerlos cuando quieras desde
-            tu perfil.
+            Configuración.
           </Text>
         </View>
 

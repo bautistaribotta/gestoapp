@@ -10,7 +10,7 @@ import { colors } from '@/theme';
 
 /**
  * Lector de un documento legal. Desde el onboarding suma «Entendido» para volver
- * a aceptar; desde el perfil es solo lectura.
+ * a aceptar; desde Configuración es solo lectura.
  */
 export default function LegalDocumentScreen() {
   const { doc, desde } = useLocalSearchParams<{ doc: string; desde?: string }>();
@@ -20,7 +20,7 @@ export default function LegalDocumentScreen() {
 
   return (
     <View style={styles.screen}>
-      <ScreenHeader backLabel={fromOnboarding ? 'Atrás' : 'Perfil'} divider />
+      <ScreenHeader backLabel={fromOnboarding ? 'Atrás' : 'Configuración'} divider />
 
       <ScrollView style={styles.flex} contentContainerStyle={styles.content}>
         <LegalDocument doc={LEGAL_DOCS[doc]} />

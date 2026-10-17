@@ -1,4 +1,6 @@
 import { router } from 'expo-router';
+import { SymbolView } from 'expo-symbols';
+import light from 'expo-symbols/androidWeights/light';
 import { TabList, Tabs, TabSlot, TabTrigger, type TabTriggerSlotProps } from 'expo-router/ui';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -15,16 +17,31 @@ export default function HomeTabsLayout() {
   return (
     <Tabs style={styles.root}>
       <SafeAreaView edges={['top']} style={styles.header}>
-        <Text style={styles.date}>{formatLongDay(todayDay())}</Text>
-        {/* Tocar el saludo abre el perfil (opción 4a del diseño). */}
+        <View style={styles.headerText}>
+          <Text style={styles.date}>{formatLongDay(todayDay())}</Text>
+          {/* Tocar el saludo abre el perfil (opción 4a del diseño). */}
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={greeting(profile)}
+            accessibilityHint="Editar tus datos"
+            onPress={() => router.push('/perfil')}
+            style={({ pressed }) => [styles.greetingButton, pressed && styles.greetingPressed]}>
+            <Text style={styles.greeting}>{greeting(profile)}</Text>
+            <Text style={styles.greetingChevron}>›</Text>
+          </Pressable>
+        </View>
+        {/* Configuración a la derecha del saludo (opción 7a del diseño). */}
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel={greeting(profile)}
-          accessibilityHint="Editar tus datos"
-          onPress={() => router.push('/perfil')}
-          style={({ pressed }) => [styles.greetingButton, pressed && styles.greetingPressed]}>
-          <Text style={styles.greeting}>{greeting(profile)}</Text>
-          <Text style={styles.greetingChevron}>›</Text>
+          accessibilityLabel="Configuración"
+          onPress={() => router.push('/configuracion')}
+          style={({ pressed }) => [styles.settingsButton, pressed && styles.greetingPressed]}>
+          <SymbolView
+            name={{ ios: 'gearshape', android: 'settings', web: 'settings' }}
+            weight={{ ios: 'light', android: light }}
+            tintColor={colors.ink}
+            size={30}
+          />
         </Pressable>
       </SafeAreaView>
       <View style={styles.slot}>
@@ -71,7 +88,21 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingHorizontal: 16,
     paddingBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  headerText: {
+    flexShrink: 1,
     gap: 2,
+  },
+  settingsButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   date: {
     fontFamily: fonts.regular,
