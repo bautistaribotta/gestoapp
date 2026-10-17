@@ -80,7 +80,13 @@ export default function PatientsScreen() {
 
   // Sin pacientes no hay nada que buscar: la pantalla entera explica qué hacer primero.
   if (!showLoading && patients !== null && patients.length === 0) {
-    return <EmptyPatients onNew={() => openNew()} onQuickCalc={() => router.navigate('/')} />;
+    return (
+      <EmptyPatients
+        onNew={() => openNew()}
+        onImport={() => router.push('/copia/importar')}
+        onQuickCalc={() => router.navigate('/')}
+      />
+    );
   }
 
   return (

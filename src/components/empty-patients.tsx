@@ -6,11 +6,13 @@ import { colors, fonts } from '@/theme';
 
 type EmptyPatientsProps = {
   onNew: () => void;
+  /** Para recuperar los datos de una copia, por ejemplo después de reinstalar la app. */
+  onImport: () => void;
   onQuickCalc: () => void;
 };
 
-/** Inicio sin pacientes: logo, qué hace la app y las dos acciones, en un solo bloque centrado. */
-export function EmptyPatients({ onNew, onQuickCalc }: EmptyPatientsProps) {
+/** Inicio sin pacientes: logo, qué hace la app y las tres acciones, en un solo bloque centrado. */
+export function EmptyPatients({ onNew, onImport, onQuickCalc }: EmptyPatientsProps) {
   return (
     <View style={styles.screen}>
       <View style={styles.brand}>
@@ -30,6 +32,7 @@ export function EmptyPatients({ onNew, onQuickCalc }: EmptyPatientsProps) {
 
       <View style={styles.actions}>
         <Button label="+ Nueva paciente" size="lg" onPress={onNew} />
+        <Button label="Importar copia de seguridad" variant="outline" size="lg" onPress={onImport} />
         <Button label="Hacer un cálculo rápido" variant="link" onPress={onQuickCalc} />
       </View>
     </View>
