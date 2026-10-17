@@ -18,6 +18,8 @@ type ProfileContextValue = {
   save: (profile: Profile) => Promise<void>;
   /** Cierra el onboarding: guarda el perfil y la aceptación juntos. */
   completeOnboarding: (profile: Profile) => Promise<void>;
+  /** Muestra un perfil que ya se guardó en la base por otro camino (ej. al importar una copia). */
+  showSavedProfile: (profile: Profile) => void;
 };
 
 const ProfileContext = createContext<ProfileContextValue | null>(null);
@@ -62,7 +64,16 @@ export function ProfileProvider({ children }: PropsWithChildren) {
   const ready = profile !== null && legal !== null;
 
   return (
-    <ProfileContext value={{ loading, profile, legal, ready, save, completeOnboarding }}>
+    <ProfileContext
+      value={{
+        loading,
+        profile,
+        legal,
+        ready,
+        save,
+        completeOnboarding,
+        showSavedProfile: setProfile,
+      }}>
       {children}
     </ProfileContext>
   );

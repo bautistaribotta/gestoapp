@@ -7,7 +7,20 @@ import { LEGAL_DOC_IDS, LEGAL_DOCS } from '@/lib/legal';
 import { useProfile } from '@/providers/profile-provider';
 import { colors, fonts } from '@/theme';
 
-/** Configuración: por ahora solo la sección Legal, para volver a leer los documentos aceptados. */
+const BACKUP_ACTIONS = [
+  {
+    href: '/copia/exportar',
+    name: 'Exportar copia',
+    description: 'Tus pacientes y tu perfil, cifrados con una contraseña',
+  },
+  {
+    href: '/copia/importar',
+    name: 'Importar copia',
+    description: 'Reemplaza los datos actuales por los de la copia',
+  },
+] as const;
+
+/** Configuración: copia de seguridad y la sección Legal para volver a leer los documentos aceptados. */
 export default function SettingsScreen() {
   const { legal } = useProfile();
   const acceptedDay = dayFromIso(legal?.acceptedAt);
@@ -17,6 +30,36 @@ export default function SettingsScreen() {
       <ScreenHeader title="Configuración" backLabel="Inicio" />
 
       <ScrollView style={styles.flex} contentContainerStyle={styles.content}>
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel} accessibilityRole="header">
+            Copia de seguridad
+          </Text>
+          <View style={styles.list}>
+            {BACKUP_ACTIONS.map((action, index) => (
+              <Pressable
+                key={action.href}
+                accessibilityRole="button"
+                accessibilityLabel={`${action.name}. ${action.description}`}
+                onPress={() => router.push(action.href)}
+                style={({ pressed }) => [
+                  styles.row,
+                  index > 0 && styles.rowDivider,
+                  pressed && styles.rowPressed,
+                ]}>
+                <View style={styles.rowText}>
+                  <Text style={styles.rowName}>{action.name}</Text>
+                  <Text style={styles.rowUpdated}>{action.description}</Text>
+                </View>
+                <Text style={styles.chevron}>›</Text>
+              </Pressable>
+            ))}
+          </View>
+          <Text style={styles.sectionNote}>
+            Guardala en iCloud Drive, Google Drive o donde prefieras. Si borrás la app, la importás
+            para recuperar tus pacientes.
+          </Text>
+        </View>
+
         <View style={styles.section}>
           <Text style={styles.sectionLabel} accessibilityRole="header">
             Legal
@@ -116,6 +159,14 @@ const styles = StyleSheet.create({
   chevron: {
     fontFamily: fonts.regular,
     fontSize: 20,
+    color: colors.textMuted,
+  },
+  sectionNote: {
+    paddingHorizontal: 4,
+    fontFamily: fonts.regular,
+    fontSize: 13,
+    lineHeight: 18,
+    textAlign: 'center',
     color: colors.textMuted,
   },
   accepted: {

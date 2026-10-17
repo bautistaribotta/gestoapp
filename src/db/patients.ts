@@ -41,7 +41,7 @@ export function onPatientsChanged(listener: () => void) {
   };
 }
 
-function notifyPatientsChanged() {
+export function notifyPatientsChanged() {
   listeners.forEach((listener) => listener());
 }
 

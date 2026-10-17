@@ -92,6 +92,8 @@ function RootStack() {
         <Stack.Screen name="paciente/editar/[id]" />
         <Stack.Screen name="perfil" />
         <Stack.Screen name="configuracion" />
+        <Stack.Screen name="copia/exportar" />
+        <Stack.Screen name="copia/importar" />
       </Stack.Protected>
       <Stack.Protected guard={!ready}>
         <Stack.Screen name="onboarding/index" />

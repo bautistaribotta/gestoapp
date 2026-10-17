@@ -118,6 +118,21 @@ body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
 .ca-load-error-title{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:600}
 .ca-load-error-title .ca-tri{width:12px;height:11px;color:oklch(0.42 0.11 30)}
 .ca-btn-outline-md{height:52px;padding:0 16px;border-radius:12px;border:1px solid oklch(0.62 0.012 250);background:oklch(1 0 0);font:700 16px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250)}
+
+.ca-list{background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;overflow:hidden}
+.ca-list-row{min-height:60px;box-sizing:border-box;display:flex;align-items:center;gap:12px;padding:8px 16px}
+.ca-list-row+.ca-list-row{border-top:1px solid oklch(0.95 0.004 250)}
+.ca-list-text{flex:1;display:flex;flex-direction:column;gap:2px}
+.ca-list-name{font-size:15px;font-weight:600}
+.ca-list-sub{font-size:13px;color:oklch(0.47 0.012 250)}
+.ca-list-chevron{font-size:20px;color:oklch(0.47 0.012 250)}
+.ca-section-label{padding:0 4px;font-size:14px;font-weight:600;color:oklch(0.47 0.012 250)}
+.ca-section-note{padding:0 4px;font-size:13px;line-height:18px;text-align:center;color:oklch(0.47 0.012 250)}
+.ca-lead-sm{margin:0;font-size:15px;line-height:22px;color:oklch(0.38 0.012 250)}
+.ca-phone-footer{margin-top:auto;padding:12px 16px;border-top:1px solid oklch(0.89 0.006 250);background:oklch(1 0 0);display:flex;flex-direction:column}
+.ca-dots{font:500 17px 'Atkinson Hyperlegible Next',sans-serif;letter-spacing:2px}
+.ca-file-name{font:400 14px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.38 0.012 250)}
+.ca-btn-danger-solid{height:52px;border:0;border-radius:12px;background:oklch(0.50 0.10 30);font:700 16px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(1 0 0)}
 </style>
 </helmet>
 <div class="ca-page">
@@ -223,6 +238,39 @@ body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
 <div class="ca-frame"><div class="ca-empty"><span class="ca-empty-title">Sin resultados para «Gimena»</span><button class="ca-btn-outline">Agregar «Gimena» como paciente</button></div></div></div>
 <div class="ca-spec"><span class="ca-spec-title">Ficha sin referencia</span>
 <div class="ca-frame"><div class="ca-info">Sin FUM ni ecografía cargadas. La ficha completa (datos y gestograma) sigue el diseño del sistema.</div></div></div>
+</div>
+</section>
+
+<section class="ca-section">
+<h2 class="ca-h2">Copia de seguridad</h2>
+<p class="ca-desc">En Configuración, arriba de Legal, la sección «Copia de seguridad» tiene dos filas con el mismo formato que la lista de documentos. Exportar pide una contraseña (al menos 10 caracteres) y su repetición, avisa en un recuadro hundido que sin la contraseña no hay forma de abrir la copia, y «Crear copia» cifra los datos (con Latido y «Cifrando…» mientras tarda) y abre el menú del sistema para guardar el archivo. Importar pide el archivo y su contraseña; si ya hay pacientes, confirma el reemplazo con la misma hoja inferior que eliminar. Una contraseña incorrecta se marca en el campo, como cualquier error de validación.</p>
+<div class="ca-grid">
+<div class="ca-spec"><span class="ca-spec-title">Configuración · sección nueva</span>
+<div class="ca-phone"><div class="ca-bar" style="margin:0"><div class="ca-bar-side"><button class="ca-back"><span class="ca-back-chevron">‹</span>Inicio</button></div><span class="ca-bar-title">Configuración</span><div class="ca-bar-side"></div></div>
+<div class="ca-phone-content" style="padding-top:16px;gap:6px">
+<span class="ca-section-label">Copia de seguridad</span>
+<div class="ca-list"><div class="ca-list-row"><span class="ca-list-text"><span class="ca-list-name">Exportar copia</span><span class="ca-list-sub">Tus pacientes y tu perfil, cifrados con una contraseña</span></span><span class="ca-list-chevron">›</span></div><div class="ca-list-row"><span class="ca-list-text"><span class="ca-list-name">Importar copia</span><span class="ca-list-sub">Reemplaza los datos actuales por los de la copia</span></span><span class="ca-list-chevron">›</span></div></div>
+<span class="ca-section-note">Guardala en iCloud Drive, Google Drive o donde prefieras. Si borrás la app, la importás para recuperar tus pacientes.</span>
+<span class="ca-section-label" style="margin-top:16px">Legal</span>
+<div class="ca-list"><div class="ca-list-row"><span class="ca-list-text"><span class="ca-list-name">Términos y Condiciones</span><span class="ca-list-sub">Actualizado el 17 de octubre de 2026</span></span><span class="ca-list-chevron">›</span></div><div class="ca-list-row"><span class="ca-list-text"><span class="ca-list-name">Política de Privacidad</span><span class="ca-list-sub">Actualizado el 17 de octubre de 2026</span></span><span class="ca-list-chevron">›</span></div></div>
+</div></div></div>
+<div class="ca-spec"><span class="ca-spec-title">Exportar copia</span>
+<div class="ca-phone"><div class="ca-bar" style="margin:0"><div class="ca-bar-side"><button class="ca-back">Cancelar</button></div><span class="ca-bar-title">Exportar copia</span><div class="ca-bar-side"></div></div>
+<div class="ca-phone-content">
+<p class="ca-lead-sm">La copia guarda tus pacientes con sus notas y tu perfil en un archivo cifrado. Después elegís dónde dejarlo: iCloud Drive, Google Drive o donde prefieras.</p>
+<div class="ca-field"><span class="ca-label">Contraseña de la copia <span class="ca-label-hint">· al menos 10 caracteres</span></span><div class="ca-row"><div class="ca-box ca-dots">••••••••••••</div></div></div>
+<div class="ca-field"><span class="ca-label">Repetí la contraseña</span><div class="ca-row"><div class="ca-box ca-dots">••••••••••••</div></div></div>
+<div class="ca-info">Guardá la contraseña en un lugar seguro, como tu gestor de contraseñas. Sin ella no hay forma de abrir la copia: nosotros tampoco podemos recuperarla.</div>
+</div>
+<div class="ca-phone-footer"><button class="ca-btn-primary-lg">Crear copia</button></div></div></div>
+<div class="ca-spec"><span class="ca-spec-title">Importar · confirmar reemplazo</span>
+<div class="ca-phone"><div class="ca-bar" style="margin:0"><div class="ca-bar-side"><button class="ca-back">Cancelar</button></div><span class="ca-bar-title">Importar copia</span><div class="ca-bar-side"></div></div>
+<div class="ca-phone-content">
+<div class="ca-field"><span class="ca-label">Archivo</span><span class="ca-file-name">gestograma-copia-2026-10-17.json</span><button class="ca-btn-outline-md">Elegir otro archivo</button></div>
+<div class="ca-field"><span class="ca-label">Contraseña de la copia</span><div class="ca-row"><div class="ca-box ca-dots">••••••••••••</div></div></div>
+</div>
+<div class="ca-scrim"><div style="flex:1"></div><div class="ca-sheet"><span class="ca-sheet-warning"><span class="ca-tri"></span>Esta acción no se puede deshacer</span><h3 class="ca-sheet-title">¿Reemplazar tus pacientes?</h3><p class="ca-sheet-body">Se borran las 12 pacientes que tenés ahora y se cargan las 14 pacientes de la copia.</p><button class="ca-btn-danger-solid" style="margin-top:8px">Sí, reemplazar</button><button class="ca-btn-outline-md">Cancelar</button></div></div></div>
+<span class="ca-note">Si la contraseña no abre la copia, el campo muestra «La contraseña no abre esta copia.» con ▲. Si el archivo no es una copia, avisa la hoja de error.</span></div>
 </div>
 </section>
 
