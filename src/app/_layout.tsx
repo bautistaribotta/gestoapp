@@ -10,7 +10,7 @@ import {
   AtkinsonHyperlegibleNext_700Bold,
 } from '@expo-google-fonts/atkinson-hyperlegible-next';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Stack, type ErrorBoundaryProps } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { SQLiteProvider } from 'expo-sqlite';
 import { StatusBar } from 'expo-status-bar';
@@ -18,12 +18,22 @@ import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { ErrorScreen } from '@/components/error-screen';
+import { rethrowAsDatabaseError } from '@/db/database-error';
 import { migrateDbIfNeeded } from '@/db/migrations';
 import { ProfileProvider, useProfile } from '@/providers/profile-provider';
 import { ToastProvider } from '@/providers/toast-provider';
 import { colors } from '@/theme';
 
 SplashScreen.preventAutoHideAsync();
+
+/**
+ * Toma cualquier error de la app, incluido el de abrir o migrar la base. Expo Router oculta el
+ * splash al mostrarlo, y «Reintentar» vuelve a montar el layout: reabre la base y reintenta la migración.
+ */
+export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
+  return <ErrorScreen error={error} retry={retry} />;
+}
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
@@ -40,7 +50,8 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <SQLiteProvider databaseName="gestoapp.db" onInit={migrateDbIfNeeded}>
+      <SQLiteProvider databaseName="gestoapp.db" onInit={migrateDbIfNeeded}
+        onError={rethrowAsDatabaseError}>
         <ProfileProvider>
           <ToastProvider>
             <StatusBar style="dark" />
