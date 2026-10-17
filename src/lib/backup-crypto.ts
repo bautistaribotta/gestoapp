@@ -17,7 +17,7 @@ const SALT_BYTES = 16;
 const KEY_BYTES = 32;
 
 /** Contraseña mínima: el archivo puede terminar en la nube y alguien podría probar contraseñas. */
-export const MIN_PASSWORD_LENGTH = 10;
+export const MIN_PASSWORD_LENGTH = 6;
 
 type Envelope = {
   format: typeof FORMAT;
