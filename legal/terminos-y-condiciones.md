@@ -1,10 +1,10 @@
-# Términos y Condiciones de Uso de Gestograma
+# Términos y Condiciones de Uso de GestoApp
 
 **Última actualización:** 17 de octubre de 2026
 
 ## 1. Partes y aceptación
 
-1.1. Estos Términos y Condiciones (los «Términos») regulan el uso de la aplicación móvil **Gestograma** (la «Aplicación»), cuyo titular es **Bautista Ribotta**, CUIT/CUIL 20-43365557-6, con domicilio en Boulevard Illia 336, piso 10, depto. «E», X5000 Ciudad de Córdoba, Provincia de Córdoba, República Argentina (el «Titular»).
+1.1. Estos Términos y Condiciones (los «Términos») regulan el uso de la aplicación móvil **GestoApp** (la «Aplicación»), cuyo titular es **Bautista Ribotta**, CUIT/CUIL 20-43365557-6, con domicilio en Boulevard Illia 336, X5000 Ciudad de Córdoba, Provincia de Córdoba, República Argentina (el «Titular»).
 
 1.2. Quien descarga, instala o usa la Aplicación (el «Usuario») declara haber leído, entendido y aceptado estos Términos y la Política de Privacidad, que forma parte de ellos. Si no está de acuerdo, debe abstenerse de usar la Aplicación y desinstalarla.
 
@@ -22,7 +22,7 @@
 
 ## 3. Qué es y qué no es la Aplicación
 
-3.1. Gestograma es una **herramienta de apoyo** que permite:
+3.1. GestoApp es una **herramienta de apoyo** que permite:
 
 - calcular la edad gestacional y la fecha probable de parto a partir de la fecha de última menstruación (FUM) o de una ecografía;
 - calcular fechas clave del control prenatal;
@@ -61,9 +61,9 @@
 
 ## 6. Conservación y pérdida de datos
 
-6.1. La Aplicación no guarda copias de los datos en servidores del Titular ni ofrece un servicio de respaldo propio. Si el Usuario desinstala la Aplicación, borra sus datos, restablece el dispositivo o lo pierde, la información registrada puede perderse de forma definitiva, salvo que pueda recuperarla desde una copia de seguridad del sistema operativo, según se explica en la Política de Privacidad.
+6.1. La Aplicación no guarda copias de los datos en servidores del Titular ni ofrece un servicio de respaldo propio. Si el Usuario desinstala la Aplicación, borra sus datos, restablece el dispositivo o lo pierde, la información registrada puede perderse de forma definitiva, salvo que pueda recuperarla desde una copia de seguridad del sistema operativo o desde una copia que haya exportado desde la Aplicación, según se explica en la Política de Privacidad.
 
-6.2. El resguardo de la información es responsabilidad del Usuario. El Titular no responde por la pérdida de datos almacenados en el dispositivo.
+6.2. El resguardo de la información es responsabilidad del Usuario, incluidos los archivos de copia que exporte y la contraseña con que los cifre. El Titular no responde por la pérdida de datos almacenados en el dispositivo.
 
 ## 7. Uso permitido
 

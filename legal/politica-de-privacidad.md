@@ -1,12 +1,13 @@
-# Política de Privacidad de Gestograma
+# Política de Privacidad de GestoApp
 
 **Última actualización:** 17 de octubre de 2026
 
 ## 1. Resumen
 
-- Gestograma **guarda la información en tu dispositivo**.
+- GestoApp **guarda la información en tu dispositivo**.
 - **No** tiene servidores, cuentas de usuario, analítica, publicidad ni rastreadores.
 - Si tenés activada la copia de seguridad de tu teléfono (iCloud en iPhone, Google en Android), el sistema puede incluir una copia de los datos de la Aplicación en tu cuenta. Lo decidís vos desde la configuración del dispositivo.
+- Desde Configuración podés **exportar una copia cifrada con tu contraseña** y guardarla donde quieras, para recuperar tus datos si borrás la Aplicación.
 - El Titular **no recibe, no ve y no puede recuperar** los datos que cargues.
 - La Aplicación **no pide permisos** de cámara, ubicación, contactos, micrófono ni fotos.
 - Si cargás datos de pacientes, sos responsable de tratarlos conforme a la ley y al secreto profesional.
@@ -15,7 +16,7 @@ Este resumen no reemplaza el texto completo que sigue.
 
 ## 2. Quién es el Titular
 
-La aplicación móvil **Gestograma** (la «Aplicación») pertenece a **Bautista Ribotta**, CUIT/CUIL 20-43365557-6, con domicilio en Boulevard Illia 336, piso 10, depto. «E», X5000 Ciudad de Córdoba, Provincia de Córdoba, República Argentina (el «Titular»). Contacto: **bautistaribotta@hotmail.com**.
+La aplicación móvil **GestoApp** (la «Aplicación») pertenece a **Bautista Ribotta**, CUIT/CUIL 20-43365557-6, con domicilio en Boulevard Illia 336, X5000 Ciudad de Córdoba, Provincia de Córdoba, República Argentina (el «Titular»). Contacto: **bautistaribotta@hotmail.com**.
 
 Esta Política complementa los Términos y Condiciones de Uso y se rige por la Ley 25.326 de Protección de los Datos Personales, su Decreto Reglamentario 1558/2001 y demás normas aplicables.
 
@@ -69,7 +70,7 @@ Como el Titular no tiene acceso a la información guardada en el dispositivo, no
 
 ## 7. Copias de seguridad
 
-7.1. La Aplicación no tiene un servicio de respaldo propio y el Titular no guarda copias de los datos.
+7.1. La Aplicación no tiene un servicio de respaldo en servidores propios y el Titular no guarda copias de los datos. Hay dos formas de tener una copia: la copia de seguridad del sistema operativo (cláusulas 7.2 a 7.5) y la copia que el Usuario exporta desde la Aplicación (cláusulas 7.6 a 7.9).
 
 7.2. El sistema operativo puede incluir los datos de la Aplicación en las copias de seguridad que el Usuario tenga activadas en su dispositivo:
 
@@ -87,6 +88,14 @@ Esas copias las hacen Apple o Google según la configuración del Usuario, se gu
 
 7.5. Como los datos de pacientes son sensibles, el Usuario debe evaluar si guardarlos en estas copias es compatible con sus obligaciones de confidencialidad y, si las usa, proteger su cuenta de Apple o de Google con una contraseña segura y verificación en dos pasos.
 
+7.6. Desde la pantalla de Configuración, el Usuario puede exportar una copia con las fichas de sus pacientes (incluidas las notas) y con su título y nombre. La aceptación de los Términos y de esta Política no se incluye: se vuelve a pedir al instalar la Aplicación.
+
+7.7. La copia se cifra en el dispositivo con una contraseña que elige el Usuario, mediante AES-256-GCM y una clave derivada de esa contraseña con scrypt. La contraseña no se guarda en la Aplicación, no se envía a ningún lado y el Titular no la conoce: **si el Usuario la olvida, la copia no se puede abrir** y nadie puede recuperarla.
+
+7.8. El Usuario decide dónde guardar el archivo de la copia (por ejemplo, iCloud Drive, Google Drive, el correo o una computadora). Ese almacenamiento se rige por los términos y la política de privacidad del servicio elegido. El Titular no recibe el archivo ni tiene acceso a él.
+
+7.9. Al importar una copia, las pacientes guardadas en el dispositivo se reemplazan por las de la copia, y el título y el nombre del Usuario, por los de la copia. La Aplicación pide confirmación antes de reemplazar datos existentes.
+
 ## 8. Conservación y eliminación
 
 8.1. Los datos permanecen en el dispositivo hasta que el Usuario los elimine. El Usuario puede:
@@ -95,7 +104,7 @@ Esas copias las hacen Apple o Google según la configuración del Usuario, se gu
 - cambiar su nombre y su título desde la pantalla de Perfil;
 - eliminar toda la información desinstalando la Aplicación o borrando sus datos desde la configuración del dispositivo.
 
-8.2. Desinstalar la Aplicación no borra las copias de seguridad del sistema que ya se hayan hecho. Para eliminarlas, el Usuario debe borrarlas desde su cuenta de iCloud o de Google.
+8.2. Desinstalar la Aplicación no borra las copias de seguridad del sistema que ya se hayan hecho ni los archivos de copia que el Usuario haya exportado. Para eliminarlos, el Usuario debe borrarlos desde su cuenta de iCloud o de Google, o desde el lugar donde guardó cada archivo.
 
 8.3. El Titular no conserva copias, por lo que **no puede recuperar** información eliminada o perdida.
 
