@@ -1,11 +1,12 @@
 # Política de Privacidad de Gestograma
 
-**Última actualización:** 11 de octubre de 2026
+**Última actualización:** 16 de octubre de 2026
 
 ## 1. Resumen
 
-- Gestograma **guarda toda la información solo en tu dispositivo**.
+- Gestograma **guarda la información en tu dispositivo**.
 - **No** tiene servidores, cuentas de usuario, analítica, publicidad ni rastreadores.
+- Si tenés activada la copia de seguridad de tu teléfono (iCloud en iPhone, Google en Android), el sistema puede incluir una copia de los datos de la Aplicación en tu cuenta. Lo decidís vos desde la configuración del dispositivo.
 - El Titular **no recibe, no ve y no puede recuperar** los datos que cargues.
 - La Aplicación **no pide permisos** de cámara, ubicación, contactos, micrófono ni fotos.
 - Si cargás datos de pacientes, sos responsable de tratarlos conforme a la ley y al secreto profesional.
@@ -20,7 +21,7 @@ Esta Política complementa los Términos y Condiciones de Uso y se rige por la L
 
 ## 3. Qué información se guarda y dónde
 
-La Aplicación almacena la siguiente información **en una base de datos local dentro del dispositivo del Usuario**:
+La Aplicación almacena la siguiente información **en una base de datos local dentro del dispositivo del Usuario** y, si el Usuario las tiene activadas, en las copias de seguridad del sistema descritas en la cláusula 7:
 
 | Información | Para qué se usa |
 | --- | --- |
@@ -38,7 +39,7 @@ El Usuario decide qué información carga. Salvo el nombre que elige para el sal
 
 El Titular **no recopila, no recibe y no almacena** ningún dato personal del Usuario ni de sus pacientes. En particular, la Aplicación:
 
-- no envía información a servidores propios ni de terceros;
+- no envía información a servidores propios ni de terceros (las copias de seguridad de la cláusula 7 las hace el sistema operativo, según la configuración del Usuario, y el Titular no tiene acceso a ellas);
 - no requiere crear una cuenta ni iniciar sesión;
 - no incluye herramientas de analítica, publicidad, perfilado ni seguimiento;
 - no accede a la ubicación, la cámara, el micrófono, los contactos ni las fotos del dispositivo;
@@ -65,34 +66,56 @@ Como el Titular no tiene acceso a la información guardada en el dispositivo, no
 - no instalar la Aplicación en dispositivos compartidos, con el sistema operativo modificado (*root* o *jailbreak*) o sin protección;
 - borrar los datos antes de vender, regalar o desechar el dispositivo.
 
-## 7. Conservación y eliminación
+## 7. Copias de seguridad
 
-7.1. Los datos permanecen en el dispositivo hasta que el Usuario los elimine. El Usuario puede:
+7.1. La Aplicación no tiene un servicio de respaldo propio y el Titular no guarda copias de los datos.
+
+7.2. El sistema operativo puede incluir los datos de la Aplicación en las copias de seguridad que el Usuario tenga activadas en su dispositivo:
+
+- en iPhone, en la copia de seguridad de iCloud o en la copia que se hace en una computadora;
+- en Android, en la copia de seguridad de Google.
+
+Esas copias las hacen Apple o Google según la configuración del Usuario, se guardan en su cuenta y se rigen por las políticas de privacidad de esas empresas. El Titular no tiene acceso a ellas.
+
+7.3. El Usuario puede activar o desactivar estas copias en cualquier momento desde la configuración de iCloud o de copia de seguridad de Google de su dispositivo. Si las desactiva, los datos quedan solo en el dispositivo.
+
+7.4. Recuperar los datos depende del sistema:
+
+- en Android, al volver a instalar la Aplicación con la misma cuenta de Google y la copia activada, los datos pueden restaurarse automáticamente;
+- en iPhone, los datos se recuperan al restaurar el dispositivo completo desde una copia de iCloud o de la computadora. Borrar la Aplicación y volver a instalarla no los recupera por sí solo.
+
+7.5. Como los datos de pacientes son sensibles, el Usuario debe evaluar si guardarlos en estas copias es compatible con sus obligaciones de confidencialidad y, si las usa, proteger su cuenta de Apple o de Google con una contraseña segura y verificación en dos pasos.
+
+## 8. Conservación y eliminación
+
+8.1. Los datos permanecen en el dispositivo hasta que el Usuario los elimine. El Usuario puede:
 
 - editar o eliminar la ficha de una paciente desde la Aplicación;
 - cambiar su nombre y su título desde la pantalla de Perfil;
 - eliminar toda la información desinstalando la Aplicación o borrando sus datos desde la configuración del dispositivo.
 
-7.2. El Titular no conserva copias, por lo que **no puede recuperar** información eliminada o perdida.
+8.2. Desinstalar la Aplicación no borra las copias de seguridad del sistema que ya se hayan hecho. Para eliminarlas, el Usuario debe borrarlas desde su cuenta de iCloud o de Google.
 
-## 8. Derechos del Usuario
+8.3. El Titular no conserva copias, por lo que **no puede recuperar** información eliminada o perdida.
+
+## 9. Derechos del Usuario
 
 El Usuario puede ejercer en todo momento, directamente desde la Aplicación, los derechos de acceso, rectificación y supresión sobre la información que cargó, ya que tiene control total sobre ella. Para cualquier consulta sobre esta Política puede escribir a **bautistaribotta@hotmail.com**.
 
 El titular de los datos personales tiene la facultad de ejercer el derecho de acceso a ellos en forma gratuita a intervalos no inferiores a seis meses, salvo que se acredite un interés legítimo al efecto conforme lo establecido en el artículo 14, inciso 3, de la Ley 25.326. La Agencia de Acceso a la Información Pública, en su carácter de Órgano de Control de la Ley 25.326, tiene la atribución de atender las denuncias y reclamos que interpongan quienes resulten afectados en sus derechos por incumplimiento de las normas vigentes en materia de protección de datos personales.
 
-## 9. Tiendas de aplicaciones y sistema operativo
+## 10. Tiendas de aplicaciones y sistema operativo
 
 La Aplicación se descarga desde la App Store de Apple o Google Play de Google. Esas empresas, y los fabricantes del dispositivo y del sistema operativo, pueden recopilar información propia (por ejemplo, datos de descarga o reportes de fallos, según la configuración del dispositivo) conforme a sus propias políticas de privacidad. Ese tratamiento es ajeno al Titular.
 
-## 10. Menores de edad
+## 11. Menores de edad
 
 La Aplicación está destinada a profesionales de la salud mayores de 18 años. No está dirigida a menores de edad.
 
-## 11. Cambios en esta Política
+## 12. Cambios en esta Política
 
 El Titular puede modificar esta Política. La nueva versión se publicará en la Aplicación con su fecha de actualización. Si en el futuro la Aplicación comenzara a recopilar o transmitir datos fuera del dispositivo (por ejemplo, mediante cuentas o sincronización), esta Política se actualizará **antes** de que esa función esté disponible y se pedirá al Usuario su consentimiento expreso.
 
-## 12. Contacto
+## 13. Contacto
 
 Para consultas sobre esta Política: **bautistaribotta@hotmail.com**.
