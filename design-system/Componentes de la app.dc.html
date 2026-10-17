@@ -105,6 +105,19 @@ body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
 .ca-sw-alert-soft{background:oklch(0.97 0.015 30)}
 .ca-sw-alert-text{background:oklch(0.42 0.11 30)}
 .ca-sw-focus{background:oklch(0.21 0.012 250)}
+
+.ca-phone{position:relative;height:560px;overflow:hidden;border:1px solid oklch(0.89 0.006 250);border-radius:20px;background:oklch(0.975 0.003 250);display:flex;flex-direction:column}
+.ca-phone-content{padding:0 16px;display:flex;flex-direction:column;gap:16px}
+.ca-scrim{position:absolute;inset:0;background:oklch(0.21 0.012 250 / 0.5);display:flex;flex-direction:column;justify-content:flex-end}
+.ca-sheet{background:oklch(1 0 0);border-radius:20px 20px 0 0;padding:24px 20px 28px;display:flex;flex-direction:column;gap:12px}
+.ca-sheet-warning{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:oklch(0.42 0.11 30)}
+.ca-sheet-title{margin:0;font-size:20px;line-height:26px;font-weight:700}
+.ca-sheet-body{margin:0;font-size:15px;line-height:22px;color:oklch(0.38 0.012 250)}
+.ca-btn-primary{margin-top:8px;height:52px;border:0;border-radius:12px;background:oklch(0.21 0.012 250);font:700 16px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(1 0 0)}
+.ca-load-error{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:0 24px 80px;text-align:center}
+.ca-load-error-title{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:600}
+.ca-load-error-title .ca-tri{width:12px;height:11px;color:oklch(0.42 0.11 30)}
+.ca-btn-outline-md{height:52px;padding:0 16px;border-radius:12px;border:1px solid oklch(0.62 0.012 250);background:oklch(1 0 0);font:700 16px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250)}
 </style>
 </helmet>
 <div class="ca-page">
@@ -210,6 +223,22 @@ body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
 <div class="ca-frame"><div class="ca-empty"><span class="ca-empty-title">Sin resultados para «Gimena»</span><button class="ca-btn-outline">Agregar «Gimena» como paciente</button></div></div></div>
 <div class="ca-spec"><span class="ca-spec-title">Ficha sin referencia</span>
 <div class="ca-frame"><div class="ca-info">Sin FUM ni ecografía cargadas. La ficha completa (datos y gestograma) sigue el diseño del sistema.</div></div></div>
+</div>
+</section>
+
+<section class="ca-section">
+<h2 class="ca-h2">Errores</h2>
+<p class="ca-desc">Cuando una acción falla (guardar una paciente, la nota o el perfil, eliminar o deshacer), se avisa con una hoja inferior con el mismo formato que la confirmación de eliminar: ▲ «Algo salió mal» en ladrillo, qué no se pudo hacer como título, qué pasó con los datos y qué hacer, y «Entendido» en oscuro sólido. Tocar fuera de la hoja o el botón Atrás de Android también la cierra. Lo cargado nunca se borra: el formulario o el editor quedan como estaban. Cuando falla una carga, el contenido se reemplaza por un mensaje centrado, como el indicador de carga, con «Reintentar».</p>
+<div class="ca-grid">
+<div class="ca-spec"><span class="ca-spec-title">Acción que falló · hoja inferior</span>
+<div class="ca-phone"><div class="ca-bar" style="margin:0"><div class="ca-bar-side"><button class="ca-back">Cancelar</button></div><span class="ca-bar-title">Nueva paciente</span><div class="ca-bar-side"></div></div>
+<div class="ca-phone-content"><div class="ca-field"><span class="ca-label">Nombre y apellido</span><div class="ca-row"><div class="ca-box" style="font-family:'Atkinson Hyperlegible Next',sans-serif">Gimena Ortiz</div></div></div></div>
+<div class="ca-scrim"><div style="flex:1"></div><div class="ca-sheet" role="dialog" aria-label="No pudimos guardar la paciente"><span class="ca-sheet-warning"><span class="ca-tri"></span>Algo salió mal</span><h3 class="ca-sheet-title">No pudimos guardar la paciente</h3><p class="ca-sheet-body">Lo que cargaste sigue en el formulario. Probá de nuevo.</p><button class="ca-btn-primary">Entendido</button></div></div></div>
+<span class="ca-note">Sin texto propio, el cuerpo es «Probá de nuevo. Si el problema sigue, cerrá la app y volvé a abrirla.»</span></div>
+<div class="ca-spec"><span class="ca-spec-title">Carga que falló · en lugar del contenido</span>
+<div class="ca-phone"><div class="ca-bar" style="margin:0"><div class="ca-bar-side"><button class="ca-back"><span class="ca-back-chevron">‹</span>Inicio</button></div><div class="ca-bar-side"></div></div>
+<div class="ca-load-error"><div style="display:flex;flex-direction:column;gap:6px;align-items:center"><span class="ca-load-error-title"><span class="ca-tri"></span>No pudimos cargar la paciente</span></div><button class="ca-btn-outline-md">Reintentar</button></div></div>
+<span class="ca-note">Si lo que falta no existe (una paciente eliminada), va el mismo mensaje sin ▲ ni «Reintentar».</span></div>
 </div>
 </section>
 
