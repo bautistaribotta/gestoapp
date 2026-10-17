@@ -63,13 +63,18 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
     { fum: values.fum, ecoDate, ecoGaDays: eco?.gaDays ?? null },
     today,
   );
+  // Al editar, la FUM que ya estaba guardada no se vuelve a validar: con el tiempo supera las
+  // 42 semanas y eso no debe impedir corregir el resto de la ficha. El límite vale al cargarla o cambiarla.
+  const keepsStoredFum = !isNew && values.fum !== null && values.fum === initialValues.fum;
+  const storedFumOutOfRange = keepsStoredFum && fumError(values.fum, today) !== null;
   // Con ecografía la FUM no se usa para datar: se guarda, pero no se valida ni bloquea el guardado.
-  const fumMessage = reference?.source === 'eco' ? null : fumError(values.fum, today);
+  const fumMessage =
+    reference?.source === 'eco' || keepsStoredFum ? null : fumError(values.fum, today);
   // Para guardar alcanza con el nombre y una referencia para datar: la FUM o la ecografía.
   const valid =
     values.name.trim().length > 1 &&
     (parsedAge === null || parsedAge > 0) &&
-    reference !== null &&
+    (reference !== null || keepsStoredFum) &&
     !fumMessage &&
     !eco?.message;
   const canSave = valid && !saving;
@@ -158,7 +163,11 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
 
           <DateField
             label="FUM"
-            help="Fecha de última menstruación. Se usa para calcular la edad gestacional si no hay ecografía cargada."
+            help={
+              storedFumOutOfRange && reference?.source !== 'eco'
+                ? 'Esta FUM ya supera las 42 semanas: se mantiene, pero la gestación queda fuera de rango.'
+                : 'Fecha de última menstruación. Se usa para calcular la edad gestacional si no hay ecografía cargada.'
+            }
             error={fumMessage}
             value={values.fum}
             onChange={set('fum')}
@@ -186,7 +195,7 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
         </ScrollView>
 
         <SafeAreaView edges={['bottom']} style={styles.footer}>
-          {reference ? null : (
+          {reference || keepsStoredFum ? null : (
             <Text style={styles.requirement}>Cargá la FUM o una ecografía para guardar.</Text>
           )}
           <Button
