@@ -9,7 +9,6 @@ import { FieldError, TextArea, TextField } from '@/components/field';
 import { KeyDatesCard } from '@/components/key-dates-card';
 import { ScreenHeader } from '@/components/screen-header';
 import { NOTE_MAX_LENGTH, type NewPatient } from '@/db/patients';
-import { todayDay } from '@/lib/dates';
 import {
   datingReference,
   ecoGaDaysFrom,
@@ -20,6 +19,7 @@ import {
 import { HEIGHT_RANGE, parseMeasurement, WEIGHT_RANGE } from '@/lib/measurements';
 import { useErrorDialog } from '@/providers/error-dialog-provider';
 import { colors, fonts } from '@/theme';
+import { useToday } from '@/providers/today-provider';
 
 export type PatientFormValues = {
   name: string;
@@ -58,7 +58,7 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
   const set = <K extends keyof PatientFormValues>(key: K) =>
     (value: PatientFormValues[K]) => setValues((current) => ({ ...current, [key]: value }));
 
-  const today = todayDay();
+  const today = useToday();
   // La edad es opcional; si se escribe, tiene que ser mayor a 0.
   const parsedAge = values.age.trim() ? parseInt(values.age, 10) : null;
   const weight = parseMeasurement(values.weight, WEIGHT_RANGE);

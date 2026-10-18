@@ -1,6 +1,6 @@
 import { router, useFocusEffect } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { RefreshControl, StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '@/components/button';
@@ -11,11 +11,11 @@ import { PatientList } from '@/components/patient-list';
 import { SearchField } from '@/components/search-field';
 import { listPatients, onPatientsChanged, type Patient } from '@/db/patients';
 import { useDelayedFlag } from '@/hooks/use-delayed-flag';
-import { todayDay } from '@/lib/dates';
 import { logError } from '@/lib/log';
 import { normalizeForSearch } from '@/lib/text';
 import { useErrorDialog } from '@/providers/error-dialog-provider';
 import { colors, fonts } from '@/theme';
+import { useToday } from '@/providers/today-provider';
 
 export default function PatientsScreen() {
   const db = useSQLiteContext();
@@ -25,14 +25,22 @@ export default function PatientsScreen() {
   const [loadFailed, setLoadFailed] = useState(false);
   const showLoading = useDelayedFlag(patients === null && !loadFailed);
   const showError = useErrorDialog();
+  const today = useToday();
 
   /** Devuelve si se cargó. Si falla con el listado ya en pantalla, se deja el que estaba. */
+  // Número de la última carga pedida: si una respuesta llega después de otra más nueva, se descarta.
+  const latestLoad = useRef(0);
+
   const load = useCallback(async () => {
+    const request = ++latestLoad.current;
     try {
-      setPatients(await listPatients(db));
+      const loaded = await listPatients(db);
+      if (request !== latestLoad.current) return true;
+      setPatients(loaded);
       setLoadFailed(false);
       return true;
     } catch (error) {
+      if (request !== latestLoad.current) return true;
       logError('Cargar pacientes', error);
       setLoadFailed(true);
       return false;
@@ -103,7 +111,7 @@ export default function PatientsScreen() {
       ) : (
         <PatientList
           patients={visible}
-          today={todayDay()}
+          today={today}
           onOpen={(patient) =>
             router.push({ pathname: '/paciente/[id]', params: { id: String(patient.id) } })
           }

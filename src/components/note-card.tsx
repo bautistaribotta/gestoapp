@@ -4,8 +4,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Button } from '@/components/button';
 import { TextArea } from '@/components/field';
 import { NOTE_MAX_LENGTH } from '@/db/patients';
-import { dayFromIso, formatDay, todayDay } from '@/lib/dates';
+import { dayFromIso, formatDay } from '@/lib/dates';
 import { colors, fonts } from '@/theme';
+import { useToday } from '@/providers/today-provider';
 
 type NoteCardProps = {
   note: string | null;
@@ -21,9 +22,10 @@ export function NoteCard({ note, updatedAt, onSave }: NoteCardProps) {
   const [draft, setDraft] = useState('');
   const [saving, setSaving] = useState(false);
 
+  const today = useToday();
   const updatedDay = dayFromIso(updatedAt);
   const dateLabel =
-    updatedDay === null ? null : updatedDay === todayDay() ? 'Hoy' : formatDay(updatedDay);
+    updatedDay === null ? null : updatedDay === today ? 'Hoy' : formatDay(updatedDay);
   const showEditor = !note || editing;
   const valid = draft.trim().length > 0;
   const canSave = valid && !saving;

@@ -1,6 +1,6 @@
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Avatar } from '@/components/avatar';
@@ -21,7 +21,7 @@ import {
   type Patient,
 } from '@/db/patients';
 import { useDelayedFlag } from '@/hooks/use-delayed-flag';
-import { dayFromIso, seenLabel, todayDay } from '@/lib/dates';
+import { dayFromIso, seenLabel } from '@/lib/dates';
 import {
   datingReference,
   discordance,
@@ -35,6 +35,7 @@ import { formatDecimal } from '@/lib/text';
 import { useErrorDialog } from '@/providers/error-dialog-provider';
 import { useToast } from '@/providers/toast-provider';
 import { colors, fonts } from '@/theme';
+import { useToday } from '@/providers/today-provider';
 
 export default function PatientScreen() {
   const db = useSQLiteContext();
@@ -47,13 +48,19 @@ export default function PatientScreen() {
   const showError = useErrorDialog();
 
   // Si una recarga falla con la ficha ya en pantalla, se deja la que estaba.
+  // Número de la última carga pedida: si una respuesta llega después de otra más nueva, se descarta.
+  const latestLoad = useRef(0);
+
   const load = useCallback(() => {
+    const request = ++latestLoad.current;
     getPatient(db, Number(id)).then(
       (loaded) => {
+        if (request !== latestLoad.current) return;
         setPatient(loaded);
         setLoadFailed(false);
       },
       (error: unknown) => {
+        if (request !== latestLoad.current) return;
         logError('Cargar paciente', error);
         setLoadFailed(true);
       },
@@ -169,7 +176,7 @@ type PatientDetailProps = {
 };
 
 function PatientDetail({ patient, onSaveNote, onDelete }: PatientDetailProps) {
-  const today = todayDay();
+  const today = useToday();
   const reference = datingReference(patient, today);
   const gestation = reference ? gestationFromReference(reference.day, today) : null;
   const comparison = discordance(patient, today);

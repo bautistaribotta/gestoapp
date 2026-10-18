@@ -3,8 +3,9 @@ import { useState } from 'react';
 import { Keyboard, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { Field, fieldStyles } from '@/components/field';
-import { dayFromDate, dayFromIso, formatDay, isoFromDay, localDateFromDay, todayDay } from '@/lib/dates';
+import { dayFromDate, dayFromIso, formatDay, isoFromDay, localDateFromDay } from '@/lib/dates';
 import { colors, fonts } from '@/theme';
+import { useToday } from '@/providers/today-provider';
 
 type DateFieldProps = {
   label: string;
@@ -22,7 +23,7 @@ type DateFieldProps = {
 export function DateField({ label, hint, help, error, value, onChange, clearable }: DateFieldProps) {
   const [iosPickerOpen, setIosPickerOpen] = useState(false);
   const day = dayFromIso(value);
-  const today = todayDay();
+  const today = useToday();
   const pickerValue = localDateFromDay(day ?? today);
   const maximumDate = localDateFromDay(today);
 

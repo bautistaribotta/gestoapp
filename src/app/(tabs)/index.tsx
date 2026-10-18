@@ -7,16 +7,16 @@ import { DateField } from '@/components/date-field';
 import { DiscordanceCard } from '@/components/discordance-card';
 import { EcoFields, EMPTY_ECO } from '@/components/eco-fields';
 import { KeyDatesCard } from '@/components/key-dates-card';
-import { todayDay } from '@/lib/dates';
 import { datingReference, discordance, ecoGaDaysFrom, fumError, keyDates } from '@/lib/gestation';
 import { useToast } from '@/providers/toast-provider';
 import { colors, fonts } from '@/theme';
+import { useToday } from '@/providers/today-provider';
 
 export default function QuickCalcScreen() {
   const [fum, setFum] = useState<string | null>(null);
   const [eco, setEco] = useState(EMPTY_ECO);
   const showToast = useToast();
-  const today = todayDay();
+  const today = useToday();
 
   const ecoResult = eco.on ? ecoGaDaysFrom(eco.date, eco.weeks, eco.days, today) : null;
   const dating = {

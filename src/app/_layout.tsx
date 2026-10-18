@@ -26,6 +26,7 @@ import { AppLockProvider } from '@/providers/app-lock-provider';
 import { ErrorDialogProvider } from '@/providers/error-dialog-provider';
 import { ProfileProvider, useProfile } from '@/providers/profile-provider';
 import { ToastProvider } from '@/providers/toast-provider';
+import { TodayProvider } from '@/providers/today-provider';
 import { colors } from '@/theme';
 
 SplashScreen.preventAutoHideAsync();
@@ -55,21 +56,23 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <SQLiteProvider
-        databaseName={database.databaseName}
-        onInit={database.onInit}
-        onError={rethrowAsDatabaseError}>
-        <ProfileProvider>
-          <AppLockProvider>
-            <ErrorDialogProvider>
-              <ToastProvider>
-                <StatusBar style="dark" />
-                <RootStack />
-              </ToastProvider>
-            </ErrorDialogProvider>
-          </AppLockProvider>
-        </ProfileProvider>
-      </SQLiteProvider>
+      <TodayProvider>
+        <SQLiteProvider
+          databaseName={database.databaseName}
+          onInit={database.onInit}
+          onError={rethrowAsDatabaseError}>
+          <ProfileProvider>
+            <AppLockProvider>
+              <ErrorDialogProvider>
+                <ToastProvider>
+                  <StatusBar style="dark" />
+                  <RootStack />
+                </ToastProvider>
+              </ErrorDialogProvider>
+            </AppLockProvider>
+          </ProfileProvider>
+        </SQLiteProvider>
+      </TodayProvider>
     </SafeAreaProvider>
   );
 }

@@ -6,19 +6,21 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { greeting } from '@/db/profile';
-import { formatLongDay, todayDay } from '@/lib/dates';
+import { formatLongDay } from '@/lib/dates';
 import { useProfile } from '@/providers/profile-provider';
 import { colors, fonts } from '@/theme';
+import { useToday } from '@/providers/today-provider';
 
 /** Inicio con barra de 2 pestañas (variante 2b del diseño, con acciones en oscuro sólido). */
 export default function HomeTabsLayout() {
   const { profile } = useProfile();
+  const today = useToday();
 
   return (
     <Tabs style={styles.root}>
       <SafeAreaView edges={['top']} style={styles.header}>
         <View style={styles.headerText}>
-          <Text style={styles.date}>{formatLongDay(todayDay())}</Text>
+          <Text style={styles.date}>{formatLongDay(today)}</Text>
           {/* Tocar el saludo abre el perfil (opción 4a del diseño). */}
           <Pressable
             accessibilityRole="button"
