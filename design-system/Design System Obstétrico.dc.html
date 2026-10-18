@@ -467,7 +467,7 @@ class Component extends DCLogic {
       };
     }
     const fumD = dn(st.fum);
-    const fumError = !st.fum ? '' : fumD > c.T ? 'La FUM no puede ser posterior a hoy.' : c.T - fumD > 300 ? 'La FUM supera las 42 semanas.' : '';
+    const fumError = !st.fum ? '' : fumD > c.T ? 'La FUM no puede ser posterior a hoy.' : c.T - fumD > 300 ? 'La FUM supera las 42 s 6 d de gestación.' : '';
     const tokenGroups = TOK.map(g => ({ title: g.title, desc: g.desc, items: g.items.map(([name, L, Cc, h, role]) => {
       const y = lum(L, Cc, h); return { name, role, val: `oklch(${L} ${Cc} ${h})`, cW: '◻ ' + ratio(y, 1), cI: '◼ ' + ratio(y, lum(0.21, 0.012, 250)) };
     }) }));

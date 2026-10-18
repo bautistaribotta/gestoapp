@@ -143,6 +143,9 @@ body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
 .ca-lock-footer{padding:0 20px 28px;display:flex;flex-direction:column}
 .ca-faceid{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);width:150px;height:150px;border-radius:30px;background:oklch(0.95 0.004 250 / 0.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;font-size:15px;font-weight:600;box-shadow:0 8px 24px oklch(0.21 0.012 250 / 0.15)}
 .ca-faceid-icon{width:56px;height:56px;border:3px solid oklch(0.21 0.012 250);border-radius:14px}
+
+.ca-note-area{min-height:90px;box-sizing:border-box;border:1px solid oklch(0.62 0.012 250);border-radius:10px;padding:12px 14px;background:oklch(1 0 0);font-size:16px;line-height:22px}
+.ca-counter{align-self:flex-end;font:400 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)}
 </style>
 </helmet>
 <div class="ca-page">
@@ -182,13 +185,13 @@ body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
 <div class="ca-spec"><span class="ca-spec-title">Cargado · abierto (iOS)</span>
 <div class="ca-frame"><div class="ca-field"><span class="ca-label">FUM <span class="ca-label-hint">· opcional</span></span><div class="ca-row"><div class="ca-box ca-box-open">26/03/2026</div><span class="ca-clear">Borrar</span></div><div class="ca-calendar">Calendario nativo en línea</div></div></div></div>
 <div class="ca-spec"><span class="ca-spec-title">Error</span>
-<div class="ca-frame"><div class="ca-field"><span class="ca-label">FUM <span class="ca-label-hint">· fecha de última menstruación</span></span><div class="ca-row"><div class="ca-box ca-box-error">01/01/2025</div></div><div class="ca-error"><span class="ca-tri"></span>La FUM supera las 42 semanas.</div></div></div></div>
+<div class="ca-frame"><div class="ca-field"><span class="ca-label">FUM <span class="ca-label-hint">· fecha de última menstruación</span></span><div class="ca-row"><div class="ca-box ca-box-error">01/01/2025</div></div><div class="ca-error"><span class="ca-tri"></span>La FUM supera las 42 s 6 d de gestación.</div></div></div></div>
 </div>
 </section>
 
 <section class="ca-section">
 <h2 class="ca-h2">Campos con unidad</h2>
-<p class="ca-desc">El valor va en mono y la unidad en gris a la derecha, dentro del campo. La altura se carga en centímetros (número entero, ej. 163) y el peso en kg con coma decimal.</p>
+<p class="ca-desc">El valor va en mono y la unidad en gris a la derecha, dentro del campo. La altura se carga en centímetros (número entero, ej. 163) y el peso en kg con coma decimal. Los rangos son amplios para incluir, por ejemplo, a personas con enanismo: altura de 50 a 230 cm y peso de 20 a 300 kg. Fuera de rango, el borde del campo pasa a ladrillo y el mensaje va debajo de la fila, a todo el ancho, porque las celdas son angostas. La nota admite hasta 250 caracteres, con un contador debajo.</p>
 <div class="ca-grid">
 <div class="ca-spec"><span class="ca-spec-title">Alta · datos de la paciente</span>
 <div class="ca-frame"><div class="ca-cols">
@@ -196,6 +199,14 @@ body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
 <div class="ca-field"><span class="ca-label">Peso</span><div class="ca-box ca-box-unit">64,5<span class="ca-unit">kg</span></div></div>
 <div class="ca-field"><span class="ca-label">Altura</span><div class="ca-box ca-box-unit"><span class="ca-placeholder">&nbsp;</span><span class="ca-unit">cm</span></div></div>
 </div></div></div>
+<div class="ca-spec"><span class="ca-spec-title">Fuera de rango</span>
+<div class="ca-frame"><div style="display:flex;flex-direction:column;gap:6px"><div class="ca-cols">
+<div class="ca-field"><span class="ca-label">Edad</span><div class="ca-box ca-box-unit">31<span class="ca-unit">años</span></div></div>
+<div class="ca-field"><span class="ca-label">Peso</span><div class="ca-box ca-box-unit">64,5<span class="ca-unit">kg</span></div></div>
+<div class="ca-field"><span class="ca-label">Altura</span><div class="ca-box ca-box-unit ca-box-error">16<span class="ca-unit">cm</span></div></div>
+</div><div class="ca-error"><span class="ca-tri"></span>La altura va de 50 a 230 cm.</div></div></div></div>
+<div class="ca-spec"><span class="ca-spec-title">Nota · contador</span>
+<div class="ca-frame"><div class="ca-field"><span class="ca-label">Nota <span class="ca-label-hint">· opcional</span></span><div class="ca-note-area">Control con ecografía en dos semanas. Pedir laboratorio del segundo trimestre.</div><span class="ca-counter">77/250</span></div></div></div>
 </div>
 </section>
 
