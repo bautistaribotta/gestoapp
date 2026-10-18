@@ -2,6 +2,7 @@ import type { SQLiteDatabase } from 'expo-sqlite';
 
 import { notifyPatientsChanged } from './patients';
 import { getProfile, isProfileTitle, profileEntries, type Profile } from './profile';
+import { withWriteTransaction } from './transaction';
 
 /** Fila de `patients` tal como está en la base, para copiarla sin perder columnas. */
 export type PatientRow = {
@@ -67,9 +68,9 @@ export async function countPatients(db: SQLiteDatabase): Promise<number> {
  */
 export async function replaceWithBackup(db: SQLiteDatabase, data: BackupData) {
   const placeholders = COLUMNS.map(() => '?').join(', ');
-  await db.withExclusiveTransactionAsync(async (txn) => {
-    await txn.runAsync('DELETE FROM patients');
-    const insert = await txn.prepareAsync(
+  await withWriteTransaction(db, async () => {
+    await db.runAsync('DELETE FROM patients');
+    const insert = await db.prepareAsync(
       `INSERT INTO patients (${COLUMNS.join(', ')}) VALUES (${placeholders})`,
     );
     try {
@@ -81,7 +82,7 @@ export async function replaceWithBackup(db: SQLiteDatabase, data: BackupData) {
     }
     if (data.profile) {
       for (const [key, value] of Object.entries(profileEntries(data.profile))) {
-        await txn.runAsync('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)', key, value);
+        await db.runAsync('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)', key, value);
       }
     }
   });

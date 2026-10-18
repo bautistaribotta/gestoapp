@@ -20,7 +20,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { ErrorScreen } from '@/components/error-screen';
 import { rethrowAsDatabaseError } from '@/db/database-error';
-import { migrateDbIfNeeded } from '@/db/migrations';
+import { useDatabaseConfig } from '@/hooks/use-database-config';
+import { usePrivacyScreen } from '@/hooks/use-privacy-screen';
+import { AppLockProvider } from '@/providers/app-lock-provider';
 import { ErrorDialogProvider } from '@/providers/error-dialog-provider';
 import { ProfileProvider, useProfile } from '@/providers/profile-provider';
 import { ToastProvider } from '@/providers/toast-provider';
@@ -46,20 +48,26 @@ export default function RootLayout() {
     AtkinsonHyperlegibleMono_500Medium,
     AtkinsonHyperlegibleMono_700Bold,
   });
+  const database = useDatabaseConfig();
+  usePrivacyScreen();
 
-  if (!fontsLoaded && !fontError) return null;
+  if ((!fontsLoaded && !fontError) || !database) return null;
 
   return (
     <SafeAreaProvider>
-      <SQLiteProvider databaseName="gestoapp.db" onInit={migrateDbIfNeeded}
+      <SQLiteProvider
+        databaseName={database.databaseName}
+        onInit={database.onInit}
         onError={rethrowAsDatabaseError}>
         <ProfileProvider>
-          <ErrorDialogProvider>
-            <ToastProvider>
-              <StatusBar style="dark" />
-              <RootStack />
-            </ToastProvider>
-          </ErrorDialogProvider>
+          <AppLockProvider>
+            <ErrorDialogProvider>
+              <ToastProvider>
+                <StatusBar style="dark" />
+                <RootStack />
+              </ToastProvider>
+            </ErrorDialogProvider>
+          </AppLockProvider>
         </ProfileProvider>
       </SQLiteProvider>
     </SafeAreaProvider>

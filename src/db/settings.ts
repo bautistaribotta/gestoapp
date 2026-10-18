@@ -1,5 +1,7 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
+import { withWriteTransaction } from './transaction';
+
 export async function getSettings(
   db: SQLiteDatabase,
   keys: readonly string[],
@@ -12,15 +14,12 @@ export async function getSettings(
   return Object.fromEntries(rows.map((row) => [row.key, row.value]));
 }
 
-/**
- * Guarda varios valores en una sola transacción. Es exclusiva: solo entran las escrituras de `txn`,
- * así una consulta que corra al mismo tiempo en otra pantalla no queda mezclada en ella.
- */
+/** Guarda varios valores en una sola transacción. */
 export async function setSettings(db: SQLiteDatabase, entries: Record<string, string>) {
-  await db.withExclusiveTransactionAsync(async (txn) => {
+  await withWriteTransaction(db, async () => {
     const upsert = 'INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)';
     for (const [key, value] of Object.entries(entries)) {
-      await txn.runAsync(upsert, key, value);
+      await db.runAsync(upsert, key, value);
     }
   });
 }

@@ -2,8 +2,11 @@ import { router } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { ScreenHeader } from '@/components/screen-header';
+import { SwitchRow } from '@/components/switch-row';
 import { dayFromIso, formatDay } from '@/lib/dates';
 import { LEGAL_DOC_IDS, LEGAL_DOCS } from '@/lib/legal';
+import { RELOCK_AFTER_MS, useAppLock } from '@/providers/app-lock-provider';
+import { useErrorDialog } from '@/providers/error-dialog-provider';
 import { useProfile } from '@/providers/profile-provider';
 import { colors, fonts } from '@/theme';
 
@@ -20,16 +23,47 @@ const BACKUP_ACTIONS = [
   },
 ] as const;
 
-/** Configuración: copia de seguridad y la sección Legal para volver a leer los documentos aceptados. */
+/** Configuración: bloqueo, copia de seguridad y la sección Legal para volver a leer los documentos. */
 export default function SettingsScreen() {
   const { legal } = useProfile();
+  const lock = useAppLock();
+  const showError = useErrorDialog();
   const acceptedDay = dayFromIso(legal?.acceptedAt);
+  const relockMinutes = RELOCK_AFTER_MS / 60_000;
+
+  const toggleLock = async (next: boolean) => {
+    try {
+      await lock.setEnabled(next);
+    } catch (error) {
+      showError({ title: 'No pudimos cambiar el bloqueo', error });
+    }
+  };
 
   return (
     <View style={styles.screen}>
       <ScreenHeader title="Configuración" backLabel="Inicio" />
 
       <ScrollView style={styles.flex} contentContainerStyle={styles.content}>
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel} accessibilityRole="header">
+            Seguridad
+          </Text>
+          <View style={[styles.list, styles.switchCard]}>
+            {lock.available ? (
+              <SwitchRow
+                label="Bloquear GestoApp"
+                description={`Pide ${lock.method} al abrirla y al volver después de ${relockMinutes} minuto.`}
+                value={lock.enabled}
+                onValueChange={toggleLock}
+              />
+            ) : (
+              <Text style={styles.unavailable}>
+                Para bloquear GestoApp, configurá un código, tu huella o tu rostro en el teléfono.
+              </Text>
+            )}
+          </View>
+        </View>
+
         <View style={styles.section}>
           <Text style={styles.sectionLabel} accessibilityRole="header">
             Copia de seguridad
@@ -160,6 +194,17 @@ const styles = StyleSheet.create({
     fontFamily: fonts.regular,
     fontSize: 20,
     color: colors.textMuted,
+  },
+  switchCard: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+  unavailable: {
+    paddingVertical: 8,
+    fontFamily: fonts.regular,
+    fontSize: 14,
+    lineHeight: 20,
+    color: colors.textSecondary,
   },
   sectionNote: {
     paddingHorizontal: 4,
