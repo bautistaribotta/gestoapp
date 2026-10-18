@@ -13,11 +13,19 @@ const WEEKDAYS = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes
 
 const pad = (value: number) => String(value).padStart(2, '0');
 
+const ISO_DATE = /^(\d{4})-(\d{2})-(\d{2})$/;
+
+/** «AAAA-MM-DD» → número de día. Devuelve null si el formato no es ese o la fecha no existe (ej. 30 de febrero). */
 export function dayFromIso(value: string | null | undefined): number | null {
-  if (!value) return null;
-  const [year, month, day] = value.split('-').map(Number);
-  if (!year || !month || !day) return null;
-  return Math.round(Date.UTC(year, month - 1, day) / DAY_MS);
+  const match = value ? ISO_DATE.exec(value) : null;
+  if (!match) return null;
+  const [year, month, day] = match.slice(1).map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  // Date.UTC corre las fechas inválidas al mes siguiente: si no coincide, la fecha no existe.
+  if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) {
+    return null;
+  }
+  return Math.round(date.getTime() / DAY_MS);
 }
 
 export function dayFromDate(date: Date): number {
