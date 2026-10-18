@@ -12,12 +12,15 @@ export async function getSettings(
   return Object.fromEntries(rows.map((row) => [row.key, row.value]));
 }
 
-/** Guarda varios valores en una sola transacción. */
+/**
+ * Guarda varios valores en una sola transacción. Es exclusiva: solo entran las escrituras de `txn`,
+ * así una consulta que corra al mismo tiempo en otra pantalla no queda mezclada en ella.
+ */
 export async function setSettings(db: SQLiteDatabase, entries: Record<string, string>) {
-  await db.withTransactionAsync(async () => {
+  await db.withExclusiveTransactionAsync(async (txn) => {
     const upsert = 'INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)';
     for (const [key, value] of Object.entries(entries)) {
-      await db.runAsync(upsert, key, value);
+      await txn.runAsync(upsert, key, value);
     }
   });
 }
