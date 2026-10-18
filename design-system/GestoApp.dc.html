@@ -17,8 +17,8 @@
 <sc-if value="{{ scr.onb1 }}" hint-placeholder-val="{{ false }}">
 <div style="flex:1;display:flex;flex-direction:column;padding:24px 20px 28px;gap:28px;min-height:0">
 <div style="display:flex;flex-direction:column;gap:10px;margin-top:40px">
-<svg width="56" height="56" viewBox="0 0 100 100" role="img" aria-label="Gestograma" style="display:block;margin-left:-6px"><path d="M 18 52 A 32 32 0 0 0 82 52 Z" fill="oklch(0.21 0.012 250)"></path><circle cx="36" cy="40" r="11" fill="oklch(0.50 0.10 30)"></circle></svg>
-<div style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250);margin-top:8px">GESTOGRAMA · PASO 1 DE 2</div>
+<svg width="56" height="56" viewBox="0 0 100 100" role="img" aria-label="GestoApp" style="display:block;margin-left:-6px"><path d="M 18 52 A 32 32 0 0 0 82 52 Z" fill="oklch(0.21 0.012 250)"></path><circle cx="36" cy="40" r="11" fill="oklch(0.50 0.10 30)"></circle></svg>
+<div style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250);margin-top:8px">GESTOAPP · PASO 1 DE 2</div>
 <h1 style="margin:0;font-size:28px;line-height:34px;font-weight:700;letter-spacing:-0.02em">¿Cómo querés que te llamemos?</h1>
 <p style="margin:0;font-size:15px;line-height:22px;color:oklch(0.38 0.012 250)">Lo usamos solo para saludarte en Inicio. Podés cambiarlo después.</p>
 </div>
@@ -41,7 +41,7 @@
 <div style="height:52px;display:flex;align-items:center;padding:0 8px;flex:none"><button onClick="{{ onbBack }}" style="height:44px;padding:0 10px;border:none;background:none;font:600 16px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250);cursor:pointer">‹ Atrás</button></div>
 <div style="flex:1;overflow:auto;padding:8px 20px 16px;display:flex;flex-direction:column;gap:20px">
 <div style="display:flex;flex-direction:column;gap:10px">
-<div style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">GESTOGRAMA · PASO 2 DE 2</div>
+<div style="font:500 13px 'Atkinson Hyperlegible Mono',monospace;color:oklch(0.47 0.012 250)">GESTOAPP · PASO 2 DE 2</div>
 <h1 style="margin:0;font-size:28px;line-height:34px;font-weight:700;letter-spacing:-0.02em">Antes de empezar</h1>
 <p style="margin:0;font-size:15px;line-height:22px;color:oklch(0.38 0.012 250);text-wrap:pretty">Abrí los dos documentos y, cuando los hayas leído, aceptalos con el botón de abajo. Podés volver a leerlos cuando quieras desde Configuración.</p>
 </div>
@@ -476,7 +476,7 @@ class Component extends DCLogic {
       const [thr, range] = eGA <= 62 ? [5, 'hasta 8 s 6 d'] : eGA <= 111 ? [7, '9 s 0 d – 15 s 6 d'] : eGA <= 153 ? [10, '16 s 0 d – 21 s 6 d'] : eGA <= 195 ? [14, '22 s 0 d – 27 s 6 d'] : [21, '28 s o más'];
       const over = diff > thr;
       disc = { show: true, over, ok: !over, title: over ? `Discordancia de ${diff} d` : `Concordante · diferencia ${diff} d`, gaFum: sd(T - f0), gaEco: sd(cga),
-        rule: `Umbral ACOG para eco a ${range}: más de ${thr} d. Se usa la ecografía.`,
+        rule: `Umbral ACOG para eco a ${range}: más de ${thr} d. La edad gestacional y las fechas se calculan con la ecografía.`,
         tc: over ? 'oklch(0.42 0.11 30)' : 'oklch(0.38 0.012 250)', bg: over ? 'oklch(0.97 0.015 30)' : 'oklch(0.975 0.003 250)', border: over ? 'oklch(0.80 0.06 30)' : 'oklch(0.89 0.006 250)' };
     }
     const calc = cok ? { ok: true, ga: sd(cga), month: '≈ ' + (Math.floor(cga / 30.4) + 1) + '° mes', bars: Array.from({ length: trimester(cga) }, (_, i) => i), tri: 'T' + trimester(cga) + ' · ' + trimester(cga) + '° trimestre', fpp: fmt(cf + 280), dates: keyDates(cf, ecoOk ? ed : null), ref: ecoOk ? 'ecografía del ' + fmt(ed) : 'FUM ' + fmt(f0), disc } : { ok: false, bars: [], dates: [], disc };
