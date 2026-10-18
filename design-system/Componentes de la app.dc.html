@@ -135,6 +135,14 @@ body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
 .ca-btn-danger-solid{height:52px;border:0;border-radius:12px;background:oklch(0.50 0.10 30);font:700 16px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(1 0 0)}
 
 .ca-btn-outline-lg{height:56px;border-radius:12px;border:1px solid oklch(0.62 0.012 250);background:oklch(1 0 0);font:700 17px 'Atkinson Hyperlegible Next',sans-serif;color:oklch(0.21 0.012 250)}
+
+.ca-lock{position:absolute;inset:0;background:oklch(0.975 0.003 250);display:flex;flex-direction:column}
+.ca-lock-content{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:0 38px;text-align:center}
+.ca-lock-title{font-size:20px;line-height:26px;font-weight:700}
+.ca-lock-text{font-size:15px;line-height:22px;color:oklch(0.38 0.012 250)}
+.ca-lock-footer{padding:0 20px 28px;display:flex;flex-direction:column}
+.ca-faceid{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);width:150px;height:150px;border-radius:30px;background:oklch(0.95 0.004 250 / 0.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;font-size:15px;font-weight:600;box-shadow:0 8px 24px oklch(0.21 0.012 250 / 0.15)}
+.ca-faceid-icon{width:56px;height:56px;border:3px solid oklch(0.21 0.012 250);border-radius:14px}
 </style>
 </helmet>
 <div class="ca-page">
@@ -240,6 +248,28 @@ body{margin:0;background:oklch(0.975 0.003 250);color:oklch(0.21 0.012 250)}
 <div class="ca-frame"><div class="ca-empty"><span class="ca-empty-title">Sin resultados para «Gimena»</span><button class="ca-btn-outline">Agregar «Gimena» como paciente</button></div></div></div>
 <div class="ca-spec"><span class="ca-spec-title">Ficha sin referencia</span>
 <div class="ca-frame"><div class="ca-info">Sin FUM ni ecografía cargadas. La ficha completa (datos y gestograma) sigue el diseño del sistema.</div></div></div>
+</div>
+</section>
+
+<section class="ca-section">
+<h2 class="ca-h2">Seguridad</h2>
+<p class="ca-desc">Con el bloqueo activado (viene así por defecto), al abrir GestoApp y al volver después de un minuto aparece la pantalla de bloqueo: tapa la app sin desmontarla, así no se pierde lo que estaba abierto, y pide enseguida Face ID, la huella o el código del teléfono. Si se cancela, queda «Desbloquear». En Configuración, la sección Seguridad va primero; desactivar el bloqueo pide autenticarse. Si el teléfono no tiene ningún bloqueo configurado, en lugar del interruptor se explica qué hacer. En el selector de apps el contenido se ve desenfocado (iOS) o en blanco (Android).</p>
+<div class="ca-grid">
+<div class="ca-spec"><span class="ca-spec-title">Pantalla de bloqueo</span>
+<div class="ca-phone"><div class="ca-lock"><div class="ca-lock-content"><svg width="72" height="72" viewBox="0 0 100 100" role="img" aria-label="GestoApp"><path d="M18 52 A32 32 0 0 0 82 52 Z" fill="oklch(0.21 0.012 250)"/><circle cx="36" cy="40" r="11" fill="oklch(0.50 0.10 30)"/></svg><div style="display:flex;flex-direction:column;gap:8px"><span class="ca-lock-title">GestoApp está bloqueada</span><span class="ca-lock-text">Para ver tus pacientes, desbloqueala con Face ID.</span></div></div><div class="ca-lock-footer"><button class="ca-btn-primary-lg">Desbloquear</button></div></div></div>
+<span class="ca-note">El texto nombra el método del teléfono: Face ID, Touch ID, «tu huella», «tu rostro» o «el código del teléfono».</span></div>
+<div class="ca-spec"><span class="ca-spec-title">Bloqueo · pidiendo Face ID</span>
+<div class="ca-phone"><div class="ca-lock"><div class="ca-lock-content"><svg width="72" height="72" viewBox="0 0 100 100" role="img" aria-label="GestoApp"><path d="M18 52 A32 32 0 0 0 82 52 Z" fill="oklch(0.21 0.012 250)"/><circle cx="36" cy="40" r="11" fill="oklch(0.50 0.10 30)"/></svg><div style="display:flex;flex-direction:column;gap:8px"><span class="ca-lock-title">GestoApp está bloqueada</span><span class="ca-lock-text">Para ver tus pacientes, desbloqueala con Face ID.</span></div></div><div class="ca-lock-footer"><button class="ca-btn-primary-lg">Desbloquear</button></div><div class="ca-faceid"><span class="ca-faceid-icon"></span>Face ID</div></div></div>
+<span class="ca-note">El diálogo es del sistema operativo; la app solo le pasa el texto «Desbloqueá GestoApp».</span></div>
+<div class="ca-spec"><span class="ca-spec-title">Configuración · Seguridad</span>
+<div class="ca-phone"><div class="ca-bar" style="margin:0"><div class="ca-bar-side"><button class="ca-back"><span class="ca-back-chevron">‹</span>Inicio</button></div><span class="ca-bar-title">Configuración</span><div class="ca-bar-side"></div></div>
+<div class="ca-phone-content" style="padding-top:16px;gap:6px">
+<span class="ca-section-label">Seguridad</span>
+<div class="ca-list" style="padding:8px 16px"><div class="ca-switch-row"><span class="ca-switch-text"><span class="ca-switch-label">Bloquear GestoApp</span><span class="ca-switch-desc">Pide Face ID al abrirla y al volver después de 1 minuto.</span></span><span class="ca-track ca-track-on"><span class="ca-thumb"></span></span></div></div>
+<span class="ca-section-label" style="margin-top:16px">Copia de seguridad</span>
+<div class="ca-list"><div class="ca-list-row"><span class="ca-list-text"><span class="ca-list-name">Exportar copia</span><span class="ca-list-sub">Tus pacientes y tu perfil, cifrados con una contraseña</span></span><span class="ca-list-chevron">›</span></div><div class="ca-list-row"><span class="ca-list-text"><span class="ca-list-name">Importar copia</span><span class="ca-list-sub">Reemplaza los datos actuales por los de la copia</span></span><span class="ca-list-chevron">›</span></div></div>
+</div></div>
+<span class="ca-note">Sin bloqueo en el teléfono: «Para bloquear GestoApp, configurá un código, tu huella o tu rostro en el teléfono.»</span></div>
 </div>
 </section>
 
