@@ -11,6 +11,7 @@ import {
 import { StyleSheet, View } from 'react-native';
 
 import { Toast, type ToastPlacement } from '@/components/toast';
+import { useScreenReader } from '@/hooks/use-screen-reader';
 
 const DURATION_MS = 3000;
 const DURATION_WITH_UNDO_MS = 5000;
@@ -35,6 +36,7 @@ const ToastContext = createContext<((options: ToastOptions) => void) | null>(nul
 export function ToastProvider({ children }: PropsWithChildren) {
   const [toast, setToast] = useState<ToastState | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const screenReader = useScreenReader();
 
   const hide = useCallback(() => {
     clearTimeout(timer.current);
@@ -45,9 +47,12 @@ export function ToastProvider({ children }: PropsWithChildren) {
     (options: ToastOptions) => {
       clearTimeout(timer.current);
       setToast({ ...options, id: Date.now(), leaving: false });
+      // Con lector de pantalla, encontrar y tocar «Deshacer» lleva más que 5 segundos: ese aviso
+      // queda hasta que se cierre o se deshaga.
+      if (options.onUndo && screenReader) return;
       timer.current = setTimeout(hide, options.onUndo ? DURATION_WITH_UNDO_MS : DURATION_MS);
     },
-    [hide],
+    [hide, screenReader],
   );
 
   // Solo quita el toast que terminó de salir; si ya se mostró otro, lo deja.

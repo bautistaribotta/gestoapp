@@ -107,7 +107,8 @@ const styles = StyleSheet.create({
     left: 12,
     right: 12,
     zIndex: 20,
-    minHeight: 52,
+    // 44 de los botones + 6 arriba y abajo.
+    minHeight: 56,
     paddingVertical: 6,
     paddingLeft: 14,
     paddingRight: 6,
@@ -151,7 +152,8 @@ const styles = StyleSheet.create({
     color: colors.surface,
   },
   action: {
-    height: 40,
+    // 44 pt: el área táctil mínima recomendada.
+    height: 44,
     paddingHorizontal: 12,
     borderRadius: 10,
     justifyContent: 'center',
@@ -166,8 +168,8 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   close: {
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
