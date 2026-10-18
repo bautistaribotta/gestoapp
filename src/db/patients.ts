@@ -31,6 +31,9 @@ export type NewPatient = PatientData & {
   note: string | null;
 };
 
+/** Largo máximo de la nota de una paciente. */
+export const NOTE_MAX_LENGTH = 250;
+
 const listeners = new Set<() => void>();
 
 /** Avisa cuando cambian las pacientes, para recargar pantallas que siguen montadas (ej. Inicio). */

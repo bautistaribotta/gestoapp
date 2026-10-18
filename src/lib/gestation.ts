@@ -1,6 +1,7 @@
 import { dayFromIso, formatDay } from './dates';
 
 const PREGNANCY_DAYS = 280;
+/** Tope de gestación que se acepta: 300 días, es decir, 42 s 6 d. */
 const MAX_GESTATION_DAYS = 300;
 
 export type Trimester = 1 | 2 | 3;
@@ -48,6 +49,9 @@ export function formatWeeksDays(days: number): string {
   return `${Math.floor(days / 7)} s ${days % 7} d`;
 }
 
+/** El tope en semanas y días («42 s 6 d»), para los mensajes: así no se desfasa del número. */
+export const MAX_GESTATION_LABEL = formatWeeksDays(MAX_GESTATION_DAYS);
+
 function plural(count: number, singular: string, pluralForm: string): string {
   return `${count} ${count === 1 ? singular : pluralForm}`;
 }
@@ -75,7 +79,7 @@ export function fumError(fum: string | null, today: number): string | null {
   const day = dayFromIso(fum);
   if (day === null) return null;
   if (day > today) return 'La FUM no puede ser posterior a hoy.';
-  if (today - day > MAX_GESTATION_DAYS) return 'La FUM supera las 42 semanas.';
+  if (today - day > MAX_GESTATION_DAYS) return `La FUM supera las ${MAX_GESTATION_LABEL} de gestación.`;
   return null;
 }
 

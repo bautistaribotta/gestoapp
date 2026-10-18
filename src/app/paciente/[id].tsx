@@ -28,6 +28,7 @@ import {
   fumError,
   gestationFromReference,
   keyDates,
+  MAX_GESTATION_LABEL,
 } from '@/lib/gestation';
 import { logError } from '@/lib/log';
 import { formatDecimal } from '@/lib/text';
@@ -207,7 +208,7 @@ function PatientDetail({ patient, onSaveNote, onDelete }: PatientDetailProps) {
         ) : (
           <Text style={styles.empty}>
             {reference?.source === 'eco'
-              ? 'La edad gestacional por ecografía supera las 42 semanas.'
+              ? `La edad gestacional por ecografía supera las ${MAX_GESTATION_LABEL}.`
               : (fumError(patient.fum, today) ??
                 'Sin FUM ni ecografía cargadas. Podés cargarlas desde «Editar datos».')}
           </Text>

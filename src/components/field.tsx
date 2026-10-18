@@ -51,12 +51,24 @@ type TextFieldProps = Omit<TextInputProps, 'style'> & {
   hint?: string;
   /** Mensaje de error debajo del campo. */
   error?: string | null;
+  /** Marca el borde en error sin mensaje, para campos angostos cuyo mensaje va aparte. */
+  invalid?: boolean;
   /** Unidad que se muestra a la derecha del valor (ej. "kg"). */
   unit?: string;
   mono?: boolean;
 };
 
-export function TextField({ label, hint, error, unit, mono, onFocus, onBlur, ...props }: TextFieldProps) {
+export function TextField({
+  label,
+  hint,
+  error,
+  invalid,
+  unit,
+  mono,
+  onFocus,
+  onBlur,
+  ...props
+}: TextFieldProps) {
   const [focused, setFocused] = useState(false);
 
   return (
@@ -65,7 +77,7 @@ export function TextField({ label, hint, error, unit, mono, onFocus, onBlur, ...
         style={[
           styles.box,
           unit ? styles.boxWithUnit : null,
-          error ? fieldStyles.boxError : null,
+          error || invalid ? fieldStyles.boxError : null,
           focused && styles.boxFocused,
           focused && unit ? styles.boxWithUnitFocused : null,
         ]}>
@@ -97,7 +109,7 @@ type TextAreaProps = Omit<TextInputProps, 'style' | 'multiline'> & {
   size?: 'md' | 'lg';
 };
 
-/** Campo de texto de varias líneas (ej. la nota de la paciente). */
+/** Campo de texto de varias líneas (ej. la nota de la paciente). Con `maxLength`, muestra el contador. */
 export function TextArea({ label, hint, size = 'md', onFocus, onBlur, ...props }: TextAreaProps) {
   const [focused, setFocused] = useState(false);
 
@@ -119,6 +131,13 @@ export function TextArea({ label, hint, size = 'md', onFocus, onBlur, ...props }
         }}
         {...props}
       />
+      {props.maxLength !== undefined ? (
+        <Text
+          style={styles.counter}
+          accessibilityLabel={`${props.value?.length ?? 0} de ${props.maxLength} caracteres`}>
+          {props.value?.length ?? 0}/{props.maxLength}
+        </Text>
+      ) : null}
     </Field>
   );
 }
@@ -217,6 +236,12 @@ const styles = StyleSheet.create({
     borderColor: colors.ink,
     paddingVertical: 11,
     paddingHorizontal: 13,
+  },
+  counter: {
+    alignSelf: 'flex-end',
+    fontFamily: fonts.mono,
+    fontSize: 13,
+    color: colors.textMuted,
   },
   unit: {
     fontFamily: fonts.regular,

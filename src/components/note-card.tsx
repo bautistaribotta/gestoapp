@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '@/components/button';
 import { TextArea } from '@/components/field';
+import { NOTE_MAX_LENGTH } from '@/db/patients';
 import { dayFromIso, formatDay, todayDay } from '@/lib/dates';
 import { colors, fonts } from '@/theme';
 
@@ -55,6 +56,7 @@ export function NoteCard({ note, updatedAt, onSave }: NoteCardProps) {
             placeholder="Antecedentes, indicaciones, recordatorios"
             value={draft}
             onChangeText={setDraft}
+            maxLength={NOTE_MAX_LENGTH}
           />
           <View style={styles.actions}>
             {note ? (

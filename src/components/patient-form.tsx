@@ -5,13 +5,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '@/components/button';
 import { DateField } from '@/components/date-field';
 import { EcoFields, EMPTY_ECO, type EcoInput } from '@/components/eco-fields';
-import { TextArea, TextField } from '@/components/field';
+import { FieldError, TextArea, TextField } from '@/components/field';
 import { KeyDatesCard } from '@/components/key-dates-card';
 import { ScreenHeader } from '@/components/screen-header';
-import type { NewPatient } from '@/db/patients';
+import { NOTE_MAX_LENGTH, type NewPatient } from '@/db/patients';
 import { todayDay } from '@/lib/dates';
-import { datingReference, ecoGaDaysFrom, fumError, keyDates } from '@/lib/gestation';
-import { parseDecimal } from '@/lib/text';
+import {
+  datingReference,
+  ecoGaDaysFrom,
+  fumError,
+  keyDates,
+  MAX_GESTATION_LABEL,
+} from '@/lib/gestation';
+import { HEIGHT_RANGE, parseMeasurement, WEIGHT_RANGE } from '@/lib/measurements';
 import { useErrorDialog } from '@/providers/error-dialog-provider';
 import { colors, fonts } from '@/theme';
 
@@ -55,6 +61,8 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
   const today = todayDay();
   // La edad es opcional; si se escribe, tiene que ser mayor a 0.
   const parsedAge = values.age.trim() ? parseInt(values.age, 10) : null;
+  const weight = parseMeasurement(values.weight, WEIGHT_RANGE);
+  const height = parseMeasurement(values.heightCm, HEIGHT_RANGE);
   const eco = values.eco.on
     ? ecoGaDaysFrom(values.eco.date, values.eco.weeks, values.eco.days, today)
     : null;
@@ -64,7 +72,7 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
     today,
   );
   // Al editar, la FUM que ya estaba guardada no se vuelve a validar: con el tiempo supera las
-  // 42 semanas y eso no debe impedir corregir el resto de la ficha. El límite vale al cargarla o cambiarla.
+  // 42 s 6 d y eso no debe impedir corregir el resto de la ficha. El límite vale al cargarla o cambiarla.
   const keepsStoredFum = !isNew && values.fum !== null && values.fum === initialValues.fum;
   const storedFumOutOfRange = keepsStoredFum && fumError(values.fum, today) !== null;
   // Con ecografía la FUM no se usa para datar: se guarda, pero no se valida ni bloquea el guardado.
@@ -74,6 +82,8 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
   const valid =
     values.name.trim().length > 1 &&
     (parsedAge === null || parsedAge > 0) &&
+    !weight.error &&
+    !height.error &&
     (reference !== null || keepsStoredFum) &&
     !fumMessage &&
     !eco?.message;
@@ -86,8 +96,8 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
       await onSubmit({
         name: values.name.trim(),
         age: parsedAge,
-        weight: parseDecimal(values.weight),
-        heightCm: parseDecimal(values.heightCm),
+        weight: weight.value,
+        heightCm: height.value,
         fum: values.fum,
         ecoDate,
         ecoGaDays: eco?.gaDays ?? null,
@@ -125,47 +135,54 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
             autoCapitalize="words"
             autoCorrect={false}
           />
-          <View style={styles.row}>
-            <View style={styles.cell}>
-              <TextField
-                label="Edad"
-                unit="años"
-                mono
-                value={values.age}
-                onChangeText={set('age')}
-                keyboardType="number-pad"
-                maxLength={2}
-              />
+          <View style={styles.measurements}>
+            <View style={styles.row}>
+              <View style={styles.cell}>
+                <TextField
+                  label="Edad"
+                  unit="años"
+                  mono
+                  value={values.age}
+                  onChangeText={set('age')}
+                  keyboardType="number-pad"
+                  maxLength={2}
+                />
+              </View>
+              <View style={styles.cell}>
+                <TextField
+                  label="Peso"
+                  unit="kg"
+                  mono
+                  value={values.weight}
+                  onChangeText={set('weight')}
+                  keyboardType="decimal-pad"
+                  maxLength={5}
+                  invalid={weight.error !== null}
+                />
+              </View>
+              <View style={styles.cell}>
+                <TextField
+                  label="Altura"
+                  unit="cm"
+                  mono
+                  value={values.heightCm}
+                  onChangeText={set('heightCm')}
+                  keyboardType="number-pad"
+                  maxLength={3}
+                  invalid={height.error !== null}
+                />
+              </View>
             </View>
-            <View style={styles.cell}>
-              <TextField
-                label="Peso"
-                unit="kg"
-                mono
-                value={values.weight}
-                onChangeText={set('weight')}
-                keyboardType="decimal-pad"
-                maxLength={5}
-              />
-            </View>
-            <View style={styles.cell}>
-              <TextField
-                label="Altura"
-                unit="cm"
-                mono
-                value={values.heightCm}
-                onChangeText={set('heightCm')}
-                keyboardType="number-pad"
-                maxLength={3}
-              />
-            </View>
+            {/* Las celdas son angostas: el mensaje va debajo de la fila, a todo el ancho. */}
+            {weight.error ? <FieldError message={weight.error} /> : null}
+            {height.error ? <FieldError message={height.error} /> : null}
           </View>
 
           <DateField
             label="FUM"
             help={
               storedFumOutOfRange && reference?.source !== 'eco'
-                ? 'Esta FUM ya supera las 42 semanas: se mantiene, pero la gestación queda fuera de rango.'
+                ? `Esta FUM ya supera las ${MAX_GESTATION_LABEL}: se mantiene, pero la gestación queda fuera de rango.`
                 : 'Fecha de última menstruación. Se usa para calcular la edad gestacional si no hay ecografía cargada.'
             }
             error={fumMessage}
@@ -190,6 +207,7 @@ export function PatientForm({ mode, initialValues, onSubmit }: PatientFormProps)
               placeholder="Antecedentes, indicaciones, recordatorios"
               value={values.note}
               onChangeText={set('note')}
+              maxLength={NOTE_MAX_LENGTH}
             />
           ) : null}
         </ScrollView>
@@ -224,6 +242,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingBottom: 16,
     gap: 16,
+  },
+  measurements: {
+    gap: 6,
   },
   row: {
     flexDirection: 'row',
