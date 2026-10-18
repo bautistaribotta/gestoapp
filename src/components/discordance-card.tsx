@@ -25,6 +25,8 @@ export function DiscordanceCard({ discordance }: { discordance: Discordance }) {
         </View>
       </View>
       <Text style={styles.rule}>{discordance.rule}</Text>
+      {/* La tarjeta es informativa: con ecografía cargada, la FUM no se usa para datar. */}
+      <Text style={styles.rule}>La edad gestacional y las fechas se calculan con la ecografía.</Text>
     </View>
   );
 }
