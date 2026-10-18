@@ -42,6 +42,7 @@ export function Toast({ message, placement, leaving, onUndo, onClose, onExited }
       stiffness: 220,
       useNativeDriver: true,
     }).start();
+    // Se anuncia solo acá, que funciona en iOS y Android. Sumar accessibilityLiveRegion lo duplicaba en Android.
     AccessibilityInfo.announceForAccessibility(message);
   }, [appear, message]);
 
@@ -61,7 +62,6 @@ export function Toast({ message, placement, leaving, onUndo, onClose, onExited }
 
   return (
     <Animated.View
-      accessibilityLiveRegion="polite"
       style={[
         styles.toast,
         leaving && styles.leaving,
