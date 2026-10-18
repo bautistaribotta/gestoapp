@@ -21,11 +21,11 @@ export type Patient = {
   note: string | null;
   /** Última edición de la nota (YYYY-MM-DD). */
   noteUpdatedAt: string | null;
-  /** Última vez que se vio a la paciente (YYYY-MM-DD). */
-  lastSeen: string;
+  /** Fecha en que se atendió a la paciente (YYYY-MM-DD): la del alta de la ficha, no cambia al editarla. */
+  attendedAt: string;
 };
 
-export type PatientData = Omit<Patient, 'id' | 'lastSeen' | 'note' | 'noteUpdatedAt'>;
+export type PatientData = Omit<Patient, 'id' | 'attendedAt' | 'note' | 'noteUpdatedAt'>;
 
 export type NewPatient = PatientData & {
   note: string | null;
@@ -47,11 +47,11 @@ export function notifyPatientsChanged() {
 
 const PATIENT_COLUMNS = `id, name, age, weight, height_cm AS heightCm, fum,
   eco_date AS ecoDate, eco_ga_days AS ecoGaDays,
-  note, note_updated_at AS noteUpdatedAt, last_seen AS lastSeen`;
+  note, note_updated_at AS noteUpdatedAt, attended_at AS attendedAt`;
 
 export function listPatients(db: SQLiteDatabase) {
   return db.getAllAsync<Patient>(
-    `SELECT ${PATIENT_COLUMNS} FROM patients ORDER BY last_seen DESC, id DESC`,
+    `SELECT ${PATIENT_COLUMNS} FROM patients ORDER BY attended_at DESC, id DESC`,
   );
 }
 
@@ -63,9 +63,9 @@ export async function insertPatient(db: SQLiteDatabase, patient: NewPatient): Pr
   const today = isoFromDay(todayDay());
   const result = await db.runAsync(
     `INSERT INTO patients
-       (name, age, weight, height_cm, fum, eco_date, eco_ga_days, note, note_updated_at, last_seen)
+       (name, age, weight, height_cm, fum, eco_date, eco_ga_days, note, note_updated_at, attended_at)
      VALUES
-       ($name, $age, $weight, $heightCm, $fum, $ecoDate, $ecoGaDays, $note, $noteUpdatedAt, $lastSeen)`,
+       ($name, $age, $weight, $heightCm, $fum, $ecoDate, $ecoGaDays, $note, $noteUpdatedAt, $attendedAt)`,
     {
       $name: patient.name,
       $age: patient.age,
@@ -76,7 +76,7 @@ export async function insertPatient(db: SQLiteDatabase, patient: NewPatient): Pr
       $ecoGaDays: patient.ecoGaDays,
       $note: patient.note,
       $noteUpdatedAt: patient.note ? today : null,
-      $lastSeen: today,
+      $attendedAt: today,
     },
   );
   notifyPatientsChanged();
@@ -123,9 +123,9 @@ export async function deletePatient(db: SQLiteDatabase, id: number) {
 export async function restorePatient(db: SQLiteDatabase, patient: Patient) {
   await db.runAsync(
     `INSERT INTO patients
-       (id, name, age, weight, height_cm, fum, eco_date, eco_ga_days, note, note_updated_at, last_seen)
+       (id, name, age, weight, height_cm, fum, eco_date, eco_ga_days, note, note_updated_at, attended_at)
      VALUES
-       ($id, $name, $age, $weight, $heightCm, $fum, $ecoDate, $ecoGaDays, $note, $noteUpdatedAt, $lastSeen)`,
+       ($id, $name, $age, $weight, $heightCm, $fum, $ecoDate, $ecoGaDays, $note, $noteUpdatedAt, $attendedAt)`,
     {
       $id: patient.id,
       $name: patient.name,
@@ -137,7 +137,7 @@ export async function restorePatient(db: SQLiteDatabase, patient: Patient) {
       $ecoGaDays: patient.ecoGaDays,
       $note: patient.note,
       $noteUpdatedAt: patient.noteUpdatedAt,
-      $lastSeen: patient.lastSeen,
+      $attendedAt: patient.attendedAt,
     },
   );
   notifyPatientsChanged();

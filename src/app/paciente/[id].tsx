@@ -187,7 +187,7 @@ function PatientDetail({ patient, onSaveNote, onDelete }: PatientDetailProps) {
                 {patient.name}
               </Text>
               <Text style={styles.meta}>
-                Vista {seenLabel(dayFromIso(patient.lastSeen) ?? today, today).toLowerCase()}
+                Vista {seenLabel(dayFromIso(patient.attendedAt) ?? today, today).toLowerCase()}
               </Text>
             </View>
           </View>

@@ -11,7 +11,7 @@ export type PatientRow = {
   weight: number | null;
   height_cm: number | null;
   fum: string | null;
-  last_seen: string;
+  attended_at: string;
   created_at: string;
   eco_date: string | null;
   eco_ga_days: number | null;
@@ -40,7 +40,7 @@ const COLUMNS = [
   'weight',
   'height_cm',
   'fum',
-  'last_seen',
+  'attended_at',
   'created_at',
   'eco_date',
   'eco_ga_days',
@@ -130,7 +130,8 @@ function parsePatient(value: unknown, index: number): PatientRow {
     weight: optionalNumber(value.weight ?? null, field('weight')),
     height_cm: optionalNumber(value.height_cm ?? null, field('height_cm')),
     fum: optionalText(value.fum ?? null, field('fum'), ISO_DATE),
-    last_seen: requiredText(value.last_seen, field('last_seen'), ISO_DATE),
+    // Las copias exportadas antes de renombrar la columna traen last_seen.
+    attended_at: requiredText(value.attended_at ?? value.last_seen, field('attended_at'), ISO_DATE),
     created_at: requiredText(value.created_at, field('created_at'), SQLITE_DATETIME),
     eco_date: optionalText(value.eco_date ?? null, field('eco_date'), ISO_DATE),
     eco_ga_days: optionalNumber(value.eco_ga_days ?? null, field('eco_ga_days'), true),

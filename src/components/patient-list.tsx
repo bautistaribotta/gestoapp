@@ -15,17 +15,17 @@ function groupIndex(daysAgo: number) {
 }
 
 type PatientListProps = {
-  /** Pacientes ordenadas de la vista más reciente a la más antigua. */
+  /** Pacientes ordenadas de la atención más reciente a la más antigua. */
   patients: Patient[];
   today: number;
   onOpen: (patient: Patient) => void;
 };
 
-/** Listado agrupado por la última vez que se vio a cada paciente. */
+/** Listado agrupado por la fecha en que se atendió a cada paciente. */
 export function PatientList({ patients, today, onOpen }: PatientListProps) {
   const groups: Patient[][] = GROUP_TITLES.map(() => []);
   for (const patient of patients) {
-    groups[groupIndex(today - (dayFromIso(patient.lastSeen) ?? today))].push(patient);
+    groups[groupIndex(today - (dayFromIso(patient.attendedAt) ?? today))].push(patient);
   }
 
   return (
@@ -42,7 +42,7 @@ export function PatientList({ patients, today, onOpen }: PatientListProps) {
                 <PatientRow
                   key={patient.id}
                   patient={patient}
-                  seen={seenLabel(dayFromIso(patient.lastSeen) ?? today, today)}
+                  seen={seenLabel(dayFromIso(patient.attendedAt) ?? today, today)}
                   first={position === 0}
                   onPress={() => onOpen(patient)}
                 />

@@ -73,6 +73,13 @@ const MIGRATIONS: string[] = [
     ALTER TABLE patients_new RENAME TO patients;
     CREATE INDEX idx_patients_last_seen ON patients (last_seen);
   `,
+  // 6: last_seen pasa a llamarse attended_at: es la fecha en que se atendió a la paciente (la de alta
+  // de la ficha) y no cambia al editarla ni al abrirla.
+  `
+    ALTER TABLE patients RENAME COLUMN last_seen TO attended_at;
+    DROP INDEX idx_patients_last_seen;
+    CREATE INDEX idx_patients_attended_at ON patients (attended_at);
+  `,
 ];
 
 /**
