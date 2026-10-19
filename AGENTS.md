@@ -56,8 +56,8 @@ Expo Go no trae SQLCipher ni Face ID. En Expo Go la app sigue funcionando, pero 
 
 ### Configuración que falta antes de publicar
 
-- **`app.json`:** `ios.bundleIdentifier`, `android.package`, el nombre visible (hoy `gestoapp`; debería ser `GestoApp`), `version`, `ios.buildNumber` y `android.versionCode` (o `appVersionSource` remoto en EAS), y decidir `ios.supportsTablet`.
-- **`eas.json`:** perfiles `development`, `preview` y `production`. Hace falta un development build para probar todo lo de la sección anterior.
+- **`app.json`:** `ios.bundleIdentifier` y decidir `ios.supportsTablet`. Ya están el nombre visible (`GestoApp`) y `android.package` (`com.gestoapp`, no se puede cambiar una vez publicado). `versionCode` y `buildNumber` los maneja EAS (`appVersionSource: "remote"` y `autoIncrement` en `production`).
+- **`eas.json`:** listo, con los perfiles `development` (usa `expo-dev-client`), `preview` (APK para instalar directo) y `production` (AAB para Play). Falta vincular el proyecto con `npx eas-cli@latest init`.
 - **Cifrado y exportación (iOS):** la app usa cifrado estándar (AES-256 en la base y en la copia exportada). Responder las preguntas de cumplimiento de exportación de App Store Connect y declarar `ITSAppUsesNonExemptEncryption` en `ios.infoPlist` según corresponda. Verificar con la documentación de Apple si aplica la exención para cifrado de protección de datos.
 - **Permisos de Android:** revisar el `AndroidManifest.xml` que genera el prebuild y bloquear con `android.blockedPermissions` todo lo que no se use. La política de privacidad dice que la app no pide permisos de cámara, ubicación, contactos, micrófono ni fotos. `expo-local-authentication` agrega `USE_BIOMETRIC` (necesario) y `USE_FINGERPRINT` (obsoleto).
 - **Manifiesto de privacidad de iOS (`PrivacyInfo.xcprivacy`):** confirmar que cubra las APIs de motivo requerido que usan las dependencias; si hace falta, completarlo con `ios.privacyManifests` en `app.json`.
