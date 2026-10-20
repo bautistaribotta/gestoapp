@@ -40,9 +40,6 @@ export type DatingReference = {
 export type Discordance = {
   over: boolean;
   title: string;
-  gaFum: string;
-  gaEco: string;
-  rule: string;
 };
 
 export function formatWeeksDays(days: number): string {
@@ -119,13 +116,12 @@ export function gestationFromFum(fum: string | null, today: number): Gestation |
 }
 
 /** Umbral ACOG de discordancia según la edad gestacional de la ecografía. */
-function acogThreshold(ecoGaDays: number): [days: number, range: string] {
-  if (ecoGaDays <= 62) return [5, 'hasta 8 s 6 d'];
-  if (ecoGaDays <= 97) return [7, '9 s 0 d – 13 s 6 d'];
-  if (ecoGaDays <= 111) return [7, '14 s 0 d – 15 s 6 d'];
-  if (ecoGaDays <= 153) return [10, '16 s 0 d – 21 s 6 d'];
-  if (ecoGaDays <= 195) return [14, '22 s 0 d – 27 s 6 d'];
-  return [21, '28 s 0 d o más'];
+function acogThreshold(ecoGaDays: number): number {
+  if (ecoGaDays <= 62) return 5; // hasta 8 s 6 d
+  if (ecoGaDays <= 111) return 7; // 9 s 0 d – 15 s 6 d
+  if (ecoGaDays <= 153) return 10; // 16 s 0 d – 21 s 6 d
+  if (ecoGaDays <= 195) return 14; // 22 s 0 d – 27 s 6 d
+  return 21; // 28 s 0 d o más
 }
 
 /** Compara la FUM con la ecografía cuando las dos están cargadas. */
@@ -135,14 +131,11 @@ export function discordance(input: DatingInput, today: number): Discordance | nu
   if (!eco || fumDay === null) return null;
 
   const diff = Math.abs(eco.day - fumDay - eco.gaDays);
-  const [threshold, range] = acogThreshold(eco.gaDays);
-  const over = diff > threshold;
+  const over = diff > acogThreshold(eco.gaDays);
+  const days = plural(diff, 'día', 'días');
   return {
     over,
-    title: over ? `Discordancia de ${diff} d` : `Concordante · diferencia ${diff} d`,
-    gaFum: formatWeeksDays(today - fumDay),
-    gaEco: formatWeeksDays(today - (eco.day - eco.gaDays)),
-    rule: `Umbral ACOG para eco a ${range}: más de ${threshold} d.`,
+    title: over ? `Discordancia de ${days}` : `Concordante · diferencia de ${days}`,
   };
 }
 

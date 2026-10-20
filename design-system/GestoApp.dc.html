@@ -100,10 +100,9 @@
 </div>
 <sc-if value="{{ calc.ok }}" hint-placeholder-val="{{ false }}">
 <sc-if value="{{ calc.disc.show }}" hint-placeholder-val="{{ false }}">
-<div style="border:1px solid {{ calc.disc.border }};background:{{ calc.disc.bg }};border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:6px">
+<div style="border:1px solid {{ calc.disc.border }};background:{{ calc.disc.bg }};border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px">
 <div style="display:flex;align-items:center;gap:7px;font-size:14px;font-weight:700;color:{{ calc.disc.tc }}"><sc-if value="{{ calc.disc.over }}" hint-placeholder-val="{{ false }}"><span style="width:11px;height:10px;background:currentColor;clip-path:polygon(50% 0,100% 100%,0 100%)"></span></sc-if><sc-if value="{{ calc.disc.ok }}" hint-placeholder-val="{{ true }}"><span style="width:10px;height:10px;border-radius:50%;border:2px solid currentColor;box-sizing:border-box"></span></sc-if>{{ calc.disc.title }}</div>
-<div style="display:flex;justify-content:space-between;font-size:13px;color:oklch(0.38 0.012 250)"><span>Por FUM: <span style="font-family:'Atkinson Hyperlegible Mono',monospace">{{ calc.disc.gaFum }}</span></span><span>Por eco: <span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-weight:700;color:oklch(0.21 0.012 250)">{{ calc.disc.gaEco }}</span></span></div>
-<div style="font-size:13px;line-height:18px;color:oklch(0.38 0.012 250)">{{ calc.disc.rule }}</div>
+<div style="font-size:13px;line-height:18px;color:oklch(0.38 0.012 250)">Se usa la ecografía para el cálculo.</div>
 </div>
 </sc-if>
 <div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:4px 16px;display:flex;flex-direction:column">
@@ -201,10 +200,9 @@
 </div>
 <sc-if value="{{ calc.ok }}" hint-placeholder-val="{{ false }}">
 <sc-if value="{{ calc.disc.show }}" hint-placeholder-val="{{ false }}">
-<div style="border:1px solid {{ calc.disc.border }};background:{{ calc.disc.bg }};border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:6px">
+<div style="border:1px solid {{ calc.disc.border }};background:{{ calc.disc.bg }};border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px">
 <div style="display:flex;align-items:center;gap:7px;font-size:14px;font-weight:700;color:{{ calc.disc.tc }}"><sc-if value="{{ calc.disc.over }}" hint-placeholder-val="{{ false }}"><span style="width:11px;height:10px;background:currentColor;clip-path:polygon(50% 0,100% 100%,0 100%)"></span></sc-if><sc-if value="{{ calc.disc.ok }}" hint-placeholder-val="{{ true }}"><span style="width:10px;height:10px;border-radius:50%;border:2px solid currentColor;box-sizing:border-box"></span></sc-if>{{ calc.disc.title }}</div>
-<div style="display:flex;justify-content:space-between;font-size:13px;color:oklch(0.38 0.012 250)"><span>Por FUM: <span style="font-family:'Atkinson Hyperlegible Mono',monospace">{{ calc.disc.gaFum }}</span></span><span>Por eco: <span style="font-family:'Atkinson Hyperlegible Mono',monospace;font-weight:700;color:oklch(0.21 0.012 250)">{{ calc.disc.gaEco }}</span></span></div>
-<div style="font-size:13px;line-height:18px;color:oklch(0.38 0.012 250)">{{ calc.disc.rule }}</div>
+<div style="font-size:13px;line-height:18px;color:oklch(0.38 0.012 250)">Se usa la ecografía para el cálculo.</div>
 </div>
 </sc-if>
 <div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:4px 16px;display:flex;flex-direction:column">
@@ -473,10 +471,9 @@ class Component extends DCLogic {
     let disc = { show: false };
     if (ecoOk && fumOk) {
       const diff = Math.abs((ed - f0) - eGA);
-      const [thr, range] = eGA <= 62 ? [5, 'hasta 8 s 6 d'] : eGA <= 111 ? [7, '9 s 0 d – 15 s 6 d'] : eGA <= 153 ? [10, '16 s 0 d – 21 s 6 d'] : eGA <= 195 ? [14, '22 s 0 d – 27 s 6 d'] : [21, '28 s o más'];
+      const thr = eGA <= 62 ? 5 : eGA <= 111 ? 7 : eGA <= 153 ? 10 : eGA <= 195 ? 14 : 21;
       const over = diff > thr;
-      disc = { show: true, over, ok: !over, title: over ? `Discordancia de ${diff} d` : `Concordante · diferencia ${diff} d`, gaFum: sd(T - f0), gaEco: sd(cga),
-        rule: `Umbral ACOG para eco a ${range}: más de ${thr} d. La edad gestacional y las fechas se calculan con la ecografía.`,
+      disc = { show: true, over, ok: !over, title: over ? `Discordancia de ${diff} ${diff === 1 ? 'día' : 'días'}` : `Concordante · diferencia de ${diff} ${diff === 1 ? 'día' : 'días'}`,
         tc: over ? 'oklch(0.42 0.11 30)' : 'oklch(0.38 0.012 250)', bg: over ? 'oklch(0.97 0.015 30)' : 'oklch(0.975 0.003 250)', border: over ? 'oklch(0.80 0.06 30)' : 'oklch(0.89 0.006 250)' };
     }
     const calc = cok ? { ok: true, ga: sd(cga), month: '≈ ' + (Math.floor(cga / 30.4) + 1) + '° mes', bars: Array.from({ length: trimester(cga) }, (_, i) => i), tri: 'T' + trimester(cga) + ' · ' + trimester(cga) + '° trimestre', fpp: fmt(cf + 280), dates: keyDates(cf, ecoOk ? ed : null), ref: ecoOk ? 'ecografía del ' + fmt(ed) : 'FUM ' + fmt(f0), disc } : { ok: false, bars: [], dates: [], disc };

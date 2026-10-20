@@ -14,19 +14,8 @@ export function DiscordanceCard({ discordance }: { discordance: Discordance }) {
         {over ? <AlertTriangle size={12} /> : <OkCircle />}
         <Text style={[styles.title, over && styles.titleOver]}>{discordance.title}</Text>
       </View>
-      <View style={styles.values}>
-        <View style={styles.value}>
-          <Text style={styles.valueLabel}>Por FUM</Text>
-          <Text style={styles.valueFum}>{discordance.gaFum}</Text>
-        </View>
-        <View style={styles.value}>
-          <Text style={styles.valueLabel}>Por ecografía · en uso</Text>
-          <Text style={styles.valueEco}>{discordance.gaEco}</Text>
-        </View>
-      </View>
-      <Text style={styles.rule}>{discordance.rule}</Text>
       {/* La tarjeta es informativa: con ecografía cargada, la FUM no se usa para datar. */}
-      <Text style={styles.rule}>La edad gestacional y las fechas se calculan con la ecografía.</Text>
+      <Text style={styles.note}>Se usa la ecografía para el cálculo.</Text>
     </View>
   );
 }
@@ -37,8 +26,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
     borderRadius: 16,
-    padding: 16,
-    gap: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    gap: 4,
   },
   cardOver: {
     backgroundColor: colors.alertSoft,
@@ -57,29 +47,7 @@ const styles = StyleSheet.create({
   titleOver: {
     color: colors.alertText,
   },
-  values: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  value: {
-    flex: 1,
-  },
-  valueLabel: {
-    fontFamily: fonts.regular,
-    fontSize: 13,
-    color: colors.textSecondary,
-  },
-  valueFum: {
-    fontFamily: fonts.monoMedium,
-    fontSize: 17,
-    color: colors.ink,
-  },
-  valueEco: {
-    fontFamily: fonts.monoBold,
-    fontSize: 17,
-    color: colors.ink,
-  },
-  rule: {
+  note: {
     fontFamily: fonts.regular,
     fontSize: 13,
     lineHeight: 18,

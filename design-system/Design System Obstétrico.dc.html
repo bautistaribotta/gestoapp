@@ -169,10 +169,9 @@
 </div>
 <div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px">
 <div style="font-size:13px;font-weight:600;color:oklch(0.47 0.012 250)">Alerta de discordancia FUM / ecografía</div>
-<div style="border:1px solid oklch(0.80 0.06 30);background:oklch(0.97 0.015 30);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px">
-<div style="display:flex;align-items:center;gap:7px;font-size:15px;font-weight:700;color:oklch(0.42 0.11 30)"><span style="width:12px;height:11px;background:currentColor;clip-path:polygon(50% 0,100% 100%,0 100%)"></span>Discordancia de 10 d</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div style="display:flex;flex-direction:column"><span style="font-size:13px;color:oklch(0.38 0.012 250)">Por FUM</span><span style="font:500 17px 'Atkinson Hyperlegible Mono',monospace">28 s 2 d</span></div><div style="display:flex;flex-direction:column"><span style="font-size:13px;color:oklch(0.38 0.012 250)">Por ecografía · en uso</span><span style="font:700 17px 'Atkinson Hyperlegible Mono',monospace">29 s 5 d</span></div></div>
-<div style="font-size:13px;line-height:18px;color:oklch(0.38 0.012 250)">Umbral ACOG para eco a 9 s 0 d – 13 s 6 d: más de 7 d.</div> <div style="font-size:13px;line-height:18px;color:oklch(0.38 0.012 250)">La edad gestacional y las fechas se calculan con la ecografía.</div>
+<div style="border:1px solid oklch(0.80 0.06 30);background:oklch(0.97 0.015 30);border-radius:16px;padding:12px 16px;display:flex;flex-direction:column;gap:4px">
+<div style="display:flex;align-items:center;gap:7px;font-size:15px;font-weight:700;color:oklch(0.42 0.11 30)"><span style="width:12px;height:11px;background:currentColor;clip-path:polygon(50% 0,100% 100%,0 100%)"></span>Discordancia de 10 días</div>
+<div style="font-size:13px;line-height:18px;color:oklch(0.38 0.012 250)">Se usa la ecografía para el cálculo.</div>
 </div>
 </div>
 </div>
@@ -296,10 +295,9 @@
 </div>
 
 <sc-if value="{{ disc.show }}" hint-placeholder-val="{{ true }}">
-<div style="border:1px solid {{ disc.border }};background:{{ disc.bg }};border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;flex:none">
+<div style="border:1px solid {{ disc.border }};background:{{ disc.bg }};border-radius:16px;padding:12px 16px;display:flex;flex-direction:column;gap:4px;flex:none">
 <div style="display:flex;align-items:center;gap:7px;font-size:15px;font-weight:700;color:{{ disc.tc }}"><sc-if value="{{ disc.over }}" hint-placeholder-val="{{ true }}"><span style="width:12px;height:11px;background:currentColor;clip-path:polygon(50% 0,100% 100%,0 100%)"></span></sc-if><sc-if value="{{ disc.ok }}" hint-placeholder-val="{{ false }}"><span style="width:10px;height:10px;border-radius:50%;border:2px solid currentColor;box-sizing:border-box"></span></sc-if>{{ disc.title }}</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div style="display:flex;flex-direction:column"><span style="font-size:13px;color:oklch(0.38 0.012 250)">Por FUM</span><span style="font:500 17px 'Atkinson Hyperlegible Mono',monospace">{{ disc.gaFum }}</span></div><div style="display:flex;flex-direction:column"><span style="font-size:13px;color:oklch(0.38 0.012 250)">Por ecografía · en uso</span><span style="font:700 17px 'Atkinson Hyperlegible Mono',monospace">{{ disc.gaEco }}</span></div></div>
-<div style="font-size:13px;line-height:18px;color:oklch(0.38 0.012 250)">{{ disc.rule }}</div>
+<div style="font-size:13px;line-height:18px;color:oklch(0.38 0.012 250)">Se usa la ecografía para el cálculo.</div>
 </div>
 </sc-if>
 
@@ -454,13 +452,11 @@ class Component extends DCLogic {
     if (c.ecoValid && c.fumOk) {
       const gaFumAtEco = c.ed - c.f, diff = Math.abs(gaFumAtEco - c.ecoGA);
       const fixed = (p.guia ?? 'acog') === 'fijo';
-      const [thr, range] = fixed ? [p.umbralDias ?? 7, ''] : acog(c.ecoGA);
+      const [thr] = fixed ? [p.umbralDias ?? 7] : acog(c.ecoGA);
       const over = diff > thr;
       disc = {
         show: true, over, ok: !over,
-        title: over ? `Discordancia de ${diff} d` : `Concordante · diferencia ${diff} d`,
-        gaFum: sd(c.T - c.f), gaEco: sd(todayGAd),
-        rule: fixed ? `Umbral fijo configurado: más de ${thr} d.` : `Umbral ACOG para eco a ${range}: más de ${thr} d.`,
+        title: over ? `Discordancia de ${diff} ${diff === 1 ? 'día' : 'días'}` : `Concordante · diferencia de ${diff} ${diff === 1 ? 'día' : 'días'}`,
         tc: over ? 'oklch(0.42 0.11 30)' : 'oklch(0.38 0.012 250)',
         bg: over ? 'oklch(0.97 0.015 30)' : 'oklch(1 0 0)',
         border: over ? 'oklch(0.80 0.06 30)' : 'oklch(0.89 0.006 250)'
