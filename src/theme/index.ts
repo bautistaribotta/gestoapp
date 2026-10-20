@@ -16,6 +16,9 @@ const palette = {
   alertBorder: 'oklch(0.80 0.06 30)',
   alertSoft: 'oklch(0.97 0.015 30)',
   alertStrong: 'oklch(0.50 0.10 30)',
+  /** Confirmación: algo ya está hecho, como un documento leído. Siempre con ✓ y texto. */
+  okText: 'oklch(0.40 0.10 150)',
+  okSoft: 'oklch(0.96 0.03 150)',
   /** Bebé del logo; mismo tono que el ladrillo, pero sin función de alerta. */
   logoAccent: 'oklch(0.50 0.10 30)',
   transparent: 'oklch(0 0 0 / 0)',

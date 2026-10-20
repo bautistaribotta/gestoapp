@@ -49,7 +49,7 @@
 <div style="background:oklch(1 0 0);border:1px solid oklch(0.89 0.006 250);border-radius:16px;display:flex;flex-direction:column;overflow:hidden">
 <button onClick="{{ d.open }}" style="display:flex;align-items:center;gap:12px;min-height:72px;padding:12px 16px;border:none;background:oklch(1 0 0);cursor:pointer;font-family:inherit;text-align:left;color:oklch(0.21 0.012 250)" style-active="background:oklch(0.95 0.004 250)">
 <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:700">{{ d.title }}</span><span style="font-size:13px;color:oklch(0.47 0.012 250)">{{ d.sub }}</span></span>
-<sc-if value="{{ d.read }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-items:center;height:26px;padding:0 9px;border-radius:999px;background:oklch(0.95 0.004 250);font-size:13px;font-weight:600;color:oklch(0.38 0.012 250)">Leído</span></sc-if>
+<sc-if value="{{ d.read }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 9px;border-radius:999px;background:oklch(0.96 0.03 150);font-size:13px;font-weight:600;color:oklch(0.40 0.10 150)"><span style="width:5px;height:10px;margin-top:-2px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);box-sizing:content-box"></span>Leído</span></sc-if>
 <sc-if value="{{ d.unread }}" hint-placeholder-val="{{ true }}"><span style="display:inline-flex;align-items:center;height:32px;padding:0 12px;border-radius:999px;border:1px solid oklch(0.62 0.012 250);font-size:14px;font-weight:600">Leer</span></sc-if>
 <span style="font-size:20px;color:oklch(0.47 0.012 250)">›</span>
 </button>

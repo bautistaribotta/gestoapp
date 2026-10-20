@@ -32,6 +32,7 @@ export function LegalConsentCard({ doc, read, onOpen }: LegalConsentCardProps) {
         </View>
         {read ? (
           <View style={styles.readBadge}>
+            <View style={styles.check} />
             <Text style={styles.readBadgeLabel}>Leído</Text>
           </View>
         ) : (
@@ -82,15 +83,27 @@ const styles = StyleSheet.create({
   },
   readBadge: {
     height: 26,
-    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
     paddingHorizontal: 9,
     borderRadius: 999,
-    backgroundColor: colors.sunken,
+    backgroundColor: colors.okSoft,
+  },
+  /** Tilde ✓ dibujado con dos bordes de un rectángulo girado. */
+  check: {
+    width: 5,
+    height: 10,
+    marginTop: -2,
+    borderRightWidth: 2,
+    borderBottomWidth: 2,
+    borderColor: colors.okText,
+    transform: [{ rotate: '45deg' }],
   },
   readBadgeLabel: {
     fontFamily: fonts.semibold,
     fontSize: 13,
-    color: colors.textSecondary,
+    color: colors.okText,
   },
   readAction: {
     height: 32,
